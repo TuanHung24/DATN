@@ -1,0 +1,37 @@
+.wrapper {
+    width: 80%;
+    border: 1px solid #ccc;
+    margin: 0 auto;
+}
+header .shadow
+{
+    margin-bottom: 2%;
+}
+
+.navbar, .navbar-nav, .text-nowrap, .dkdn{
+    display: inline-flex;
+    padding: 15px 0 2px 0px;
+}
+.header, .footer {
+    height: 40px;
+    background-color: #00ff89;
+}
+.menu {
+    width: 20%;
+    background-color: #ff3030;
+    float: left;
+}
+.main-content {
+    width: 80%;
+    background-color: bisque;
+    float: right;
+}
+
+.clear {
+    clear: both;
+}
+
+img.logo {
+    height: 70px;
+    width: auto;
+}
