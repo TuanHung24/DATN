@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('admin', function (Blueprint $table) {
             $table->id();
-            $table->string("email",80)->nullable();
+            $table->text("avatar_url")->nullable();
+            $table->string("name",40);
+            $table->string("email",80);
+            $table->string("username",20);
             $table->string("password",100);
+            $table->string("phone",10);
+            $table->string('address',128);
+            $table->integer("roles");
+            $table->boolean("status")->default(1);
             $table->timestamps();
         });
     }

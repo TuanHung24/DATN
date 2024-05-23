@@ -42,7 +42,7 @@
                     <!-- Side Nav Toggle -->
                     <a class="js-side-nav header-invoker d-flex mr-md-2" href="#" data-close-invoker="#sidebarClose" data-target="#sidebar" data-target-wrapper="body">
                         <i class="fas fa-align-left"></i>
-                    </a>
+                    </a>    
                     <!-- End Side Nav Toggle -->
 
                     <!-- User Notifications -->
@@ -154,71 +154,160 @@
                             </a>
                         </li>
 
-
-                        <!-- Title -->
                         <li class="sidebar-heading h6">Examples</li>
-                        <!-- End Title -->
 
-                        <!-- Users -->
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subUsers">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-user"></i>
+                                    <i class="fas fa-circle-user"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Users</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Nhân viên</span>
                                 <span class="side-nav-control-icon d-flex">
                                     <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
-
-                            <!-- Users: subUsers -->
                             <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html">All Users</a>
+                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html">Add new</a>
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
-                            <!-- End Users: subUsers -->
                         </li>
-                        <!-- End Users -->
 
-                        <!-- Authentication -->
                         <li class="side-nav-menu-item side-nav-has-menu">
-                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subPages">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subCustomers">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-lock"></i>
+                                    <i class="fas fa-users"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Authentication</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Khách hàng</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+                            <ul id="subCustomers" class="side-nav-menu side-nav-menu-second-level mb-0">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="login.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="register.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subProvider">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-truck"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Nhà cung cấp</span>
                                 <span class="side-nav-control-icon d-flex">
                                     <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
 
-                            <!-- Pages: subPages -->
-                            <ul id="subPages" class="side-nav-menu side-nav-menu-second-level mb-0">
+                            <ul id="subProvider" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="login.html">Login</a>
+                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="register.html">Register</a>
-                                </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="password-reset.html">Forgot Password</a>
-                                </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="password-reset-2.html">Forgot Password 2</a>
-                                </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="email-verification.html">Email Verification</a>
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
-                            <!-- End Pages: subPages -->
                         </li>
-                        <!-- End Authentication -->
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subProductTypes">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-tags"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Loại sản phẩm</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subProductTypes" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subProducts">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-box"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Sản phẩm</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subProducts" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#Receipts">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-receipt"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Phiếu nhập kho</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="Receipts" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subInvoices">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-file-invoice"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Hóa đơn</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subInvoices" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="users.html">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
 
                         <!-- Settings -->
                         <li class="side-nav-menu-item">
