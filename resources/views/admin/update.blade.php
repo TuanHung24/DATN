@@ -55,7 +55,7 @@
                 <div class=row>
                     <div class="col-md-6">
                     <label for="avatar" class="form-label">Chọn ảnh: </label>
-                    <input type="file" name="avatar" required/><br/>
+                    <input type="file" name="avatar"/><br/>
                     </div>
                 </div>
                 <div class="col-md-2">

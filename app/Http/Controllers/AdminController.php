@@ -21,24 +21,39 @@ class AdminController extends Controller
     public function hdAddNew(Request $request){
 
         try{
-
+        
+            $request->validate([
+                'avatar' => 'nullable|image', // Optional avatar field validation
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:admin',
+                'username' => 'required|string|max:255|unique:admin',
+                'password' => 'required|string|min:6',
+                'phone' => 'required|string|max:20',
+                'address' => 'required|string|max:255',
+                'roles' => 'required|integer|in:1,2,3',
+            ]);
+    
         $file = $request->file('avatar');
+        $newAdmin = new Admin();
 
         if(isset($file)){
             $path = $file->store('avt');
-            $listAdmin = new Admin();
-            $listAdmin->avatar_url = $path;
-            $listAdmin->name = $request->name;
-            $listAdmin->email = $request->email;
-            $listAdmin->username = $request->username;
-            $listAdmin->password = Hash::make($request->password);
-            $listAdmin->phone = $request->phone;
-            $listAdmin->address = $request->address;
-            $listAdmin->roles = $request->roles; 
-            $listAdmin->save();
+           
+            $newAdmin->avatar_url = $path;
+            
         }
-       
-        return view('admin.list',compact('listAdmin'));
+            $newAdmin->name = $request->name;
+            $newAdmin->email = $request->email;
+            $newAdmin->username = $request->username;
+            $newAdmin->password = Hash::make($request->password);
+            $newAdmin->phone = $request->phone;
+            $newAdmin->address = $request->address;
+            $newAdmin->roles = $request->roles; 
+            $newAdmin->save();
+
+        
+        return redirect()->route('admin.list');
+
         }catch(Exception $e){
             return back()->with(['error:'=>"Error:".$e]);
         }
@@ -81,11 +96,10 @@ class AdminController extends Controller
         }
     }
     public function delete($id){
-        $aDmin=Admin::find($id);
-        // if(empty($aDmin)){
 
-        // }
+        $aDmin=Admin::find($id);
+        
         $aDmin->delete();
-        return view('admin.list');
+        return redirect()->route('admin.list');
     }
 }

@@ -44,8 +44,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                    <label for="khach-hang" class="form-label" name="roles">Chức vụ:</label>
-                        <select>
+                    <label for="roles" class="form-label">Chức vụ:</label>
+                        <select name="roles">
                             <option selected disabled>Chọn chức vụ</option>
                             <option value="1">Quản lý</option>
                             <option value="2">Nhân viên</option>
