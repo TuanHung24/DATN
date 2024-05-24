@@ -169,10 +169,10 @@
                             </a>
                             <ul id="subUsers" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{ route('admin.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{ route('admin.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>

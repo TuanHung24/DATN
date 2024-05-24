@@ -8063,7 +8063,7 @@ pre code {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f9f9f9
+    background-color: white;
 }
 
 .table-hover tbody tr:hover {
@@ -8349,6 +8349,7 @@ pre code {
 
 @media (max-width:575.98px) {
     .table-responsive-sm {
+        
         display: block;
         width: 100%;
         overflow-x: auto;
