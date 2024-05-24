@@ -4,7 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">THÊM MỚI SẢN PHẨM</h1>
             </div>
-            <form method="POST" action="{{ route('admin.hd-add-new') }}">
+            <form method="POST" action="{{ route('admin.hd-add-new') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
@@ -44,13 +44,13 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                    <label for="khach-hang" class="form-label">Chức vụ:</label>
-                        <section>
+                    <label for="khach-hang" class="form-label" name="roles">Chức vụ:</label>
+                        <select>
                             <option selected disabled>Chọn chức vụ</option>
                             <option value="1">Quản lý</option>
                             <option value="2">Nhân viên</option>
                             <option value="3">Quản lý kho</option>
-                        </section>
+                        </select>
                     </div>
                 </div>
                 <div class=row>

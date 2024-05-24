@@ -21,7 +21,7 @@
         </thead>
         @foreach($listAdmin as $Admin)
         <tr>
-            <td><img src="{{asset($Admin->avatar_url)}}" class="avatar1"/></td>
+            <td><img src="{{asset($Admin->avatar_url)}}" class="avatar1" alt="avatar"/></td>
             <td>{{ $Admin->name }}</td>
             <td>{{ $Admin->email }}</td>
             <td>{{ $Admin->username }}</td>

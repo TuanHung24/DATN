@@ -80,4 +80,12 @@ class AdminController extends Controller
             return back()->with(['error:'=>"Error:".$e]);
         }
     }
+    public function delete($id){
+        $aDmin=Admin::find($id);
+        // if(empty($aDmin)){
+
+        // }
+        $aDmin->delete();
+        return view('admin.list');
+    }
 }

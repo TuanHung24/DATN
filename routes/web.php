@@ -18,7 +18,7 @@ use App\Http\Controllers\MainController;
 |
 */
 
-// Route::middleware('auth')->group(function(){
+Route::middleware('auth')->group(function(){
     Route::get('san-pham/them-moi', [SanPhamController::class, 'themMoi'])->name('san-pham.them-moi');
     Route::post('san-pham/them-moi', [SanPhamController::class, 'xuLyThemMoi'])->name('san-pham.xl-them-moi');
     Route::get('san-pham', [SanPhamController::class, 'danhSach'])->name('san-pham.danh-sach');
@@ -33,7 +33,7 @@ use App\Http\Controllers\MainController;
             Route::get('list', [AdminController::class, 'getList'])->name('list');
             Route::get('update/{id}', [AdminController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
-            Route::get('delete/{id}', [AdminController::class, 'xoa'])->name('delete');
+            Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');
         });
         
     });
@@ -48,10 +48,10 @@ use App\Http\Controllers\MainController;
 
     Route::get('main',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
-// });
-// Route::middleware('guest')->group(function(){
+});
+Route::middleware('guest')->group(function(){
     Route::get('login',[LoginController::class, 'Login'])->name('login');
     Route::post('login',[LoginController::class, 'hdLogin'])->name('hd-login');
     
     Route::get('password-reset',[LoginController::class, 'passWordReset'])->name('password-reset');
-// });
+});
