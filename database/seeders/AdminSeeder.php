@@ -21,7 +21,15 @@ class AdminSeeder extends Seeder
         $admin->password = Hash::make(123);
         $admin->phone = "0937116413";
         $admin->address = "Quận Bình Thanh, TP.HCM";
-        $admin->username = "TuanHung";
+        $admin->roles = 1;
+        $admin->save();
+        $admin = new Admin();
+        $admin->name = "Mai Văn Khải";
+        $admin->email = "khaimen57@gmail.com";
+        $admin->username = "MaiKhai";
+        $admin->password = Hash::make(123);
+        $admin->phone = "0368193004";
+        $admin->address = "Quận Gò Vấp, TP.HCM";
         $admin->roles = 1;
         $admin->save();
     }

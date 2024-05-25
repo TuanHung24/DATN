@@ -357,6 +357,8 @@
 
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
+    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+    
 
     <!-- DEMO CHARTS -->
     <!-- <script src="public/demo/resizeSensor.js"></script>
