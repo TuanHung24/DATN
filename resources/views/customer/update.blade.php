@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">THÊM MỚI NHÂN VIÊN</h1>
+                <h1 class="h2">THÊM MỚI KHÁCH HÀNG</h1>
             </div>
-            <form method="POST" action="{{ route('admin.hd-add-new') }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('customer.hd-update', ['id'=> $cusTomer->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-md-6">
                         <label for="name" class="form-label">Họ tên</label>
-                        <input type="text" class="form-control" name="name" value="{{old('name')}}">
+                        <input type="text" class="form-control" name="name" value="{{ old('name', $cusTomer->name)}}">
                     </div>
                     @error('name')
                         <span class="error-message"> {{ $message }} </span>
@@ -18,25 +18,17 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="email" class="form-label">Email</label>
-                        <input type="text" class="form-control" name="email" value="{{old('email')}}">
+                        <input type="text" class="form-control" name="email" value="{{ old('email', $cusTomer->email)}}">
                     </div>
                     @error('email')
                         <span class="error-message"> {{ $message }} </span>
                     @enderror
                 </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="username" class="form-label">Tên tài khoản</label>
-                        <input type="text" class="form-control" name="username" value="{{old('username')}}">
-                    </div>
-                    @error('username')
-                        <span class="error-message"> {{ $message }} </span>
-                    @enderror
-                </div>
+                
                 <div class="row">
                     <div class="col-md-6">
                         <label for="password" class="form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" name="password" value="{{old('password')}}">
+                        <input type="password" class="form-control" name="password" value="{{ old('password', $cusTomer->password)}}">
                     </div>
                     @error('password')
                         <span class="error-message"> {{ $message }} </span>
@@ -45,7 +37,7 @@
                 <div class="row">
                     <div class="col-md-6">
                     <label for="phone" class="form-label">Điện thoại</label>
-                        <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
+                        <input type="text" class="form-control" name="phone" value="{{ old('phone', $cusTomer->phone)}}">
                     </div>
                     @error('phone')
                         <span class="error-message"> {{ $message }} </span>
@@ -54,34 +46,17 @@
                 <div class="row">
                     <div class="col-md-6">
                         <label for="address" class="form-label">Địa chỉ</label>
-                        <input type="text" class="form-control" name="address" value="{{old('address')}}">
+                        <input type="text" class="form-control" name="address" value="{{ old('address', $cusTomer->address)}}">
                     </div>
                     @error('address')
                         <span class="error-message"> {{ $message }} </span>
                     @enderror
                 </div>
-                <div class="row">
+                <div class="row"> 
                     <div class="col-md-6">
-                    <label for="roles" class="form-label">Chức vụ:</label>
-                        <select name="roles">
-                            <option selected disabled>Chọn chức vụ</option>
-                            <option value="1">Quản lý</option>
-                            <option value="2">Nhân viên</option>
-                            <option value="3">Quản lý kho</option>
-                        </select>
+                        <label for="status" class="form-label">Trạng thái</label>
+                        <input type="checkbox" name="status" {{ old('status', $cusTomer->status) ? 'checked' : '' }}/>
                     </div>
-                    @error('roles')
-                        <span class="error-message"> {{ $message }} </span>
-                    @enderror
-                </div>
-                <div class=row>
-                    <div class="col-md-6">
-                    <label for="avatar" class="form-label">Chọn ảnh: </label>
-                    <input type="file" name="avatar" required/><br/>
-                    </div>
-                    @error('avatar')
-                        <span class="error-message"> {{ $message }} </span>
-                    @enderror
                 </div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Lưu</button>

@@ -190,10 +190,10 @@
                             </a>
                             <ul id="subCustomers" class="side-nav-menu side-nav-menu-second-level mb-0">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="login.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{ route('customer.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="register.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{ route('customer.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -225,7 +225,7 @@
                                 <span class="side-nav-menu-icon d-flex mr-3">
                                     <i class="fas fa-tags"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Loại sản phẩm</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Hãng sản phẩm</span>
                                 <span class="side-nav-control-icon d-flex">
                                     <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
@@ -305,6 +305,29 @@
                                 </li>
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subNews">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-newspaper"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Tin tức</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subNews" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('news.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('news.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>

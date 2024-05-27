@@ -7020,6 +7020,7 @@ pre code {
 }
 
 .row {
+    margin-bottom: 10px;
     display: flex;
     flex-wrap: wrap;
     margin-right: -15px;
@@ -8018,9 +8019,12 @@ pre code {
 }
 
 .table {
+    background: white;
     width: 100%;
     margin-bottom: 1rem;
-    color: #4a4e69
+    color: #4a4e69;
+    
+    
 }
 
 .table td,

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AdminRequest;
 use App\Models\Admin;
 use Exception;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ class AdminController extends Controller
     public function AddNew(){
         return view('admin.add-new');
     }
-    public function hdAddNew(Request $request){
+    public function hdAddNew(AdminRequest $request){
 
         try{
         
@@ -55,7 +56,7 @@ class AdminController extends Controller
         return redirect()->route('admin.list');
 
         }catch(Exception $e){
-            return back()->with(['error:'=>"Error:".$e]);
+            return back()->withInput()->with(['error:'=>"Error:".$e]);
         }
     }
 
@@ -67,7 +68,7 @@ class AdminController extends Controller
         return view('admin.update', compact('aDmin'));
     }
 
-    public function hdUpdate(Request $request, $id){
+    public function hdUpdate(AdminRequest $request, $id){
 
         try{
 
@@ -92,14 +93,17 @@ class AdminController extends Controller
         
         return redirect()->route('admin.list');
         }catch(Exception $e){
-            return back()->with(['error:'=>"Error:".$e]);
+            return back()->withInput()->with(['error' => "Error: " . $e->getMessage()]);
         }
     }
     public function delete($id){
 
         $aDmin=Admin::find($id);
-        
-        $aDmin->delete();
+        if(empty($aDmin)){
+            return redirect()->route('admin.list')->with(['Empty'=>"$id không tồn tại!"]);
+        }
+        $aDmin->status=0;
+        $aDmin->save();
         return redirect()->route('admin.list');
     }
 }

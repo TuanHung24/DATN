@@ -422,6 +422,14 @@ button.ui-button::-moz-focus-inner {
 	height: 50px;
 	width: 50px;
 }
-#table{
-	background: white;
+.table tr td{
+	vertical-align: middle;
+}
+.error-message{
+	color: red;
+	margin-left: 3px;
+	margin-bottom: 10px;
+}
+.form-label{
+	color: black;
 }

@@ -4,11 +4,11 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3 >DANH SÁCH NHÂN VIÊN</h3>
 </div>
-
+@if(isset($listAdmin) && $listAdmin->isNotEmpty($listAdmin))
 <div class="table-responsive">
     <table class="table table-sm">
         <thead>
-            <tr>
+            <tr> 
                 <th>Ảnh đại diện</td>
                 <th>Họ tên</th>
                 <th>Email</td>
@@ -17,6 +17,7 @@
                 <th>Địa chỉ</th>
                 <th>Quyền</th>
                 <th>Trạng thái</th>
+                <th>Thao tác</th>
             </tr>
         </thead>
         @foreach($listAdmin as $Admin)
@@ -28,7 +29,7 @@
             <td>{{ $Admin->phone }}</td>
             <td>{{ $Admin->address }}</td>
             <td>{{ $Admin->roles == 1 ? 'Quản lý' : ($Admin->roles == 2 ? 'Nhân viên' : ($Admin->roles == 3 ? 'Quản lý kho' : 'Không xác định')) }}</td>
-
+            <td>{{ $Admin->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
                 <a href="{{ route('admin.update', ['id' => $Admin->id]) }}">Sửa</a> | <a href="{{ route('admin.delete', ['id' => $Admin->id]) }}">Xóa</a>
             </td>
@@ -36,4 +37,7 @@
         @endforeach
     </table>
 </div>
+@else
+<h6>Không có nhân viên nào!</h6>
+@endif
 @endsection

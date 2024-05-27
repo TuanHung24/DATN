@@ -2,23 +2,33 @@
 
 namespace App\Http\Controllers;
 use App\Models\News;
+use Exception;
 use Illuminate\Http\Request;
+
+use function PHPUnit\Framework\isEmpty;
 
 class NewsController extends Controller
 {
     public function getList(){
         $listNews = News::all();
-        return view('news.list-news',compact('listNews'));
+        return view('news.list',compact('listNews'));
     }
 
-    public function themMoi(){
+    public function addNew(){
         return view('news.add-new');
     }
-    public function xuLyThemMoi(Request $request){
-        $news= new News();
-        $news->title= $request->title;
-        $news->content= $request->content;
-        $news->save();
+    public function hdAddNew(Request $request){
+        try{
+
+            $news= new News();
+            $news->title= $request->title;
+            $news->content= $request->content;
+            $news->save();
+
+        }catch(Exception $e){
+            return back()->with("error: ".$e);
+        }
+        
 
     }
 }

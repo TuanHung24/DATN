@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
@@ -39,6 +40,17 @@ Route::middleware('auth')->group(function(){
         
     });
     
+    Route::prefix('customer')->group(function(){
+        Route::name('customer.')->group(function(){
+            Route::get('add-new', [CustomerController::class, 'addNew'])->name('add-new');
+            Route::post('add-new', [CustomerController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('list', [CustomerController::class, 'getList'])->name('list');
+            Route::get('update/{id}', [CustomerController::class, 'upDate'])->name('update');
+            Route::post('update/{id}', [CustomerController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [CustomerController::class, 'delete'])->name('delete');
+        });
+        
+    });
 
     Route::get('loai-san-pham', [LoaiSanPhamController::class, 'danhSach'])->name('loai-san-pham.danh-sach');
     Route::get('loai-san-pham/them-moi',[LoaiSanPhamController::class, 'themMoi'])->name('loai-san-pham.them-moi');
@@ -47,9 +59,14 @@ Route::middleware('auth')->group(function(){
     Route::post('loai-san-pham/cap-nhat/{id}', [LoaiSanPhamController::class, 'xuLyCapNhat'])->name('loai-san-pham.xl-cap-nhat');
     Route::get('loai-san-pham/xoa/{id}', [LoaiSanPhamController::class, 'xoa'])->name('loai-san-pham.xoa');
 
-    Route::get('news', [NewsController::class, 'getList'])->name('news.danh-sach');
-    Route::get('news/them-moi',[NewsController::class, 'themMoi'])->name('news.them-moi');
-    Route::post('news/them-moi',[NewsController::class, 'xuLyThemMoi'])->name('news.xl-them-moi');
+    Route::prefix('news')->group(function(){
+        Route::name('news.')->group(function(){
+            Route::get('list', [NewsController::class, 'getList'])->name('list');
+            Route::get('add-new',[NewsController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[NewsController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+    
 
     Route::get('main',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');

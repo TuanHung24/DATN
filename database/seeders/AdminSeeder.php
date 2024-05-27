@@ -32,5 +32,7 @@ class AdminSeeder extends Seeder
         $admin->address = "Quận Gò Vấp, TP.HCM";
         $admin->roles = 1;
         $admin->save();
+
+        echo "Thêm Admin thành công!";
     }
 }
