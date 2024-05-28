@@ -32,6 +32,15 @@ class AdminSeeder extends Seeder
         $admin->address = "Quận Gò Vấp, TP.HCM";
         $admin->roles = 1;
         $admin->save();
+        $admin = new Admin();
+        $admin->name = "Mai Văn Khải22";
+        $admin->email = "khaimen572@gmail.com";
+        $admin->username = "MaiKhai2";
+        $admin->password = Hash::make(123);
+        $admin->phone = "0368193004";
+        $admin->address = "Quận Gò Vấp, TP.HCM";
+        $admin->roles = 2;
+        $admin->save();
 
         echo "Thêm Admin thành công!";
     }

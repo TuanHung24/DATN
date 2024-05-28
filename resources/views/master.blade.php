@@ -94,9 +94,9 @@
                         <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#profileMenu" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
                             <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
                             <span class="mr-md-2 avatar-placeholder">
-                                <img src="{{asset('img/avatar.jpg')}}" alt="" class="rounded-circle1">
+                                <img src="{{asset(Auth()->user()->avatar_url)}}" alt="" class="rounded-circle1">
                             </span>
-                            <span class="d-none d-md-block">John Doe</span>
+                            <span class="d-none d-md-block">{{Auth()->user()->name}}</span>
                             <i class="fas fa-angle-down d-none d-md-block ml-2"></i>
                         </a>
 
@@ -212,10 +212,10 @@
 
                             <ul id="subProvider" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{ route('provider.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{route('provider.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -234,10 +234,10 @@
 
                             <ul id="subProductTypes" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{ route('brand.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{route('brand.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -381,7 +381,7 @@
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-    <script src="{{ asset('jquery-3.7.1.min.js') }}"></script>
+    <!-- <script src="{{ asset('jquery-3.7.1.min.js') }}"></script> -->
     @yield('page-sw')
 
     @yield('page-js')

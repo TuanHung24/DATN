@@ -9,6 +9,8 @@ use App\Http\Controllers\LoaiSanPhamController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\ProviderController;
+use App\Http\Controllers\BrandController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,6 +67,20 @@ Route::middleware('auth')->group(function(){
             Route::get('list', [NewsController::class, 'getList'])->name('list');
             Route::get('add-new',[NewsController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[NewsController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+    Route::prefix('provider')->group(function(){
+        Route::name('provider.')->group(function(){
+            Route::get('list', [ProviderController::class, 'getList'])->name('list');
+            Route::get('add-new',[ProviderController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[ProviderController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+    Route::prefix('brand')->group(function(){
+        Route::name('brand.')->group(function(){
+            Route::get('list', [BrandController::class, 'getList'])->name('list');
+            Route::get('add-new',[BrandController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[BrandController::class, 'hdAddNew'])->name('hd-add-new');
         });
     });
     
