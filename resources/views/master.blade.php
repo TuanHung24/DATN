@@ -300,11 +300,11 @@
 
                             <ul id="subInvoices" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html">
+                                    <a class="side-nav-menu-link" href="{{route('invoice.list')}}">
                                         <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{ route('invoice.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -381,8 +381,10 @@
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-    
+    <script src="{{ asset('jquery-3.7.1.min.js') }}"></script>
+    @yield('page-sw')
 
+    @yield('page-js')
     <!-- DEMO CHARTS -->
     <!-- <script src="public/demo/resizeSensor.js"></script>
 <script src="public/demo/chartist.js"></script>

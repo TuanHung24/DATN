@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SanPhamController;
 use App\Http\Controllers\LoaiSanPhamController;
@@ -67,6 +68,14 @@ Route::middleware('auth')->group(function(){
         });
     });
     
+    Route::prefix('invoice')->group(function(){
+        Route::name('invoice.')->group(function(){
+            Route::get('list', [InvoiceController::class, 'getList'])->name('list');
+            Route::get('add-new',[InvoiceController::class, 'addNew'])->name('add-new');
+            Route::get('get-product',[InvoiceController::class, 'getProduct'])->name('get-product');
+            Route::post('add-new',[InvoiceController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
 
     Route::get('main',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
