@@ -11,6 +11,8 @@ use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BrandController;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\WarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +76,9 @@ Route::middleware('auth')->group(function(){
             Route::get('list', [ProviderController::class, 'getList'])->name('list');
             Route::get('add-new',[ProviderController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[ProviderController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [ProviderController::class, 'upDate'])->name('update');
+            Route::post('update/{id}', [ProviderController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [ProviderController::class, 'delete'])->name('delete');
         });
     });
     Route::prefix('brand')->group(function(){
@@ -81,15 +86,41 @@ Route::middleware('auth')->group(function(){
             Route::get('list', [BrandController::class, 'getList'])->name('list');
             Route::get('add-new',[BrandController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[BrandController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [BrandController::class, 'upDate'])->name('update');
+            Route::post('update/{id}', [BrandController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [BrandController::class, 'delete'])->name('delete');
         });
     });
-    
+
+    Route::prefix('product')->group(function(){
+        Route::name('product.')->group(function(){
+            Route::get('list', [ProductController::class, 'getList'])->name('list');
+            Route::get('detail/{id}', [ProductController::class, 'productDetail'])->name('detail');
+            Route::get('add-new',[ProductController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[ProductController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [ProductController::class, 'upDate'])->name('update');
+            Route::post('update/{id}', [ProductController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
+        });
+    });
+
     Route::prefix('invoice')->group(function(){
         Route::name('invoice.')->group(function(){
             Route::get('list', [InvoiceController::class, 'getList'])->name('list');
             Route::get('add-new',[InvoiceController::class, 'addNew'])->name('add-new');
+            Route::get('detail/{id}', [InvoiceController::class, 'invoiceDetail'])->name('detail');
             Route::get('get-product',[InvoiceController::class, 'getProduct'])->name('get-product');
             Route::post('add-new',[InvoiceController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+
+    Route::prefix('warehouse')->group(function(){
+        Route::name('warehouse.')->group(function(){
+            Route::get('list', [WarehouseController::class, 'getList'])->name('list');
+            Route::get('add-new',[WarehouseController::class, 'addNew'])->name('add-new');
+            Route::get('detail/{id}', [WarehouseController::class, 'warehouseDetail'])->name('detail');
+            Route::get('get-product',[WarehouseController::class, 'getProduct'])->name('get-product');
+            Route::post('add-new',[WarehouseController::class, 'hdAddNew'])->name('hd-add-new');
         });
     });
 

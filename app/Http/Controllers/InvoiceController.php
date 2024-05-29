@@ -74,7 +74,7 @@ class InvoiceController extends Controller
         {
             return back()->withInput()->with(['error:'=>"Error:".$e->getMessage()]);
         }
-    }
+    } 
     public function getList()
     { 
         $listInvoice = Invoice::orderBy('status','asc')

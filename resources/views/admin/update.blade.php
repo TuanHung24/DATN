@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">THÊM MỚI NHÂN VIÊN</h1>
+                <h3>THÊM MỚI NHÂN VIÊN</h3>
             </div>
             <form method="POST" action="{{ route('admin.hd-update', ['id'=> $aDmin->id]) }}" enctype="multipart/form-data">
                 @csrf
@@ -70,6 +70,12 @@
                         </select>
                     </div>
                 </div>
+                <div class="row"> 
+                    <div class="col-md-6">
+                        <label for="status" class="form-label">Trạng thái</label>
+                        <input type="checkbox" name="status" {{ old('status', $aDmin->status) ? 'checked' : '' }}/>
+                    </div>
+                </div>
                 <div class=row>
                     <div class="col-md-6">
                     <label for="avatar" class="form-label">Chọn ảnh: </label>
@@ -79,6 +85,7 @@
                         <span class="error-message"> {{ $message }} </span>
                     @enderror
                 </div>
+                
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>

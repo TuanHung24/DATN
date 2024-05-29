@@ -88,6 +88,7 @@ class AdminController extends Controller
         $aDmin->phone = $request->phone;
         $aDmin->address = $request->address;
         $aDmin->roles = $request->roles; 
+        $aDmin->status = isset($request->status) ? 1 : 0;
         $aDmin->save();
 
         

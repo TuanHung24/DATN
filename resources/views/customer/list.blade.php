@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3 >DANH SÁCH KHÁCH HÀNG</h3>
+    <h3>DANH SÁCH KHÁCH HÀNG</h3>
 </div>
 @if(isset($listCusTomer) && $listCusTomer->isNotEmpty())
 <div class="table-responsive">

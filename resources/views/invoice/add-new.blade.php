@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-  <h2 class="h2">NHẬP HÓA ĐƠN</h2>
+  <h3>NHẬP HÓA ĐƠN</h3>
 </div>
 <div class="row"> 
   <div class="col-md-6">
@@ -29,7 +29,7 @@
   <div class="col-md-2">
     <label for="phone" class="form-label">Số điện thoại:</label>
     <input type="text" class="form-control" name="phone" id="phone">
-    <span class="error-message" id="error-phone"></span>
+    <span class="error" id="error-phone"></span>
   </div>
 </div>
 <div class="row">
@@ -43,7 +43,7 @@
       @endforeach
       @endforeach
     </select>
-    <span class="error-message" id="error-product"></span>
+    <span class="error" id="error-product"></span>
   </div>
 </div>
 

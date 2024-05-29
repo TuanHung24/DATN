@@ -42,7 +42,7 @@
                     <!-- Side Nav Toggle -->
                     <a class="js-side-nav header-invoker d-flex mr-md-2" href="#" data-close-invoker="#sidebarClose" data-target="#sidebar" data-target-wrapper="body">
                         <i class="fas fa-align-left"></i>
-                    </a>    
+                    </a>
                     <!-- End Side Nav Toggle -->
 
                     <!-- User Notifications -->
@@ -96,7 +96,7 @@
                             <span class="mr-md-2 avatar-placeholder">
                                 <img src="{{asset(Auth()->user()->avatar_url)}}" alt="" class="rounded-circle1">
                             </span>
-                            <span class="d-none d-md-block">{{Auth()->user()->name}}</span>
+                            <span class="d-none d-md-block">{{Auth()->user()->username}}</span>
                             <i class="fas fa-angle-down d-none d-md-block ml-2"></i>
                         </a>
 
@@ -256,10 +256,10 @@
 
                             <ul id="subProducts" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{route('product.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{route('product.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -278,10 +278,10 @@
 
                             <ul id="Receipts" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="users.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{ route('warehouse.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="user-edit.html"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                    <a class="side-nav-menu-link" href="{{ route('warehouse.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>
@@ -332,6 +332,30 @@
                             </ul>
                         </li>
 
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subColorCapacity">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-newspaper"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Dung lượng và màu sắc</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subColorCapacity" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('news.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('news.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
+                                </li>
+                            </ul>
+                        </li>
+
                         <!-- Settings -->
                         <li class="side-nav-menu-item">
                             <a class="side-nav-menu-link media align-items-center" href="settings.html">
@@ -358,11 +382,14 @@
                 </div>
             </div>
 
-
-            <div id="mCSB_1_dragger_vertical" class="mCSB_dragger" style="position: absolute; min-height: 50px; height: 194px; top: 0px; display: block; max-height: 285px;">
-                <div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+            <div class="mCSB_scrollTools  mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
+                <div >
+                   
+                        <div class="mCSB_dragger_bar" style="line-height: 0px;"></div>
+                    
+                    <div class="mCSB_draggerRail"></div>
+                </div>
             </div>
-
 
 
         </aside>
@@ -381,7 +408,7 @@
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
     <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-    <!-- <script src="{{ asset('jquery-3.7.1.min.js') }}"></script> -->
+
     @yield('page-sw')
 
     @yield('page-js')
@@ -399,5 +426,15 @@
 </script> -->
 
 </body>
-
+<script>
+$(document).ready(function(){
+    $(".js-custom-scroll").mCustomScrollbar({
+        theme: "minimal-dark",
+        scrollInertia: 300, // Điều chỉnh độ trễ cuộn
+        advanced: {
+            updateOnContentResize: true
+        }
+    });
+});
+</script>
 </html>

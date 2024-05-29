@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Provider;
+use Exception;
+
 class ProviderController extends Controller
 {
     public function getList(){
@@ -21,9 +23,31 @@ class ProviderController extends Controller
             $provider->name= $request->name;
             $provider->phone= $request->phone;
             $provider->address= $request->address;
-            $provider->status= $request->status;
             $provider->save();
 
+        return redirect()->route('provider.list');
+        }catch(Exception $e){
+            return back()->with("error: ".$e);
+        }
+    } 
+    public function upDate($id){
+        $proVider= Provider::find($id);
+        if(empty($proVider)){
+            return redirect()->route('provider.list');
+        }
+        return view('provider.update', compact('proVider'));
+    }
+    public function hdUpdate(Request $request, $id){
+        try{
+
+            $provider= Provider::find($id);
+            $provider->name   = $request->name;
+            $provider->phone  = $request->phone;
+            $provider->address= $request->address;
+            $provider->status = isset($request->status) ? 1 :0;
+            $provider->save();
+
+        return redirect()->route('provider.list');
         }catch(Exception $e){
             return back()->with("error: ".$e);
         }

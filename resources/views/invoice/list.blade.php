@@ -17,31 +17,8 @@
 
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h4><span data-feather="list" ></span>DANH SÁCH HÓA ĐƠN</h4>
-    <!-- <form action="{{route('invoice.tim-kiem')}}" class="submit_search" id="search-form">
-    <div class="Search">
-        <input type="search" class="form-control form-control-dark" name="search_name" value="{{$reQuest ?? null}}" placeholder="Tên khách hàng..." aria-label="Search" />
-        <button class="btn btn-primary seach" type="submit"><span data-feather="search"></span></button>
-    </div>
-    </form>
-    <form action="{{route('invoice.tim-kiem-sdt')}}" class="submit_search" id="search-form">
-        <div class="Search">
-            <input type="number" class="form-control form-control-dark" name="search_sdt" value="{{$reQuestSdt ?? null}}" placeholder="Số điện thoại khách hàng..." aria-label="Search" />
-            <button class="btn btn-primary seach" type="submit"><span data-feather="search"></span></button>
-        </div>
-    </form> -->
-    <!-- <form action="{{route('invoice.tim-kiem-date')}}" class="submit_search" id="search-form">
-        <div class="Search">
-            <input type="date" class="form-control form-control-dark" name="search_date" value="{{ $reQuestDate ?? null }}" aria-label="Search" />
-
-            <button class="btn btn-primary seach" type="submit"><span data-feather="search"></span></button>
-        </div>
-        </form> -->
-    <!-- <div class="btn-toolbar mb-2 mb-md-0">
-        <div class="btn-group me-2">
-            <a href="{{ route('invoice.them-moi') }}" class="btn btn-success"><span data-feather="plus-circle"></span>Thêm mới</a>
-        </div>
-    </div> -->
+    <h3>DANH SÁCH HÓA ĐƠN</h3>
+   
 </div>  
 @if(session('thong_bao'))
     <div class="alert alert-success d-flex align-items-center" role="alert">
@@ -50,6 +27,7 @@
         </div>
     </div>
 @endif
+@if(isset($listInvoice) && $listInvoice->isNotEmpty())
 <div class="table-responsive">
     <table class="table table-striped table-sm">
         <thead>
@@ -122,35 +100,8 @@
     @endif
     
 </div>
-{{ $dsinVoice->links('vendor.pagination.default') }}
-<script>
-function confirmHuyDon(url) {
-    if (confirm("Bạn có chắc chắn muốn hủy đơn này?")) {
-        window.location.href = url;
-    }
-}
-</script>
+@else
+<h6>Không có hóa đơn nào!</h6>
+@endif
 @endsection
 
-@section('page-js')
-<script type="text/javascript">
-    $(document).ready(function(){
-
-        $('.huy-don-btn').on('click', function(){
-        var inVoiceId = $(this).data('id');
-        var confirmHuy = false; 
-
-        if (!confirmHuy) {
-            var confirmXoa = confirm("Bạn có muốn Xóa hóa đơn này không?");
-
-            if (confirmXoa) {
-                window.location.href = "{{ route('invoice.huy-don', '') }}/" + inVoiceId;
-            } else {
-                window.location.href = "{{ route('invoice.danh-sach') }}";
-            }
-        }
-    
-    });
-    });
-</script>
-@endsection
