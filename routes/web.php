@@ -13,6 +13,8 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\CapacityColorController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -91,6 +93,19 @@ Route::middleware('auth')->group(function(){
             Route::get('delete/{id}', [BrandController::class, 'delete'])->name('delete');
         });
     });
+    Route::prefix('capacity_color')->group(function(){
+        Route::name('capacity_color.')->group(function(){
+            Route::get('list', [CapacityColorController::class, 'getList'])->name('list');
+            Route::get('add-new-capacity',[CapacityColorController::class, 'addNewCapacity'])->name('add-new-capacity');
+            Route::post('add-new-capacity',[CapacityColorController::class, 'hdAddNewCapacity'])->name('hd-add-new-capacity');
+            Route::get('add-new-color',[CapacityColorController::class, 'addNewColor'])->name('add-new-color');
+            Route::post('add-new-color',[CapacityColorController::class, 'hdAddNewColor'])->name('hd-add-new-color');     
+            // Route::get('update/{id}', [CapacityColorController::class, 'upDate'])->name('update');
+            // Route::post('update/{id}', [CapacityColorController::class, 'hdUpdate'])->name('hd-update');
+            // Route::get('delete/{id}', [CapacityColorController::class, 'delete'])->name('delete');
+        });
+    });
+
 
     Route::prefix('product')->group(function(){
         Route::name('product.')->group(function(){
