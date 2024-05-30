@@ -84,7 +84,6 @@ class AdminController extends Controller
         $aDmin->name = $request->name;
         $aDmin->email = $request->email;
         $aDmin->username = $request->username;
-        $aDmin->password = Hash::make($request->password);
         $aDmin->phone = $request->phone;
         $aDmin->address = $request->address;
         $aDmin->roles = $request->roles; 
