@@ -20,7 +20,7 @@
     <h3>CHI TIẾT HÓA ĐƠN</h3>
 </div>
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-sm">
         <thead>
             <tr>
                 <th>Mã hóa đơn</th>
@@ -33,15 +33,15 @@
                
             </tr>
         </thead>
-        @foreach($dsCTHoaDon as $cthoaDon)
+        @foreach($listInvoiceDetail as $invoiceDetail)
         <tr>
-            <td>{{ $cthoaDon->hoa_don_id }}</td>
-            <td>{{ $cthoaDon->san_pham->ten }}</td>
-            <td>{{ $cthoaDon->mau_sac->ten }}</td>
-            <td>{{ $cthoaDon->dung_luong->ten }}</td>
-            <td>{{ $cthoaDon->so_luong }}</td>
-            <td>{{ $cthoaDon->don_gia_formatted }}</td>
-            <td>{{ $cthoaDon->thanh_tien_formatted }}</td>
+            <td>{{ $invoiceDetail->invoice_id }}</td>
+            <td>{{ $invoiceDetail->product->name }}</td>
+            <td>{{ $invoiceDetail->color->name }}</td>
+            <td>{{ $invoiceDetail->capacity->name }}</td>
+            <td>{{ $invoiceDetail->quanlity }}</td>
+            <td>{{ $invoiceDetail->price_formatted }}</td>
+            <td>{{ $invoiceDetail->into_money_formatted }}</td>
         <tr>
             @endforeach
     </table>

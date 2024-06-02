@@ -78,6 +78,7 @@ class ProductController extends Controller
         return view('product.update',compact('proDuct','listBrand','productDes'));
     }
     public function hdUpdate(ProductRequest $request, $id){
+        
         $proDuct = Product::find($id);
         if(!$proDuct){
            return redirect()->route('product.list')->with(["thong_bao"=>"Sản phẩm không tồn tại!"]);
@@ -88,7 +89,7 @@ class ProductController extends Controller
         $proDuct->brand_id= $request->brand;
         $proDuct->save();
 
-        $productDes=ProductDetail::where('product_id',$id)->first();
+        $productDes=ProductDescription::where('product_id',$id)->first();
         $productDes->product_id = $proDuct->id;
         $productDes->resolution = $request->resolution;
         $productDes->screen = $request->screen;
@@ -130,9 +131,12 @@ class ProductController extends Controller
                 $imgProduct->save();
             }
         }  
-        return redirect()->route('san-pham.danh-sach')->with(['thong_bao'=>"Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
+        return redirect()->route('product.list')->with(['thong_bao'=>"Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
     }
-    public function productDetail($id){
-        
+    public function getProductDetail($id){
+        $listProductDetail = ProductDetail::where('product_id', $id)->get();
+        $proDuct = Product::find($id);
+        return view('product.detail', compact('listProductDetail','proDuct'));
     }
+    
 }

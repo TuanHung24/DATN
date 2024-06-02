@@ -14,6 +14,9 @@ class Invoice extends Model
     const TRANG_THAI_DANG_GIAO = 3;
     const TRANG_THAI_HOAN_THANH = 4;
     const TRANG_THAI_DA_HUY = 5;
+    public function customer(){
+        return $this->belongsTo(Customer::class);
+    }
     public function getTotalFormattedAttribute()
     {
         return number_format($this->total, 0, ',', '.');

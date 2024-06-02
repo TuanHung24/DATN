@@ -21,7 +21,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="email">E-Mail Address</label>
-                        <input id="email" type="email" class="form-control" name="email" >
+                        <input id="email" type="email" class="form-control" name="email" value="{{old('email')}}" >
                     </div>
 
                     <div class="form-group">

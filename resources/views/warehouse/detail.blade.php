@@ -20,7 +20,7 @@
     <h3>CHI TIẾT KHO</h3>
 </div>
 <div class="table-responsive">
-    <table class="table table-striped table-sm">
+    <table class="table table-sm">
         <thead>
             <tr>
                 <th>Mã hóa đơn</th>
@@ -28,20 +28,23 @@
                 <th>Màu sắc</th>
                 <th>Dung lượng</th>
                 <th>Số lượng</th>
-                <th>Đơn giá</th>
+                <th>Giá nhập</th>
+                <th>Giá bán</th>
                 <th>Thành tiền</th>
                
             </tr>
         </thead>
-        @foreach($dsCTHoaDon as $cthoaDon)
+        @foreach($listWareHouseDetail as $wareHouseDetail)
         <tr>
-            <td>{{ $cthoaDon->hoa_don_id }}</td>
-            <td>{{ $cthoaDon->san_pham->ten }}</td>
-            <td>{{ $cthoaDon->mau_sac->ten }}</td>
-            <td>{{ $cthoaDon->dung_luong->ten }}</td>
-            <td>{{ $cthoaDon->so_luong }}</td>
-            <td>{{ $cthoaDon->don_gia_formatted }}</td>
-            <td>{{ $cthoaDon->thanh_tien_formatted }}</td>
+            <td>{{ $wareHouseDetail->warehouse_id }}</td>
+            <td>{{ $wareHouseDetail->product->name }}</td>
+            <td>{{ $wareHouseDetail->color->name }}</td>
+            <td>{{ $wareHouseDetail->capacity->name }}</td>
+            
+            <td>{{ $wareHouseDetail->quanlity }}</td>
+            <td>{{ $wareHouseDetail->in_price_formatted }}</td>
+            <td>{{ $wareHouseDetail->out_price_formatted }}</td>
+            <td>{{ $wareHouseDetail->into_money_formatted }}</td>
         <tr>
             @endforeach
     </table>

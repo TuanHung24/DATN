@@ -430,6 +430,9 @@ button.ui-button::-moz-focus-inner {
 	margin-left: 3px;
 	margin-bottom: 5px;
 }
+.error{
+	color: red;
+}
 .form-label{
 	color: black;
 }

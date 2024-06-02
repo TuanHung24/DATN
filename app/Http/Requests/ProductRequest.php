@@ -23,7 +23,7 @@ class ProductRequest extends FormRequest
     {
         $id=$this->route('id');
         return [ 
-            'name' => 'required|min:6|max:50|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/u|unique:san_pham,name,' . $id,
+            'name' => 'required|min:6|max:50|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/u|unique:products,name,' . $id,
 
             'resolution'=>'required|min:3|max:30',
 

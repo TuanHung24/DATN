@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Capacity;
-use App\Models\Colors;
+use App\Models\Color;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Provider;
@@ -18,7 +18,7 @@ class WarehouseController extends Controller
     {
         $listProvider = Provider::all();
         $listProduct  = Product::all();
-        $listColor  = Colors::all();
+        $listColor  = Color::all();
         $listCapacity = Capacity::all();
         return view("warehouse.add-new",compact('listProvider','listProduct','listColor','listCapacity'));
  
@@ -28,7 +28,7 @@ class WarehouseController extends Controller
     {
         try
         {
-       
+        
         $wareHouse= new Warehouse();
         $wareHouse->provider_id= $request->provider_id;
         $wareHouse->save();
@@ -42,7 +42,7 @@ class WarehouseController extends Controller
             $productDetail=ProductDetail::where('product_id',$request->idSP[$i])->where('color_id',$request->color_id[$i])->where('capacity_id',$request->capacity_id[$i])->get();
             if(count($productDetail)>0){
                 $productDetail=ProductDetail::where('product_id',$request->idSP[$i])->where('color_id',$request->color_id[$i])->where('capacity_id',$request->capacity_id[$i])->first();
-                $productDetail->price = $request->price[$i];
+                $productDetail->price = $request->out_price[$i];
                 $productDetail->quanlity += $request->quanlity[$i];
                 $productDetail->save();
             }
@@ -51,7 +51,7 @@ class WarehouseController extends Controller
                 $productDetail->product_id   = $request->idSP[$i];
                 $productDetail->color_id    =$request->color_id[$i];
                 $productDetail->capacity_id =$request->capacity_id[$i];
-                $productDetail->price       =$request->price[$i];
+                $productDetail->price       =$request->out_price[$i];
                 $productDetail->quanlity      =$request->quanlity[$i];
                 $productDetail->save();
             }
@@ -70,7 +70,7 @@ class WarehouseController extends Controller
         }
         $wareHouse->total = $toTal;
         $wareHouse->save();
-        return redirect()->route('nhap-hang.danh-sach')->with(['thong_bao'=>"Nhập đơn hàng {$wareHouse->id} thành công!"]);
+        return redirect()->route('warehouse.list')->with(['thong_bao'=>"Nhập đơn hàng {$wareHouse->id} thành công!"]);
         }catch(Exception $e)
         {
             
@@ -88,5 +88,9 @@ class WarehouseController extends Controller
     {
         $listProductDetail = ProductDetail::where('product_id',$request->productId)->get();
         return view('invoice.get-product',compact('listProductDetail'));
+    }
+    public function warehouseDetail($id){
+        $listWareHouseDetail = WarehouseDetail::where('warehouse_id', $id)->get();
+        return view('warehouse.detail', compact('listWareHouseDetail'));
     }
 }

@@ -8,10 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory,SoftDeletes;
     protected $table='products';
     public function product_detail(){
-        return $this->hasMany(InvoiceDetail::class);
+        return $this->hasMany(ProductDetail::class);
     }
     public function brand(){
         return $this->belongsTo(Brand::class);

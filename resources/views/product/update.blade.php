@@ -3,9 +3,9 @@
 @section('content')
  
 <div class="d-flex justify-connamet-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>THÊM MỚI SẢN PHẨM</h3>
+    <h3>CẬP NHẬT SẢN PHẨM</h3>
 </div>
-<form method="POST" action="{{ route('product.hd-add-new') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('product.hd-update',['id'=>$proDuct->id]) }}" enctype="multipart/form-data">
     @csrf
     <h5 class="offset-md-6">Thông tin sản phẩm:</h5>
     <div class="row">
@@ -86,7 +86,7 @@
     <div class="row">
         <div class="col-md-3">
             <label for="img[]" class="form-label">Chọn ảnh: </label>
-            <input type="file" name="img[]" multiple required/><br/>
+            <input type="file" name="img[]" multiple/><br/>
             @error('img')
             <span class="error-message">{{ $message }}</span>
             @enderror

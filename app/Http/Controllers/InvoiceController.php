@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\ProductDetail;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use SebastianBergmann\Exporter\Exporter;
 
 class InvoiceController extends Controller
@@ -34,19 +35,20 @@ class InvoiceController extends Controller
         {
        
         $inVoice= new Invoice();
-        $inVoice->customer_id= $request->kh;
-        $inVoice->phone= $request->phone;
+        $inVoice->customer_id= $request->customer_id;
+        $inVoice->phone= $request->in_phone;
+        $inVoice->payment_method ="Thanh toán khi nhận hàng";
         $inVoice->save();
         $toTal=0;
         
         for($i=0;$i<count($request->spID);$i++)
         {
            $invoiceDetail =new InvoiceDetail();
-           $invoiceDetail->customer_id=$inVoice->id;
+           $invoiceDetail->invoice_id=$inVoice->id;
            $invoiceDetail->product_id=$request->spID[$i];
            $invoiceDetail->color_id=$request->msID[$i];
            $invoiceDetail->capacity_id=$request->dlID[$i];
-           $invoiceDetail->quanlity=$request->soLuong[$i];
+           $invoiceDetail->quanlity=$request->quanlity[$i];
  
            $productDetail = ProductDetail::where('product_id', $request->spID[$i])
             ->where('color_id', $request->msID[$i])
@@ -60,8 +62,8 @@ class InvoiceController extends Controller
             }
             
             
-           $invoiceDetail->price=$request->giaBan[$i];
-           $invoiceDetail->into_money=$request->thanhTien[$i];
+           $invoiceDetail->price=$request->price[$i];
+           $invoiceDetail->into_money=$request->total[$i];
            $invoiceDetail->save();
            
            $toTal += $invoiceDetail->into_money;
@@ -84,7 +86,60 @@ class InvoiceController extends Controller
     }
     public function getProduct(Request $request)
     {
-        $listProductDetail = ProductDetail::where('product_id',$request->productId)->get();
-        return view('invoice.get-product',compact('listProductDetail'));
+        $productDetail = ProductDetail::where('product_id', $request->product_id)->where('quanlity','>',0)->get();
+        return view('invoice.get-product-ajax', compact('productDetail'));
     }
+    public function updateStatusComplete($id){
+        $inVoice = Invoice::find($id);
+
+        if(empty($inVoice) || $inVoice->status != 3){
+            return redirect()->route('invoice.list');
+        }
+
+        $inVoice->status = Invoice::TRANG_THAI_HOAN_THANH;
+        $inVoice->save();
+        return redirect()->route('invoice.list');
+    }
+
+    public function updateStatusDelivering($id){
+        $inVoice = Invoice::find($id);
+
+        if(empty($inVoice) || $inVoice->status != 2){
+            return redirect()->route('invoice.list');
+        }
+
+        $inVoice->status = Invoice::TRANG_THAI_DANG_GIAO;
+        $inVoice->save();
+        return redirect()->route('invoice.list');
+    }
+
+    public function updateStatusApproved($id){
+        $inVoice = Invoice::find($id);
+
+        if(empty($inVoice) || $inVoice->status != 1){
+            return redirect()->route('invoice.list');
+        }
+
+        $inVoice->status = Invoice::TRANG_THAI_DA_DUYET;
+        $inVoice->save();
+        return redirect()->route('invoice.list');
+    }
+
+    public function updateStatusCancel($id){
+        $inVoice = Invoice::find($id);
+
+        if(empty($inVoice) || $inVoice->status != 1){
+            return redirect()->route('invoice.list');
+        }
+
+        $inVoice->status = Invoice::TRANG_THAI_DA_HUY;
+        $inVoice->save();
+        return redirect()->route('invoice.list');
+    }
+
+    public function invoiceDetail($id){
+        $listInvoiceDetail = InvoiceDetail::where('invoice_id', $id)->get();
+        return view('invoice.detail',compact('listInvoiceDetail'));
+    }
+
 }

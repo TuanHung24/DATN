@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Colors;
+use App\Models\Color;
 use App\Models\Capacity;
+use Exception;
 
 class CapacityColorController extends Controller
 {
     public function getList(){
-        $listColors = Colors::all();
+        $listColors = Color::all();
         $listCapacity= Capacity::all();
         return view('capacity_color.list',compact('listColors','listCapacity'));
     }
@@ -35,7 +36,7 @@ class CapacityColorController extends Controller
     public function hdAddNewColor(Request $request){
         try{
 
-            $color= new Colors();
+            $color= new Color();
             $color->name= $request->name;
             $color->save();
             return redirect()->route('capacity_color.list');

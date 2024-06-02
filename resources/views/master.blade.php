@@ -12,8 +12,8 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('custom.css') }}" rel="stylesheet">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="public/demo/chartist.css">
-    <link rel="stylesheet" href="public/demo/chartist-plugin-tooltip.css">
+    <!-- <link rel="stylesheet" href="public/demo/chartist.css">
+    <link rel="stylesheet" href="public/demo/chartist-plugin-tooltip.css"> -->
     <link rel="stylesheet" href="{{asset('css/graindashboard.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
@@ -410,8 +410,7 @@
 
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
-    <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
-
+    <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
     @yield('page-sw')
 
     @yield('page-js')
@@ -439,5 +438,6 @@ $(document).ready(function(){
         }
     });
 });
+ 
 </script>
 </html>

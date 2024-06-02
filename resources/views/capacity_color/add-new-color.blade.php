@@ -10,7 +10,8 @@
                     <div class="col-md-6">
                         <label for="name" class="form-label">Nhập màu</label>
                         <input type="text" class="form-control" name="name">
-                    </div>         
+                    </div> 
+                </div>        
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>

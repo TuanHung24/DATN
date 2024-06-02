@@ -10,13 +10,14 @@
         </tr>
     </thead>
     <tbody>
-        @foreach($listProductDetail as $proDuct)
+        @foreach($productDetail as $proDuct)
         <tr>
+            <input type="hidden" value="{{$proDuct->product_id}}" name="product_id" id="product-id"/>
             <td id="td-color">{{ $proDuct->color->name }}<input type="hidden" value="{{ $proDuct->color->id }}" id="color-id"/></td>
             <td id="td-capacity">{{ $proDuct->capacity->name }}<input type="hidden" value="{{ $proDuct->capacity->id }}" id="capacity-id"/></td>
-            <td>{{ $proDuct->price }}<input type="hidden" value="{{ $proDuct->price }}" name="price" id="price-id"/></td>
+            <td>{{ $proDuct->price_formatted }}<input type="hidden" value="{{ $proDuct->price }}" name="price" id="price-id"/></td>
             <td>{{ $proDuct->quanlity }}</td>
-            <td><input type="number" max="{{ $proDuct->quanlity }}" min="1" name="quanlity" id='quanlity-id'/></td>
+            <td><input type="number" max="{{ $proDuct->quanlity }}" value="1" min="1" name="quanlity" id='quanlity-id'/></td>
             <td><input type="checkbox" name="buy" id="buy-id"></td>
         </tr>
         @endforeach

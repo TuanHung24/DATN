@@ -9,4 +9,25 @@ class WarehouseDetail extends Model
 {
     use HasFactory;
     protected $table = 'warehouse_detail';
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
+    public function color(){
+        return $this->belongsTo(Color::class);
+    }
+    public function capacity(){
+        return $this->belongsTo(Capacity::class);
+    }
+    public function getIntoMoneyFormattedAttribute()
+    {
+        return number_format($this->into_money, 0, ',', '.');
+    }
+    public function getInPriceFormattedAttribute()
+    {
+        return number_format($this->in_price, 0, ',', '.');
+    }
+    public function getOutPriceFormattedAttribute()
+    {
+        return number_format($this->out_price, 0, ',', '.');
+    }
 }

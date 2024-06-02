@@ -28,12 +28,7 @@ use App\Http\Controllers\CapacityColorController;
 */
 
 Route::middleware('auth')->group(function(){
-    Route::get('san-pham/them-moi', [SanPhamController::class, 'themMoi'])->name('san-pham.them-moi');
-    Route::post('san-pham/them-moi', [SanPhamController::class, 'xuLyThemMoi'])->name('san-pham.xl-them-moi');
-    Route::get('san-pham', [SanPhamController::class, 'danhSach'])->name('san-pham.danh-sach');
-    Route::get('san-pham/cap-nhat/{id}', [SanPhamController::class, 'capNhat'])->name('san-pham.cap-nhat');
-    Route::post('san-pham/cap-nhat/{id}', [SanPhamController::class, 'xuLyCapNhat'])->name('san-pham.xl-cap-nhat');
-    Route::get('san-pham/xoa/{id}', [SanPhamController::class, 'xoa'])->name('san-pham.xoa');
+   
 
     Route::prefix('admin')->group(function(){
         Route::name('admin.')->group(function(){
@@ -59,13 +54,7 @@ Route::middleware('auth')->group(function(){
         
     });
 
-    Route::get('loai-san-pham', [LoaiSanPhamController::class, 'danhSach'])->name('loai-san-pham.danh-sach');
-    Route::get('loai-san-pham/them-moi',[LoaiSanPhamController::class, 'themMoi'])->name('loai-san-pham.them-moi');
-    Route::post('loai-san-pham/them-moi',[LoaiSanPhamController::class, 'xuLyThemMoi'])->name('loai-san-pham.xl-them-moi');
-    Route::get('loai-san-pham/cap-nhat/{id}', [LoaiSanPhamController::class, 'capNhat'])->name('loai-san-pham.cap-nhat');
-    Route::post('loai-san-pham/cap-nhat/{id}', [LoaiSanPhamController::class, 'xuLyCapNhat'])->name('loai-san-pham.xl-cap-nhat');
-    Route::get('loai-san-pham/xoa/{id}', [LoaiSanPhamController::class, 'xoa'])->name('loai-san-pham.xoa');
-
+    
     Route::prefix('news')->group(function(){
         Route::name('news.')->group(function(){
             Route::get('list', [NewsController::class, 'getList'])->name('list');
@@ -110,7 +99,7 @@ Route::middleware('auth')->group(function(){
     Route::prefix('product')->group(function(){
         Route::name('product.')->group(function(){
             Route::get('list', [ProductController::class, 'getList'])->name('list');
-            Route::get('detail/{id}', [ProductController::class, 'productDetail'])->name('detail');
+            Route::get('detail/{id}', [ProductController::class, 'getProductDetail'])->name('detail');
             Route::get('add-new',[ProductController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[ProductController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('update/{id}', [ProductController::class, 'upDate'])->name('update');
@@ -124,11 +113,15 @@ Route::middleware('auth')->group(function(){
             Route::get('list', [InvoiceController::class, 'getList'])->name('list');
             Route::get('add-new',[InvoiceController::class, 'addNew'])->name('add-new');
             Route::get('detail/{id}', [InvoiceController::class, 'invoiceDetail'])->name('detail');
-            Route::get('get-product',[InvoiceController::class, 'getProduct'])->name('get-product');
+            Route::get('get-product',[InvoiceController::class, 'getProduct'])->name('get-product-ajax');
             Route::post('add-new',[InvoiceController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update-status-cancel/{id}', [InvoiceController::class, 'updateStatusCancel'])->name('update-status-cancel');
+            Route::get('update-status-approved/{id}', [InvoiceController::class, 'updateStatusApproved'])->name('update-status-approved');
+            Route::get('update-status-delivering/{id}', [InvoiceController::class, 'updateStatusDelivering'])->name('update-status-delivering');
+            Route::get('update-status-complete/{id}', [InvoiceController::class, 'updateStatusComplete'])->name('update-status-complete');
         });
     });
-
+    Route::get('/get-product-ajax',[InvoiceController::class, 'getProduct'])->name('get-product-ajax');
     Route::prefix('warehouse')->group(function(){
         Route::name('warehouse.')->group(function(){
             Route::get('list', [WarehouseController::class, 'getList'])->name('list');
@@ -139,7 +132,7 @@ Route::middleware('auth')->group(function(){
         });
     });
 
-    Route::get('main',[MainController::class, 'main'])->name('main');
+    Route::get('/',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
 });
 Route::middleware('guest')->group(function(){
