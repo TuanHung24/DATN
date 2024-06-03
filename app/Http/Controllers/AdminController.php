@@ -13,6 +13,7 @@ class AdminController extends Controller
 {
     public function getList(){
         $listAdmin = Admin::all();
+        
         return view('admin.list',compact('listAdmin'));
     }
 
@@ -22,7 +23,6 @@ class AdminController extends Controller
     public function hdAddNew(AdminRequest $request){
 
         try{
-        
             $request->validate([
                 'avatar' => 'nullable|image', // Optional avatar field validation
                 'name' => 'required|string|max:255',

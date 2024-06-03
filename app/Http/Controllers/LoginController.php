@@ -15,20 +15,23 @@ class LoginController extends Controller
    
     public function hdLogin(Request $rq){
         $credentials = $rq->only('email', 'password');
-        if (Auth::guard('web')->attempt($credentials)) {
+        $remember = $rq->has('remember'); 
+    
+        if (Auth::guard('web')->attempt($credentials, $remember)) {
+            
             return redirect()->route('main');
         } else {
-            
-            return view('login');
+            return view('login')->with(['email' => 'Email hoặc mật khẩu không đúng.']);
         }
-        
     }
     public function passWordReset(){
         return view('password-reset');
     }
-    public function logOut(){
+    public function logOut(Request $request){
         Auth::logout();
-        return view('login');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/login');
     }
     
 }

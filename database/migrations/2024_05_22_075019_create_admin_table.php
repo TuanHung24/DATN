@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('address',128);
             $table->integer("roles");
             $table->boolean("status")->default(1);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
