@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function(){
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
         });
     });
-
+    
     Route::prefix('discount')->group(function(){
         Route::name('discount.')->group(function(){
             Route::get('list', [DiscountController::class, 'getList'])->name('list');

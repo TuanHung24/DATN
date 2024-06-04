@@ -58,7 +58,7 @@
 <div class="row">
   <div class="col-md-6">
     <label for="quanlity" class="form-label">Số lượng:</label>
-    <input type="number" class="form-control" name="quanlity" id="quanlity" value="1">
+    <input type="number" class="form-control" name="quanlity" id="quanlity" value="1" min="1">
     <span class="error" id="error-quanlity"></span>
   </div>
 </div>
@@ -280,6 +280,20 @@
         isValid = false;
       } else {
         $("#error-capacity").text("").hide();
+      }
+
+      var soLuong = parseFloat($("#quanlity").val());
+
+      if (isNaN(soLuong)) {
+        $("#error-quanlity").text("Vui lòng nhập số lượng").show();
+        isValid = false;
+      }
+      else if (soLuong <= 0){
+        $("#error-quanlity").text("Số lượng không thể là số âm").show();
+        isValid = false;
+      }
+       else {
+        $("#error-quanlity").text("").hide();
       }
 
       var giaNhap = parseFloat($("#in-price").val());
