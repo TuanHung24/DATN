@@ -36,7 +36,7 @@
                 <th>Nhà cung cấp</th>  
                 <th>Tổng tiền(VND)</th>
                 <th>Ngày nhập</th>
-                <th>Thao tác</th>
+                <th>Tác vụ</th>
             </tr>
         </thead> 
         @foreach($listWarehouse as $Warehouse)

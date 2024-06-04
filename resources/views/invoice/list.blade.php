@@ -40,7 +40,7 @@
                 <th>Phương thức thanh toán</th>
                 <th>Ngày tạo</th>
                 <th>Trạng thái</th>
-                <th>Thao tác</th>
+                <th>Tác vụ</th>
             </tr>
         </thead>
         @foreach($listInvoice as $inVoice)

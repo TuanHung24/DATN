@@ -13,7 +13,7 @@
                 <th>Địa chỉ</th>
                 <th>Điện thoại</td>
                 <th>Trạng thái</th>
-                <th>Thao tác</th>
+                <th>Tác vụ</th>
             </tr>
         </thead>
         @foreach($listProvider as $Provider)

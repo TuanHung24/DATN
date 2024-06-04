@@ -13,7 +13,7 @@
         <th>Tên sản phẩm</th>
         <th>Mô tả</th>  
         <th>Hãng sản phẩm</th>
-        <th>Thao tác</th>
+        <th>Tác vụ</th>
     </tr>
     </thead>
     <tbody>

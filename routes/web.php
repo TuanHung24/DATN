@@ -14,7 +14,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\CapacityColorController;
-
+use App\Http\Controllers\DiscountController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +105,18 @@ Route::middleware('auth')->group(function(){
             Route::get('update/{id}', [ProductController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [ProductController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
+        });
+    });
+
+    Route::prefix('discount')->group(function(){
+        Route::name('discount.')->group(function(){
+            Route::get('list', [DiscountController::class, 'getList'])->name('list');
+            Route::get('detail/{id}', [DiscountController::class, 'getProductDetail'])->name('detail');
+            Route::get('add-new',[DiscountController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[DiscountController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [DiscountController::class, 'upDate'])->name('update');
+            Route::post('update/{id}', [DiscountController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [DiscountController::class, 'delete'])->name('delete');
         });
     });
 

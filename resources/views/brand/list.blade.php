@@ -10,7 +10,7 @@
         <thead>
             <tr> 
                 <th>Tên thương hiệu</td>
-                <th>Thao tác</td>
+                <th>Tác vụ</td>
             </tr>
         </thead>
         @foreach($listBrand as $Brand)

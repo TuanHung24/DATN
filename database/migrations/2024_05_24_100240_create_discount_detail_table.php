@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("discount_id")->constrained("discount");
             $table->foreignId("product_id")->nullable()->constrained("products");
-            $table->foreignId("brand_id")->nullable()->constrained("brand");
+            $table->foreignId("product_detail_id")->nullable()->constrained("product_detail");
             $table->timestamps();
         });
     }
