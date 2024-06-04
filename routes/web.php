@@ -108,6 +108,7 @@ Route::middleware('auth')->group(function(){
         });
     });
 
+
     Route::prefix('invoice')->group(function(){
         Route::name('invoice.')->group(function(){
             Route::get('list', [InvoiceController::class, 'getList'])->name('list');

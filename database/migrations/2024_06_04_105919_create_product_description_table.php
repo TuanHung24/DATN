@@ -14,14 +14,15 @@ return new class extends Migration
         Schema::create('product_description', function (Blueprint $table) {
             $table->id();
             $table->foreignId("product_id")->constrained("products");
-            $table->string("resolution",30);
-            $table->string("screen",50);
-            $table->string("size",50);
+            // $table->foreignId("brand_id")->constrained("brand");
+            $table->foreignId("camera_id")->constrained("camera");
+            $table->foreignId("screen_id")->constrained("screen");
             $table->string("weight",10);
             $table->string("os",50);
-            $table->string("camera",50);
             $table->string("battery",5);
             $table->string("ram",5);
+            $table->string("chip",50);
+            $table->string("sims",50);
             $table->timestamps();
         });
     }
