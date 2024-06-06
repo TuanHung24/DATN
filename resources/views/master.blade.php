@@ -378,7 +378,7 @@
                                 </li>
                                 
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('discount.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới màu sắc</a>
+                                    <a class="side-nav-menu-link" href="{{route('discount.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm khuyến mãi</a>
                                 </li>
                             </ul>
                         </li>

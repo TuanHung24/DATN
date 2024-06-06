@@ -12804,9 +12804,6 @@ a.close.disabled {
     padding: 1.25rem
 }
 
-.modal-open {
-    overflow: hidden
-}
 
 .modal-open .modal {
     overflow-x: hidden;
@@ -12909,23 +12906,10 @@ a.close.disabled {
     outline: 0
 }
 
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1040;
-    width: 100vw;
-    height: 100vh;
-    background-color: #f3f5fa
-}
-
-.modal-backdrop.fade {
-    opacity: 0
-}
 
 .modal-backdrop.show {
     opacity: .5
-}
+} 
 
 .modal-header {
     display: flex;
@@ -23151,9 +23135,7 @@ body.has-fixed-sidebar-and-header .main {
     z-index: 1
 }
 
-.modal-backdrop.show {
-    opacity: .9
-}
+
 
 .modal-dialog {
     width: 30rem;

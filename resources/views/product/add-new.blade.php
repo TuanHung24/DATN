@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
- 
+
 <div class="d-flex justify-connamet-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>THÊM MỚI SẢN PHẨM</h3>
 </div>
@@ -17,9 +17,9 @@
             @enderror
         </div>
         <div class="col-md-3">
-            <label for="resolution" class="form-label">Độ phân giải:</label>
-            <input type="text" id="resolution" class="form-control" name="resolution" value="{{old('resolution')}}">
-            @error('resolution')
+            <label for="chip" class="form-label">Chip:</label>
+            <input type="text" id="chip" class="form-control" name="chip" value="{{old('chip')}}">
+            @error('chip')
             <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
@@ -34,15 +34,15 @@
     <div class="row">
         <div class="col-md-6">
             <label for="brand" class="form-label">Hãng sản phẩm:</label>
-            <select name="brand" class="form-select">     
-            @foreach($listBrand as $Brand)
+            <select name="brand" class="form-select">
+                @foreach($listBrand as $Brand)
                 @php
-                    $selectedValue = old('brand', $Brand->id);
+                $selectedValue = old('brand', $Brand->id);
                 @endphp
-            <option value="{{ $Brand->id }}"   {{ $selectedValue ==   $Brand->id ? 'selected' : '' }} >
-                {{ $Brand->name }}
-            </option>
-            @endforeach
+                <option value="{{ $Brand->id }}" {{ $selectedValue ==   $Brand->id ? 'selected' : '' }}>
+                    {{ $Brand->name }}
+                </option>
+                @endforeach
             </select>
         </div>
         <div class="col-md-3">
@@ -68,7 +68,7 @@
             <span class="error-message">{{ $message }}</span>
             @enderror
         </div>
-        <div class="col-md-3"> 
+        <div class="col-md-3">
             <label for="size" class="form-label">Kích thước(dài-ngang-dày):</label>
             <textarea type="text" id="size" class="form-control" cols="3" name="size">{{old('size')}}</textarea>
             @error('size')
@@ -86,7 +86,7 @@
     <div class="row">
         <div class="col-md-3">
             <label for="img[]" class="form-label">Chọn ảnh: </label>
-            <input type="file" name="img[]" multiple required/><br/>
+            <input type="file" name="img[]" multiple required /><br />
             @error('img')
             <span class="error-message">{{ $message }}</span>
             @enderror
@@ -106,8 +106,77 @@
             @enderror
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-3 offset-md-6">
+                <label for="sims" class="form-label">Sim:</label>
+                <input type="text" id="sims" class="form-control" name="sims" value="{{old('sims')}}">
+                @error('sims')
+                <span class="error-message">{{ $message }}</span>
+                @enderror
+        </div>
+    </div>
+
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="md" data-bs-target="#newCamera" data-bs-whatever="@mdo">Open md for @mdo</button>
+
+<!-- Modal -->
+<div class="md fade" id="newCamera" tabindex="-1" aria-labelledby="newCameraLabel" aria-hidden="true">
+    <div class="md-dialog">
+        <div class="md-content">
+            <div class="md-header">
+                <h1 class="md-title fs-5" id="newCameraLabel">New message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="md" aria-label="Close"></button>
+            </div>
+            <div class="md-body">
+                <form>
+                    <div class="mb-3">
+                        <label for="recipient-name" class="col-form-label">Recipient:</label>
+                        <input type="text" class="form-control" id="recipient-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Message:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="md-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="md">Close</button>
+                <button type="button" class="btn btn-primary">Send message</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary"><span data-feather="save"></span>Lưu</button>
     </div>
 </form>
+@endsection
+
+@section('page-js')
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        $('[data-bs-toggle="md"]').on('click', function(event) {
+            var target = $(this).data('bs-target');
+            var recipient = $(this).data('bs-whatever');
+            var modal = $(target);
+            modal.find('.md-title').text('New message to ' + recipient);
+            modal.find('.md-body input').val(recipient);
+            modal.addClass('show');
+            modal.attr('aria-hidden', 'false');
+            modal.css('display', 'block');
+        });
+
+        $('.btn-close, .btn-secondary').on('click', function() {
+            var modal = $(this).closest('.md');
+            modal.removeClass('show');
+            modal.attr('aria-hidden', 'true');
+            modal.css('display', 'none');
+        });
+    
+    });
+  
+</script>
 @endsection

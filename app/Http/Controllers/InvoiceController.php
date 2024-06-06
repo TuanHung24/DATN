@@ -86,8 +86,24 @@ class InvoiceController extends Controller
     }
     public function getProduct(Request $request)
     {
-        $productDetail = ProductDetail::where('product_id', $request->product_id)->where('quanlity','>',0)->get();
-        return view('invoice.get-product-ajax', compact('productDetail'));
+        $productDetail = ProductDetail::with(['color', 'capacity', 'discount_detail.discount'])
+                        ->where('product_id', $request->product_id)
+                        ->where('quanlity', '>', 0)
+                        ->get();
+
+    // Lọc khuyến mãi còn hiệu lực
+    $productDetail->each(function ($product) {
+        $product->active_discount_details = $product->discount_detail->filter(function ($discountDetail) {
+            return $discountDetail->isActive();
+        });
+    });
+
+    // Kiểm tra xem có sản phẩm nào có chi tiết khuyến mãi còn hiệu lực không
+    $hasDiscount = $productDetail->contains(function ($product) {
+        return $product->discount_detail->isNotEmpty();
+    });
+
+    return view('invoice.get-product-ajax', compact('productDetail', 'hasDiscount'));
     }
     public function updateStatusComplete($id){
         $inVoice = Invoice::find($id);

@@ -107,13 +107,14 @@ Route::middleware('auth')->group(function(){
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
         });
     });
-    
+
     Route::prefix('discount')->group(function(){
         Route::name('discount.')->group(function(){
             Route::get('list', [DiscountController::class, 'getList'])->name('list');
-            Route::get('detail/{id}', [DiscountController::class, 'getProductDetail'])->name('detail');
+            Route::get('detail/{id}', [DiscountController::class, 'getDetail'])->name('detail');
             Route::get('add-new',[DiscountController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[DiscountController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('get-product-ajax',[DiscountController::class, 'getProduct'])->name('get-product-ajax');
             Route::get('update/{id}', [DiscountController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [DiscountController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [DiscountController::class, 'delete'])->name('delete');

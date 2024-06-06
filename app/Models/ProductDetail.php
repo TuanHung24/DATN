@@ -18,6 +18,9 @@ class ProductDetail extends Model
     public function capacity(){
         return $this->belongsTo(Capacity::class);
     }
+    public function discount_detail(){
+        return $this->hasMany(DiscountDetail::class);
+    }
     public function getPriceFormattedAttribute()
     {
         return number_format($this->price, 0, ',', '.');

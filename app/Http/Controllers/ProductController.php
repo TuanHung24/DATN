@@ -52,14 +52,14 @@ class ProductController extends Controller
 
         $productDes= new ProductDescription();
         $productDes->product_id = $proDuct->id;
-        $productDes->resolution = $request->resolution;
-        $productDes->screen = $request->screen;
-        $productDes->size = $request->size;
+        // $productDes->camera_id = 1;
+        // $productDes->screen_id = 1;
         $productDes->weight = $request->weight;
         $productDes->os = $request->os;
-        $productDes->camera = $request->camera;
         $productDes->battery = $request->battery;
         $productDes->ram = $request->ram;
+        $productDes->chip = $request->weight;
+        $productDes->sims = $request->sims;
         $productDes->save();
 
         for($i=0;$i<count($request->img);$i++){
@@ -68,6 +68,7 @@ class ProductController extends Controller
             $imgProduct->img_url= $paths[$i];
             $imgProduct->save();
         }
+        
         return redirect()->route('product.list');
         
     }
@@ -91,14 +92,14 @@ class ProductController extends Controller
 
         $productDes=ProductDescription::where('product_id',$id)->first();
         $productDes->product_id = $proDuct->id;
-        $productDes->resolution = $request->resolution;
-        $productDes->screen = $request->screen;
-        $productDes->size = $request->size;
+        // $productDes->camera_id = 1;
+        // $productDes->screen_id = 1;
         $productDes->weight = $request->weight;
         $productDes->os = $request->os;
-        $productDes->camera = $request->camera;
         $productDes->battery = $request->battery;
         $productDes->ram = $request->ram;
+        $productDes->chip = $request->chip;
+        $productDes->sims = $request->sims;
         $productDes->save();
 
         if(!empty($files))

@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
         return [ 
             'name' => 'required|min:6|max:50|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/u|unique:products,name,' . $id,
 
-            'resolution'=>'required|min:3|max:30',
+            // 'resolution'=>'required|min:3|max:30',
 
             'weight'=>'required|numeric|min:100|max:700',
 
@@ -56,9 +56,7 @@ class ProductRequest extends FormRequest
             'name.unique'=>"Tên sản phẩm không được trùng",
             'name.regex'=>"Tên sản phẩm không được bắt đầu bằng ký tự là số và không chứa ký tự đặc biệt!",
 
-            'resolution.required'=>"Độ phân giải không được bỏ trống!",
-            'resolution.min'=>"Độ phân giải phải lớn hơn :min ký tự!",
-            'resolution.max'=>"Độ phân giải sản phẩm phải nhỏ hơn :max ký tự!",
+           
             
             'weight.required'=>"Trọng lượng không được bỏ trống!",
             'weight.min'=>"Trọng lượng phải lớn hơn :min g!",

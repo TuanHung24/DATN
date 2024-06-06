@@ -3,14 +3,10 @@
         <tr>
             <th scope="col">Màu sắc</th>
             <th scope="col">Dung lượng</th>
-            <th scope="col">Giá bán</th>
+            <th scope="col">Giá gốc</th>
             <th scope="col">Số lượng tồn</th>
-            @if($hasDiscount)
             <th scope="col">Giảm giá(%)</th>
-            <th scope="col">Giá sau khi giảm</th>
-            @endif
-            <th scope="col">Nhập số lượng mua</th>
-            <th scope="col">Chọn mua</th>
+            <th scope="col">Áp dụng khuyến mãi</th>
         </tr>
     </thead>
     <tbody>
@@ -20,13 +16,8 @@
             <td id="td-color">{{ $proDuct->color->name }}<input type="hidden" value="{{ $proDuct->color->id }}" id="color-id"/></td>
             <td id="td-capacity">{{ $proDuct->capacity->name }}<input type="hidden" value="{{ $proDuct->capacity->id }}" id="capacity-id"/></td>
             <td>{{ $proDuct->price_formatted }}<input type="hidden" value="{{ $proDuct->price }}" name="price" id="price-id"/></td>
-            <td>{{ $proDuct->quanlity }}</td>
-            @if($hasDiscount)
-                <td>{{ $proDuct->discount_detail->first()->percent }}</td>
-                <td>{{ $proDuct->discount_detail->first()->price_formatted }}</td>
-            @endif
-            
-            <td><input type="number" max="{{ $proDuct->quanlity }}" value="1" min="1" name="quanlity" id='quanlity-id'/></td>
+            <td>{{ $proDuct->quanlity }}<input type="hidden" value="{{ $proDuct->quanlity }}" name="quanlity" id="quanlity-id"/></td>
+            <td><input type="number" value="1" min="1" name="percent" id='percent-id'/></td>
             <td><input type="checkbox" name="buy" id="buy-id"></td>
         </tr>
         @endforeach

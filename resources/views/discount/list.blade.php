@@ -21,14 +21,15 @@
         <tr>
             
             <td>{{ $disCount->name }}</td>
-            <td>{{ $disCount->date_start }}</td>
+            <td>{{ $disCount->formatted_date_start  }}</td>
            
-            <td>{{ $disCount->date_end }}</td>
+            <td>{{ $disCount->formatted_date_end }}</td>
             <td>{{ $disCount->percent }}</td>
             
             <td>{{ $disCount->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
-                <a href="{{ route('discount.update', ['id' => $disCount->id]) }}">Sửa</a>
+                <a href="{{ route('discount.detail', ['id' => $disCount->id]) }}">Chi tiết</a>|
+                <a href="{{ route('discount.update', ['id' => $disCount->id]) }}">Cập nhật</a>
             </td>
         <tr>
         @endforeach
