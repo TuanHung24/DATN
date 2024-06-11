@@ -10,13 +10,14 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('screen', function (Blueprint $table) {
+    { 
+        Schema::create('front_camera', function (Blueprint $table) {
             $table->id();
-            $table->string('technoscreen');
-            $table->string('resolution');
-            $table->string('size');
-            $table->string('brightness');
+            $table->foreignId('product_description_id')->constrained('product_description');
+            $table->string('resolution',50);
+            $table->text('record');
+            $table->text('feature');
+            $table->boolean('flash');
             $table->timestamps();
         });
     }
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('screen');
+        Schema::dropIfExists('front_camera');
     }
 };

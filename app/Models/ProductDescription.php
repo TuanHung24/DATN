@@ -15,4 +15,7 @@ class ProductDescription extends Model
     public function screen(){
         return $this->hasMany(Screen::class);
     }
+    public function product(){
+        return $this->belongsTo(Product::class);
+    }
 }

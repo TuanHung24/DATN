@@ -31,14 +31,12 @@ class AdminRequest extends FormRequest
                 'max:50',
                 'regex:/^[a-zA-Z0-9._-]+@gmail\.com$/',
                 'unique:admin,email,' . $id,
-            ],
-                     
+            ],           
             'address' => 'required|min:10|max:128|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u',
-      
-            'username' => 'required|min:6|max:60|regex:/^[a-zA-Z][a-zA-Z0-9]*$/u|not_regex:/[\p{P}\p{M}\p{S}\p{C}\p{Z}]/u|not_regex:/[^\p{L}\p{N}]/u|unique:admin,username,' . $id,
- 
-            'password'=> 'required|min:6|max:128',
+            'username' => 'required|min:6|max:20|regex:/^[a-zA-Z][a-zA-Z0-9]*$/u|not_regex:/[\p{P}\p{M}\p{S}\p{C}\p{Z}]/u|not_regex:/[^\p{L}\p{N}]/u|unique:admin,username,' . $id,
+            'password' => $this->isMethod('post') ? 'required|min:6|max:128|unique:admin,password,'.$id : 'nullable|min:6|max:128|unique:admin,password,'.$id,
             'roles' => 'required|in:1,2,3',
+            'gender' => 'required|in:0,1',
             'avatar'=> 'image|mimes:jpg,png,jpeg|max:6048'
         ];
     }
@@ -53,8 +51,11 @@ class AdminRequest extends FormRequest
             'phone.required' => 'Số điện thoại không được bỏ trống!',
             'phone.regex' => 'Số điện thoại phải bắt đầu bằng số 0 và có 10 chữ số!',
 
-            'roles.required' => 'Chức vụ chưa được chọn!',
-            'roles.in' => 'Chức vụ chưa chọn!!',
+            'roles.required' => 'Vui lòng chọn chức vụ!',
+            'roles.in' => 'Vui lòng chọn chức vụ!',
+
+            'gender.required' => 'Vui lòng chọn giới tính!',
+            'gender.in' => 'Vui lòng chọn giới tính!',
             
             'email.required' => "Email không được bỏ trống!",
             'email.min' => "Email phải lớn hơn :min ký tự!",
@@ -67,11 +68,11 @@ class AdminRequest extends FormRequest
             'address.max' => "Địa chỉ phải nhỏ hơn :max ký tự!",
             'address.regex' => "Địa chỉ không được chứa ký tự đặc biệt!",
     
-            'username.required' => "Tên đăng nhập không được bỏ trống!",
-            'username.min' => "Tên đăng nhập phải lớn hơn :min ký tự!",
-            'username.max' => "Tên đăng nhập phải nhỏ hơn :max ký tự!",
-            'username.regex'=>"Tên đăng nhập không được bắt đầu bằng số, không chứa khoản trắng, không được có dấu và chứa ký tự đặc biệt! ",
-            'username.unique' => "Tên đăng nhập đã tồn tại!",
+            'username.required' => "Tên tài khoản không được bỏ trống!",
+            'username.min' => "Tên tài khoản phải lớn hơn :min ký tự!",
+            'username.max' => "Tên tài khoản phải nhỏ hơn :max ký tự!",
+            'username.regex'=>"Tên tài khoản không được bắt đầu bằng số, không chứa khoản trắng, không được có dấu và chứa ký tự đặc biệt! ",
+            'username.unique' => "Tên tài khoản đã tồn tại!",
 
             'password.required' => "Mật khẩu không được bỏ trống!",
             'password.min' => "Mật khẩu phải lớn hơn :min ký tự!",

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rearcamera', function (Blueprint $table) {
+        Schema::create('rear_camera', function (Blueprint $table) {
             $table->id();
-            $table->string('resolutioncamera');
-            $table->string('recordcamera');
-            $table->string('feature');
+            $table->foreignId('product_description_id')->constrained('product_description');
+            $table->string('resolution',50);
+            $table->text('record');
+            $table->text('feature');
             $table->boolean('flash');
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('rearcamera');
+        Schema::dropIfExists('rear_camera');
     }
 };

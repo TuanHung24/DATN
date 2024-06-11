@@ -29,7 +29,7 @@
 @endif
 @if(isset($listInvoice) && $listInvoice->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr class="title_hd">
                 <th>Mã hóa đơn</th>
@@ -95,9 +95,10 @@
     </div>
     @endif
 
+    {{ $listInvoice->links('vendor.pagination.default') }}
 </div>
 @else
-<h6>Không có hóa đơn nào!</h6>
+<span class="error">Không có hóa đơn nào!</h6>
 @endif
 @endsection
 

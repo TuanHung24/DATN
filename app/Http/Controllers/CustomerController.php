@@ -13,7 +13,7 @@ use function PHPUnit\Framework\isEmpty;
 class CustomerController extends Controller
 {
     public function getList(){
-        $listCusTomer = Customer::all();
+        $listCusTomer = Customer::paginate(6);
         return view('customer.list',compact('listCusTomer'));
     }
 

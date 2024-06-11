@@ -7,7 +7,7 @@
 
 @if(isset($listNews) && $listNews->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr>
                 <th>Title</th> <!-- Đã sửa thành </th> -->
@@ -23,8 +23,9 @@
             @endforeach
         </tbody>
     </table>
+    {{ $listNews->links('vendor.pagination.default') }}
 </div>
 @else
-    <h6>Không có tin tức nào!</h6>
+    <span class="error">Không có tin tức nào!</span>
 @endif
 @endsection

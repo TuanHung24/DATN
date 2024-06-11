@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string("phone",10);
             $table->string('address',128);
             $table->integer("roles");
+            $table->integer("gender");
             $table->boolean("status")->default(1);
             $table->rememberToken();
             $table->timestamps();

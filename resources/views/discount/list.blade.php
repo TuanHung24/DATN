@@ -6,7 +6,7 @@
 </div>
 @if(isset($listDiscount) && $listDiscount->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr>   
                 <th>Tên khuyến mãi</th>
@@ -34,8 +34,9 @@
         <tr>
         @endforeach
     </table>
+    {{ $listDiscount->links('vendor.pagination.default') }}
 </div>
 @else
-<h6>Không có khuyến mãi nào!</h6>
+<sapn class="error">Không có khuyến mãi nào!</span>
 @endif
 @endsection

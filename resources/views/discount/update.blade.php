@@ -52,7 +52,7 @@
 <form method="POST" action="{{route('discount.hd-update',['id'=>$disCount->id])}}">
     @csrf
     <div class="table-responsive">
-        <table class="table table-sm" id="tb-ds-product">
+        <table class="table" id="tb-ds-product">
             <thead>
                 <tr>
                     <th>STT</th>

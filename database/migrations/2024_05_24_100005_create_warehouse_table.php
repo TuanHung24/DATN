@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('warehouse', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('provider_id')->constrained('provider');
-            
+            $table->foreignId('provider_id')->constrained('provider');          
             $table->timestamp("date");
             $table->decimal("total",12,0)->nullable();
             $table->boolean("status")->default(1);

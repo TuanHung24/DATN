@@ -9,7 +9,7 @@
         @if(isset($listCapacity) && $listCapacity->isNotEmpty())
         <h4 class="mb-3">Danh sách dung lượng</h4>
         <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Mã dung lượng</th>
@@ -29,7 +29,7 @@
             </table>
         </div>
         @else
-        <span>Không có dữ liệu dung lượng!</span>
+        <span class="error">Không có dung lượng!</span>
         @endif
     </div>
 
@@ -37,7 +37,7 @@
         @if(isset($listColors) && $listColors->isNotEmpty())
         <h4 class="mb-3">Danh sách màu</h4>
         <div class="table-responsive">
-            <table class="table table-sm">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>Mã màu</th>
@@ -57,7 +57,7 @@
             </table>
         </div>
         @else
-        <span>Không có dữ liệu màu!</span> 
+        <span class="error">Không có màu!</span> 
         @endif
     </div>
 </div>

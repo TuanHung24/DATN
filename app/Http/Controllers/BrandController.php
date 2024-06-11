@@ -10,8 +10,9 @@ use Exception;
 class BrandController extends Controller
 {
     public function getList(){
-        $listBrand = Brand::all();
-        return view('brand.list',compact('listBrand'));
+        $listBrand = Brand::paginate(8);
+        $listBrandDelete = Brand::onlyTrashed()->get();
+        return view('brand.list',compact('listBrand','listBrandDelete'));
     }
 
     public function addNew(){
@@ -44,9 +45,34 @@ class BrandController extends Controller
             $bRand = Brand::find($id);
             $bRand->name = $request->name;
             $bRand->save();
-        return redirect()->route('brand.list')->with(['success'=>"Cập nhật thương hiệu $bRand->name thành công!"]);
+        return redirect()->route('brand.list')->with(['success'=>"Cập nhật thương hiệu {$bRand->name} thành công!"]);
         }catch(Exception $e){
             return redirect()->route('brand.list')->with(['Error'=>"Lỗi: ".$e]);
         }
+    }
+
+    public function delete($id)
+    {
+        $bRand = Brand::find($id);
+        if (empty($bRand)) {
+            return "Thương hiệu không tồn tại";
+        }
+        
+        $bRand->delete();
+        return redirect()->route('brand.list')->with(['Success'=>"Xóa thương hiệu {$bRand->name} thành công!"]);
+    }
+   
+    public function restore($id)
+    {
+        $bRand=Brand::withTrashed()->find($id);
+        $bRand->restore();
+        return redirect()->route('brand.list')->with(['Success'=>"Phục hồi thương hiệu {$bRand->name} thành công "]);
+    }
+    
+    public function deleted($id)
+    {
+        $bRand=Brand::withTrashed()->find($id);
+        $bRand->forceDelete();
+        return redirect()->route('brand.list')->with(['Success'=>"Xóa vĩnh viễn thương hiệu {$bRand->name} thành công "]);
     }
 }

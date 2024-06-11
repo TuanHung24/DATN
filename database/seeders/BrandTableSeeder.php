@@ -17,8 +17,17 @@ class BrandTableSeeder extends Seeder
         $brand=new Brand();
         $brand->name="Apple";
         $brand->save();
+        
         $brand=new Brand();
         $brand->name="Samsung";
+        $brand->save();
+
+        $brand=new Brand();
+        $brand->name="Oppo";
+        $brand->save();
+        
+        $brand=new Brand();
+        $brand->name="Xiaomi";
         $brand->save();
 
         echo "Thêm Brand thành công!";

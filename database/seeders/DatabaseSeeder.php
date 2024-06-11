@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Product;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +19,11 @@ class DatabaseSeeder extends Seeder
             BrandTableSeeder::class,
             CapacityTableSeeder::class,
             ColorTableSeeder::class,
+            ProductSeeder::class,
+            ProductDescriptionSeeder::class,
+            FrontCameraSeeder::class,
+            RearCameraSeeder::class,
+            ScreenSeeder::class
         ]);
     }
 }

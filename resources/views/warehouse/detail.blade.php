@@ -20,7 +20,7 @@
     <h3>CHI TIẾT KHO</h3>
 </div>
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr>
                 <th>Mã hóa đơn</th>

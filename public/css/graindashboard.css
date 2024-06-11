@@ -6477,11 +6477,12 @@ section {
 
 body {
     margin: 0;
-    font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
-    font-size: 1rem;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    
     font-weight: 400;
     line-height: 1.5;
-    color: #4a4e69;
+    color: black;
     text-align: left
 }
 
@@ -8029,7 +8030,6 @@ pre code {
 
 .table td,
 .table th {
-    padding: .75rem;
     vertical-align: top;
     border-top: 1px solid #eeeef1
 }
@@ -8407,6 +8407,7 @@ pre code {
 .table-responsive {
     display: block;
     width: 100%;
+    padding-bottom: 10px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch
 }
@@ -8955,21 +8956,22 @@ textarea.form-control.is-invalid {
 
 .btn {
     display: inline-block;
-    font-weight: 600;
-    color: #4a4e69;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
     text-align: center;
+    text-decoration: none;
     vertical-align: middle;
+    cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     background-color: transparent;
     border: 1px solid transparent;
-    padding: .63rem 1rem;
+    padding: 10px 15px;
     font-size: 1rem;
-    line-height: 1.4;
-    border-radius: .125rem;
-    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out
+    border-radius: .25rem;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
 @media (prefers-reduced-motion:reduce) {
@@ -9001,20 +9003,11 @@ fieldset:disabled a.btn {
 
 .btn-primary {
     color: #fff;
-    background-color: #265df1;
-    border-color: #265df1
+    background-color: #0d6efd;
+    border-color: #0d6efd;
 }
 
-.btn-primary:hover {
-    color: #fff;
-    background-color: #0f48e2;
-    border-color: #0e44d6
-}
 
-.btn-primary.focus,
-.btn-primary:focus {
-    box-shadow: 0 0 0 .2rem rgba(71, 117, 243, .5)
-}
 
 .btn-primary.disabled,
 .btn-primary:disabled {
@@ -9077,14 +9070,14 @@ fieldset:disabled a.btn {
 
 .btn-success {
     color: #fff;
-    background-color: #0cdcb9;
-    border-color: #0cdcb9
+    background-color: #198754;
+    border-color: #198754;
 }
 
 .btn-success:hover {
     color: #fff;
-    background-color: #0ab89a;
-    border-color: #09ac90
+    background-color: #147146;
+    border-color: #147146;
 }
 
 .btn-success.focus,
@@ -20544,7 +20537,6 @@ button:focus {
     font-size: 1.6rem;
     font-weight: 600;
     color: #265df1;
-    background: hsla(0, 0%, 89.8%, .5);
     text-align: center;
     display: inline-block
 }
@@ -22041,22 +22033,7 @@ input:checked+.btn .form-check-subtext {
     color: #fff !important
 }
 
-.checkbox:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    display: inline-block;
-    width: 1.13rem;
-    height: 1.13rem;
-    font: 1rem gd-icons, sans-serif;
-    line-height: 1rem;
-    text-align: center;
-    border: 1px solid #d2d2da;
-    border-radius: 2px;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%)
-}
+
 
 input[type=checkbox]:checked+.checkbox:before {
     content: attr(data-icon);
@@ -22083,7 +22060,41 @@ input[type=checkbox]:checked+.checkbox-text .text-checked {
 }
 
 .form-control {
-    border-radius: .125rem !important
+    display: block;
+    width: 100%;
+    padding: .360rem .55rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .375rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}    
+
+.form-control:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.form-control:hover {
+    border-color: #1e7e34;
+    box-shadow: 0 0 5px rgba(0, 123, 255, .25);
+}
+
+.form-control::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
 }
 
 .form-control-onfocus-inherit:focus {
@@ -22950,6 +22961,7 @@ body.has-fixed-sidebar-and-header .main {
     flex: 1;
     max-width: 100%;
     transition: left .2s ease-in
+    
 }
 
 @media (min-width:992px) {
@@ -23296,6 +23308,7 @@ body.side-nav-initialized .side-nav {
 }
 
 body.has-fixed-sidebar-and-header .side-nav {
+    width: 300px;
     position: fixed;
     top: 4.0625rem;
     height: calc(100% - 4.0625rem)

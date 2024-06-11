@@ -18,7 +18,9 @@ return new class extends Migration
             $table->string("address",128)->nullable();
             $table->decimal("total",12,0)->nullable();
             $table->string("payment_method",60);
+            $table->string("note",255)->nullable();
             $table->unsignedSmallInteger("status")->default(1);
+            $table->decimal('ship',10,0)->nullable();
             $table->timestamp("date");
             $table->timestamps();
         });

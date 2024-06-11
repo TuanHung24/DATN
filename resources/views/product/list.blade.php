@@ -4,10 +4,11 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH SẢN PHẨM</h3>
+    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
 </div>
 @if(isset($listProduct) && $listProduct->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
     <tr class="title_sp">
         <th>Tên sản phẩm</th>
@@ -31,9 +32,41 @@
     @endforeach
     </tbody>
 </table> 
+{{ $listProduct->links('vendor.pagination.default') }}
 @else
-    <h6>Không có sản phẩm nào!</h6>
+    <span class="error">Không có sản phẩm nào!</span>
 @endif
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Danh sách sản phẩm</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      @if(isset($listproductDelete) && $listproductDelete->isNotEmpty())
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  @foreach($listproductDelete as $productDelete)
+                    <tr>
+                        <td>{{$productDelete->name}}</td>
+                        <td><a href="{{ route('product.restore',['id'=>$productDelete->id])}}">Khôi phục</a> | <a href="#">Chi tiết</a></td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+      @else
+      <h6 class="error">Không có sản phẩm nào đã xóa!</h6>
+      @endif
+    </div>
+</div>
+
 @endsection
 
 

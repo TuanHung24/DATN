@@ -29,7 +29,7 @@
 @endif
 @if(isset($listWarehouse) && $listWarehouse->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr class="title_nh">
                 <th id="th-id">Mã phiếu nhập</th>
@@ -53,7 +53,7 @@
     </table>
 </div>
 @else
-<h6>Không có hóa đơn nào!</h6>
+<span class="error">Không có phiếu nhập kho nào!</h6>
 @endif
 @endsection
 

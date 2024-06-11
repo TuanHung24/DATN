@@ -14,14 +14,15 @@ class LoginController extends Controller
     }
    
     public function hdLogin(Request $rq){
-        $credentials = $rq->only('email', 'password');
+        $credentials = $rq->only('email', 'password',);
+        
         $remember = $rq->has('remember'); 
     
         if (Auth::guard('web')->attempt($credentials, $remember)) {
             
             return redirect()->route('main');
         } else {
-            return view('login')->with(['email' => 'Email hoặc mật khẩu không đúng.']);
+            return back()->withInput()->with(['Error' => 'Email hoặc mật khẩu không đúng.']);
         }
     }
     public function passWordReset(){

@@ -8,6 +8,7 @@
     <link href="{{ asset('style.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('css/graindashboard.css')}}">
 </head>
+@extends('layout.app')
 <body>
 <div class="row justify-content-md-center">
     <div class="card-wrapper col-12 col-md-4 mt-5">
@@ -22,8 +23,13 @@
                     <div class="form-group">
                         <label for="email">E-Mail Address</label>
                         <input id="email" type="email" class="form-control" name="email" value="{{old('email')}}" >
+                        @if(session('Error'))
+                        <span class="error-message">
+                            {{ session('Error') }}
+                        </span>
+                        @endif
                     </div>
-
+                    
                     <div class="form-group">
                         <label for="password">Password
                         </label>
@@ -34,10 +40,9 @@
                             </a>
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <div class="form-check position-relative mb-2">
-                            <input type="checkbox" class="form-check-input d-none" id="remember" name="remember">
+                        <div>
+                            <input type="checkbox" id="remember" name="remember">
                             <label class="checkbox checkbox-xxs form-check-label ml-1" for="remember">Remember Me</label>
                         </div>
                     </div>

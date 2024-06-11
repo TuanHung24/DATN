@@ -2,14 +2,18 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class DiscountDetail extends Model
 {
     use HasFactory;
     protected $table = 'discount_detail';
-    public function product_detail(){
+    
+    public function product_detail()
+    {
         return $this->belongsTo(ProductDetail::class);
     }
     public function discount()
@@ -20,11 +24,14 @@ class DiscountDetail extends Model
     {
         return number_format($this->price, 0, ',', '.');
     }
-    
-    public function isActive()
+
+    public function isActive($id)
     {
-        $now = now();
-        return $this->discount->date_start <= $now && $this->discount->date_end >= $now;
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        $discount = $this->discount()->find($id);
+        if ($discount) {
+            return $this->date_start <= $now && $this->date_end >= $now;
+        }
+        return false;
     }
-    
 }

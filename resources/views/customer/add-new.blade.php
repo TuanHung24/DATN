@@ -7,7 +7,7 @@
             <form method="POST" action="{{ route('customer.hd-add-new') }}">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="name" class="form-label">Họ tên</label>
                         <input type="text" class="form-control" name="name" value="{{old('name')}}">
                     </div>
@@ -16,7 +16,7 @@
                     @enderror
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" name="email" value="{{old('email')}}">
                     </div>
@@ -26,7 +26,7 @@
                 </div>
                 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <label for="password" class="form-label">Mật khẩu</label>
                         <input type="password" class="form-control" name="password">
                     </div>
@@ -35,7 +35,7 @@
                     @enderror
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                     <label for="phone" class="form-label">Điện thoại</label>
                         <input type="text" class="form-control" name="phone" value="{{old('phone')}}">
                     </div>
@@ -52,8 +52,8 @@
                         <span class="error-message"> {{ $message }} </span>
                     @enderror
                 </div>
-                <div class="col-md-2">
+                
                     <button type="submit" class="btn btn-primary">Lưu</button>
-                </div>
+                
             </form>
 @endsection

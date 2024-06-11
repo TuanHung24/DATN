@@ -12,12 +12,14 @@
     <!-- Custom styles for this template -->
     <link href="{{ asset('custom.css') }}" rel="stylesheet">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
+    <link href="{{asset('bootstrap-5.2.3/css/bootstrap.min.css')}}" rel="stylesheet">
     <!-- <link rel="stylesheet" href="public/demo/chartist.css">
     <link rel="stylesheet" href="public/demo/chartist-plugin-tooltip.css"> -->
     <link rel="stylesheet" href="{{asset('css/graindashboard.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
 </head>
-
+@extends('layout.app')
 <body class="has-sidebar has-fixed-sidebar-and-header side-nav-full-mode">
     <!-- Header -->
     <header class="header bg-body">
@@ -37,7 +39,7 @@
                 <!-- End Logo For Desktop View -->
             </div>
 
-            <div class="header-content col px-md-3">
+            <div class="header-content col px-md-7">
                 <div class="d-flex align-items-center">
                     <!-- Side Nav Toggle -->
                     <a class="js-side-nav header-invoker d-flex mr-md-2" href="#" data-close-invoker="#sidebarClose" data-target="#sidebar" data-target-wrapper="body">
@@ -94,9 +96,9 @@
                         <a id="profileMenuInvoker" class="header-complex-invoker" href="#" aria-controls="profileMenu" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#profileMenu" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
                             <!--img class="avatar rounded-circle mr-md-2" src="#" alt="John Doe"-->
                             <span class="mr-md-2 avatar-placeholder">
-                                <img src="{{asset(Auth()->user()->avatar_url)}}" alt="" class="rounded-circle1">
+                                <img src="{{Auth::check() && Auth::user()->avatar_url ? asset(Auth::user()->avatar_url) : asset('avt/avatar-rong.jpg')}}" class="rounded-circle1">
                             </span>
-                            <span class="d-none d-md-block">{{Auth()->user()->username}}</span>
+                            <span class="d-none d-md-block">{{ Auth()->user()->username}}</span>
                             <i class="fas fa-angle-down d-none d-md-block ml-2"></i>
                         </a>
 
@@ -422,7 +424,7 @@
         <!-- End Sidebar Nav -->
 
         <div class="content">
-            <div class="py-4 px-3 px-md-4">
+            <div class="py-4 px-3 px-md-8">
                 <div class="mb-12 mb-md-4">
                     @yield('content')
                 </div>
@@ -430,9 +432,10 @@
         </div>
     </main>
 
-
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
+    <script src="{{asset('bootstrap-5.2.3/js/bootstrap.min.js')}}"></script>
     <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
     @yield('page-sw')
 

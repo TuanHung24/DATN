@@ -27,16 +27,14 @@ use App\Http\Controllers\DiscountController;
 |
 */
 
-Route::middleware('auth')->group(function(){
-   
-
+Route::middleware(['auth', 'check.status'])->group(function(){
     Route::prefix('admin')->group(function(){
         Route::name('admin.')->group(function(){
             Route::get('add-new', [AdminController::class, 'addNew'])->name('add-new');
             Route::post('add-new', [AdminController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('list', [AdminController::class, 'getList'])->name('list');
             Route::get('update/{id}', [AdminController::class, 'upDate'])->name('update');
-            Route::post('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
+            Route::put('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');
         });
         
@@ -54,7 +52,6 @@ Route::middleware('auth')->group(function(){
         
     });
 
-    
     Route::prefix('news')->group(function(){
         Route::name('news.')->group(function(){
             Route::get('list', [NewsController::class, 'getList'])->name('list');
@@ -79,6 +76,8 @@ Route::middleware('auth')->group(function(){
             Route::post('add-new',[BrandController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('update/{id}', [BrandController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [BrandController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('restore/{id}', [BrandController::class, 'restore'])->name('restore');
+            Route::get('deleted/{id}', [BrandController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [BrandController::class, 'delete'])->name('delete');
         });
     });
@@ -104,6 +103,8 @@ Route::middleware('auth')->group(function(){
             Route::post('add-new',[ProductController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('update/{id}', [ProductController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [ProductController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('restore/{id}', [ProductController::class, 'restore'])->name('restore');
+            Route::get('deleted/{id}', [ProductController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
         });
     });
@@ -145,7 +146,7 @@ Route::middleware('auth')->group(function(){
         });
     });
 
-    Route::get('/',[MainController::class, 'main'])->name('main');
+    Route::get('main',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
 });
 Route::middleware('guest')->group(function(){

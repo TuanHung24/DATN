@@ -8,4 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class RearCamera extends Model
 {
     use HasFactory;
+    protected $table='rear_camera';
 }

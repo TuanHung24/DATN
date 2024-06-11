@@ -13,8 +13,9 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
     public function getList(){
-        $listProduct = Product::all();
-        return view('product.list', compact('listProduct'));
+        $listProduct = Product::paginate(8);
+        $listProductDelete=Product::onlyTrashed()->get();
+        return view('product.list', compact('listProduct','listProductDelete'));
     }
     public function addNew(){
         $listBrand = Brand::all();
@@ -132,12 +133,38 @@ class ProductController extends Controller
                 $imgProduct->save();
             }
         }  
-        return redirect()->route('product.list')->with(['thong_bao'=>"Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
+        return redirect()->route('product.list')->with(['Success'=>"Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
     }
     public function getProductDetail($id){
         $listProductDetail = ProductDetail::where('product_id', $id)->get();
+        $productDescription = ProductDescription::where('product_id', $id)->first();
         $proDuct = Product::find($id);
-        return view('product.detail', compact('listProductDetail','proDuct'));
+        $listImg = ImgProduct::where('product_id', $id)->get();
+        return view('product.detail', compact('listProductDetail','proDuct','listImg','productDescription'));
+    }
+
+    public function delete($id)
+    {
+        $proDuct = Product::find($id);
+        if (empty($proDuct)) {
+            return "Sản phẩm không tồn tại";
+        }
+        $proDuct->delete();
+        return redirect()->route('product.list')->with(['Success'=>"Xóa sản phẩm {$proDuct->name} thành công!"]);
+    }
+   
+    public function restore($id)
+    {
+        $proDuct=Product::withTrashed()->find($id);
+        $proDuct->restore();
+        return redirect()->route('product.list')->with(['Success'=>"Phục hồi sản phẩm {$proDuct->name} thành công "]);
+    }
+    
+    public function deleted($id)
+    {
+        $proDuct=Product::withTrashed()->find($id);
+        $proDuct->forceDelete();
+        return redirect()->route('product.list')->with(['Success'=>"Xóa vĩnh viễn sản phẩm {$proDuct->name} thành công "]);
     }
     
 }

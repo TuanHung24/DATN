@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('camera', function (Blueprint $table) {
+        Schema::create('screen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('frontcamera_id')->constrained('frontcamera');
-            $table->foreignId('rearcamera_id')->constrained('rearcamera');
+            $table->foreignId('product_description_id')->constrained('product_description');
+            $table->string('technoscreen',30);
+            $table->string('resolution', 60);
+            $table->string('size', 20);
+            $table->string('brightness', 20);
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('camera');
+        Schema::dropIfExists('screen');
     }
 };

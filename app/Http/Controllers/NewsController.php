@@ -10,7 +10,7 @@ use function PHPUnit\Framework\isEmpty;
 class NewsController extends Controller
 {
     public function getList(){
-        $listNews = News::all();
+        $listNews = News::paginate(5);
         return view('news.list',compact('listNews'));
     }
 

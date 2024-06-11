@@ -5,30 +5,42 @@
             <th scope="col">Dung lượng</th>
             <th scope="col">Giá bán</th>
             <th scope="col">Số lượng tồn</th>
-            @if($hasDiscount)
+
             <th scope="col">Giảm giá(%)</th>
             <th scope="col">Giá sau khi giảm</th>
-            @endif
+
             <th scope="col">Nhập số lượng mua</th>
             <th scope="col">Chọn mua</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($productDetail as $proDuct)
+        @foreach($productDetail as $product)
         <tr>
-            <input type="hidden" value="{{$proDuct->product_id}}" name="product_id" id="product-id"/>
-            <td id="td-color">{{ $proDuct->color->name }}<input type="hidden" value="{{ $proDuct->color->id }}" id="color-id"/></td>
-            <td id="td-capacity">{{ $proDuct->capacity->name }}<input type="hidden" value="{{ $proDuct->capacity->id }}" id="capacity-id"/></td>
-            <td>{{ $proDuct->price_formatted }}<input type="hidden" value="{{ $proDuct->price }}" name="price" id="price-id"/></td>
-            <td>{{ $proDuct->quanlity }}</td>
-            @if($hasDiscount)
-                <td>{{ $proDuct->discount_detail->first()->percent }}</td>
-                <td>{{ $proDuct->discount_detail->first()->price_formatted }}</td>
+            <input type="hidden" value="{{ $product->product_id }}" name="product_id" id="product-id" />
+            <td id="td-color">{{ $product->color->name }}<input type="hidden" value="{{ $product->color->id }}" id="color-id" /></td>
+            <td id="td-capacity">{{ $product->capacity->name }}<input type="hidden" value="{{ $product->capacity->id }}" id="capacity-id" /></td>
+            <td>{{ $product->price_formatted }}</td>
+            <td>{{ $product->quanlity }}</td>
+
+            @php
+                $activeDiscount = $product->discount_detail->first(function($discountDetail) {
+                    $now = \Carbon\Carbon::now('Asia/Ho_Chi_Minh');
+                    return $discountDetail->discount->date_start <= $now && $discountDetail->discount->date_end >= $now;
+                });
+            @endphp
+
+            @if($activeDiscount)
+            <td>{{ $activeDiscount->percent }}</td>
+            <td>{{ $activeDiscount->price_formatted }}<input type="hidden" value="{{ $activeDiscount->price }}" name="price" id="price-id" /></td>
+            @else
+            <td>0</td>
+            <td>{{$product->price_formatted}}<input type="hidden" value="{{ $product->price }}" name="price" id="price-id" /></td>
             @endif
-            
-            <td><input type="number" max="{{ $proDuct->quanlity }}" value="1" min="1" name="quanlity" id='quanlity-id'/></td>
+
+            <td><input type="number" max="{{ $product->quanlity }}" value="1" min="1" name="quanlity" id='quanlity-id' /></td>
             <td><input type="checkbox" name="buy" id="buy-id"></td>
         </tr>
         @endforeach
+
     </tbody>
 </table>

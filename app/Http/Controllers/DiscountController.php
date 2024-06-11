@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class DiscountController extends Controller
 {
     public function getList(){
-        $listDiscount = Discount::all();
+        $listDiscount = Discount::paginate(8);
         return view('discount.list', compact('listDiscount'));
     }
     public function addNew(){

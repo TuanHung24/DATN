@@ -6,7 +6,7 @@
 </div>
 @if(isset($listCusTomer) && $listCusTomer->isNotEmpty())
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr>   
                 <th>Họ tên</th>
@@ -33,8 +33,9 @@
         <tr>
         @endforeach
     </table>
+    {{ $listCusTomer->links('vendor.pagination.default') }}
 </div>
 @else
-<h6>Không có nhân viên nào!</h6>
+<span class="error">Không có khách hàng nào!</span>
 @endif
 @endsection

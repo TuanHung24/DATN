@@ -51,7 +51,7 @@
 <form method="POST" action="{{route('invoice.hd-add-new')}}">
   @csrf
   <div class="table-responsive">
-    <table class="table table-striped table-sm" id="tb-ds-product">
+    <table class="table" id="tb-ds-product">
       <thead>
         <tr>
           <th>STT</th>

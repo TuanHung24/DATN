@@ -7,7 +7,7 @@
             <form method="POST" action="{{ route('provider.hd-update', ['id'=> $proVider->id]) }}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="name" class="form-label">Tên nhà cung cấp</label>
                         <input type="text" class="form-control" name="name" value="{{old('name', $proVider->name)}}">
                     </div>
@@ -16,7 +16,7 @@
                     @enderror
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                     <label for="phone" class="form-label">Điện thoại</label>
                         <input type="text" class="form-control" name="phone" value="{{old('phone', $proVider->phone)}}">
                     </div>

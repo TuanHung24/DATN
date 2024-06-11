@@ -16,4 +16,13 @@ class Product extends Model
     public function brand(){
         return $this->belongsTo(Brand::class);
     }
+    public function product_description()
+    {
+        return $this->hasMany(ProductDescription::class, 'product_id');
+    }
+
+    public function img_product()
+    {
+        return $this->hasMany(ImgProduct::class, 'product_id');
+    }
 }

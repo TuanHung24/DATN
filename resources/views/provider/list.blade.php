@@ -6,7 +6,7 @@
 </div>
 @if(isset($listProvider) && $listProvider->isNotEmpty($listProvider))
 <div class="table-responsive">
-    <table class="table table-sm">
+    <table class="table">
         <thead>
             <tr> 
                 <th>Tên nhà cung cấp</td>
@@ -28,8 +28,9 @@
         <tr>
         @endforeach
     </table>
+    {{ $listProvider->links('vendor.pagination.default') }}
 </div>
 @else
-<h6>Không có nhà cung cấp nào!</h6>
+<span class="error">Không có nhà cung cấp nào!</span>
 @endif
 @endsection

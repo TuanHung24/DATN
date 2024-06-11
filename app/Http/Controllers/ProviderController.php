@@ -9,7 +9,7 @@ use Exception;
 class ProviderController extends Controller
 {
     public function getList(){
-        $listProvider = Provider::all();
+        $listProvider = Provider::paginate(8);
         return view('provider.list',compact('listProvider'));
     }
 
