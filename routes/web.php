@@ -15,6 +15,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\CapacityColorController;
 use App\Http\Controllers\DiscountController;
+use App\Http\Controllers\SlideShowController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,13 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('list', [NewsController::class, 'getList'])->name('list');
             Route::get('add-new',[NewsController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[NewsController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+    Route::prefix('slideshow')->group(function(){
+        Route::name('slideshow.')->group(function(){
+            Route::get('list', [SlideShowController::class, 'getList'])->name('list');
+            Route::get('add-new',[SlideShowController::class, 'addNew'])->name('add-new');
+            Route::post('add-new',[SlideShowController::class, 'hdAddNew'])->name('hd-add-new');
         });
     });
     Route::prefix('provider')->group(function(){

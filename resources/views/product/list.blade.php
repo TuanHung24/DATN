@@ -6,6 +6,20 @@
     <h3>DANH SÁCH SẢN PHẨM</h3>
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
 </div>
+@if(session('Error'))
+    <div class="alert alert-danger d-flex align-items-center" role="alert">
+        <div> 
+              {{session('Error')}}
+        </div>
+    </div>
+@endif
+@if(session('Success'))
+    <div class="alert alert-success d-flex align-items-center" role="alert">
+        <div> 
+              {{session('Success')}}
+        </div>
+    </div>
+@endif
 @if(isset($listProduct) && $listProduct->isNotEmpty())
 <div class="table-responsive">
     <table class="table">
@@ -42,7 +56,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      @if(isset($listproductDelete) && $listproductDelete->isNotEmpty())
+      @if(isset($listProductDelete) && $listProductDelete->isNotEmpty())
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -52,7 +66,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach($listproductDelete as $productDelete)
+                  @foreach($listProductDelete as $productDelete)
                     <tr>
                         <td>{{$productDelete->name}}</td>
                         <td><a href="{{ route('product.restore',['id'=>$productDelete->id])}}">Khôi phục</a> | <a href="#">Chi tiết</a></td>

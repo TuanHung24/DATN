@@ -360,6 +360,7 @@
                                 </li>
                             </ul>
                         </li>
+                        
 
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subDiscount">
@@ -384,6 +385,32 @@
                                 </li>
                             </ul>
                         </li>
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subSlideshow">
+                                <span class="side-nav-menu-icon d-flex mr-3">
+                                    <i class="fas fa-newspaper"></i>
+                                </span>
+                                <span class="side-nav-fadeout-on-closed media-body">Quản lí slideshow</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
+                            </a>
+
+                            <ul id="subSlideshow" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('slideshow.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                                
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('slideshow.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        
                         <!-- Settings -->
                         <li class="side-nav-menu-item">
                             <a class="side-nav-menu-link media align-items-center" href="settings.html">
