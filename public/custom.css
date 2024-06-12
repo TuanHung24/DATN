@@ -22,8 +22,8 @@
 
 .slide {
 	border-radius: 8px;
-	height: 300px;
-	width: 300;
+	height: 150px;
+	width: 400px;
 }
 
 .b-example-vr {
@@ -669,3 +669,209 @@ button.ui-button::-moz-focus-inner {
 .pagination-nav {
 	text-align: center;
 }
+
+
+.product-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.product-name {
+    font-size: 1em;
+    color: #333;
+}
+
+.comment-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.comment-label {
+    font-size: 0.9em;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+.comment-author {
+    font-size: 1.1em;
+    color: #333;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.comment-content {
+    font-size: 1em;
+    color: #555;
+    line-height: 1.5;
+}
+
+
+
+
+
+
+/* Thiết lập các thuộc tính chung cho thẻ span có class "thong_ke" */
+.thong_ke {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/* Thiết lập bố cục cho container của mỗi phần thống kê */
+.count_container {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.count_container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Thiết lập icon */
+.count_container span[data-feather] {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 15px;
+    color: #007bff;
+    display: block;
+    font-size: 30px;
+}
+
+/* Thiết lập tiêu đề */
+.count_container h5,
+.count_container span{
+    font-weight: bold; /* Đậm */
+    color: #fff;
+}
+
+
+
+/* Thiết lập nền và văn bản của phần sản phẩm bán chạy */
+
+
+.sp_top {
+    background-color: #ea6976;
+}
+
+.count_sp { /* Phần số lượng sản phẩm */
+    background-color: #dfbd58; /* Màu vàng */
+}
+
+.count_hd { /* Phần số lượng hóa đơn */
+    background-color: #49d069; /* Màu xanh lá */
+}
+
+.count_nd { /* Phần số lượng người dùng */
+    background-color: #4496ee; /* Màu xanh dương */
+}
+
+
+.option-m-y {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.option-m-y > div {
+    border-radius: 8px;
+    padding: 1px;
+    margin-bottom: 10px;
+}
+
+.option-m-y .select-box {
+    display: flex;
+}
+
+.option-m-y label {
+    font-weight: bold;
+}
+#pieChart {
+	max-height: 400px;
+    max-width: 500px; /* Đảm bảo canvas không vượt quá kích thước của phần tử cha */
+    height: auto; /* Đảm bảo tỷ lệ chiều cao được duy trì */
+    display: block; /* Loại bỏ khoảng trắng dưới canvas */
+}
+
+
+
+    .form-container {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        align-items: center;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group select {
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button#checkDate {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button#checkDate:hover {
+        background-color: #0056b3;
+    }
+
+    .chart-container {
+        display: flex;
+        gap: 20px;
+        align-items: flex-start;
+    }
+
+    .invoice-details {
+        
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .invoice-details h3 {
+        margin-bottom: 10px;
+        font-size: 18px;
+    }
+
+    #invoiceList > div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 5px;
+    }
+
+    #invoiceList > div > div {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+    }

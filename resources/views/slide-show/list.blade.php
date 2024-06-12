@@ -5,26 +5,27 @@
     <h3>DANH SÁCH SLIDE</h3>
 </div>
 
-@if(isset($listslide) && $listslide->isNotEmpty())
+@if(isset($listSlide) && $listSlide->isNotEmpty())
 <div class="table-responsive">
     <table class="table">
         <thead>
             <tr>
-                <th>Sản Phẩm</th> <!-- Đã sửa thành </th> -->
+                <th id='th-sp'>Sản Phẩm</th>
                 <th>Hình ảnh</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($listslide as $slide)
+            @foreach($listSlide as $slide)
             <tr>
                 <td>{{ $slide->product->name }}</td>
                 <td> <img type="img_url" class="slide" name="img_url" src="{{asset($slide->img_url)}}"> </td>
-            </tr> <!-- Đã thêm thẻ đóng </tr> -->
+            </tr>
             @endforeach
         </tbody>
     </table>
+    {{ $listSlide->links('vendor.pagination.default') }}
 </div>
 @else
-    <span class="error">Không có tin tức nào!</span>
+    <span class="error">Không có Slideshow nào!</span>
 @endif
 @endsection

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('slide_show', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_id')->constrained('products');
+            $table->foreignId('product_id')->nullable()->constrained('products');
             $table->string('img_url');
             $table->timestamps();
         });

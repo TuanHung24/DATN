@@ -27,6 +27,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $listCapacity->links('vendor.pagination.default') }}
         </div>
         @else
         <span class="error">Không có dung lượng!</span>
@@ -55,6 +56,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $listColors->links('vendor.pagination.default') }}
         </div>
         @else
         <span class="error">Không có màu!</span> 

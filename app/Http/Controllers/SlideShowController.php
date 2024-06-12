@@ -10,8 +10,8 @@ use Exception;
 class SlideShowController extends Controller
 {
     public function getList(){
-        $listslide = SlideShow::all();
-        return view('slide-show.list',compact('listslide'));
+        $listSlide = SlideShow::paginate(3);
+        return view('slide-show.list',compact('listSlide'));
     }
 
     public function addNew(){
@@ -29,7 +29,7 @@ class SlideShowController extends Controller
         $slideshow->product_id= $request->product;
         $slideshow->save();
             
-
+        return redirect()->route('slide-show.list')->with(['Success'=>'Thêm Slideshow thành công!']);
         }catch(Exception $e){
             return back()->with("error: ".$e);
         }

@@ -13,6 +13,9 @@ class Product extends Model
     public function product_detail(){
         return $this->hasMany(ProductDetail::class);
     }
+    public function comment(){
+        return $this->hasMany(Comment::class);
+    }
     public function brand(){
         return $this->belongsTo(Brand::class);
     }

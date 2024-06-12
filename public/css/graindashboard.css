@@ -4958,6 +4958,7 @@
 }
 
 .mCustomScrollBox {
+    min-width: 80px;
     position: relative;
     overflow: hidden;
     height: 100%;

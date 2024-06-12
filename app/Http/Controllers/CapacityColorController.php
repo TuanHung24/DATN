@@ -10,8 +10,8 @@ use Exception;
 class CapacityColorController extends Controller
 {
     public function getList(){
-        $listColors = Color::all();
-        $listCapacity= Capacity::all();
+        $listColors = Color::paginate(2);
+        $listCapacity= Capacity::paginate(3);
         return view('capacity_color.list',compact('listColors','listCapacity'));
     }
 

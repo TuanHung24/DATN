@@ -17,9 +17,10 @@
     <link rel="stylesheet" href="public/demo/chartist-plugin-tooltip.css"> -->
     <link rel="stylesheet" href="{{asset('css/graindashboard.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    
+
 </head>
 @extends('layout.app')
+
 <body class="has-sidebar has-fixed-sidebar-and-header side-nav-full-mode">
     <!-- Header -->
     <header class="header bg-body">
@@ -134,29 +135,22 @@
                 <div id="mCSB_1_container" class="mCSB_container" style="position:relative; top:0; left:0;" dir="ltr">
                     <ul id="sideNav" class="side-nav-menu side-nav-menu-top-level mb-0">
 
-                        <li class="sidebar-heading h6">Dashboard</li>
+                        <li class="sidebar-heading h6">Trang chủ</li>
 
                         <!-- Dashboard -->
                         <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link media align-items-center" href="/">
+                            <a class="side-nav-menu-link media align-items-center" href="{{ route('statistical')}}">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-tachometer-alt"></i>
+                                    <i class="fas fa-chart-line"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Dashboard</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Thống kê</span>
                             </a>
                         </li>
                         <!-- End Dashboard -->
 
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link media align-items-center" target="_blank">
-                                <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-file"></i>
-                                </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Documentation</span>
-                            </a>
-                        </li>
+                       
 
-                        <li class="sidebar-heading h6">Examples</li>
+                        <li class="sidebar-heading h6">Quản lý</li>
 
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subUsers">
@@ -322,7 +316,6 @@
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
-
                             <ul id="subNews" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{route('news.list')}}">
@@ -334,11 +327,10 @@
                             </ul>
                         </li>
 
-
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subColorCapacity">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-newspaper"></i>
+                                    <i class="fas fa-palette"></i>
                                 </span>
                                 <span class="side-nav-fadeout-on-closed media-body">Dung lượng và màu sắc</span>
                                 <span class="side-nav-control-icon d-flex">
@@ -346,7 +338,6 @@
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
-
                             <ul id="subColorCapacity" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{route('capacity_color.list')}}">
@@ -360,12 +351,11 @@
                                 </li>
                             </ul>
                         </li>
-                        
 
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subDiscount">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-newspaper"></i>
+                                    <i class="fas fa-tags"></i>
                                 </span>
                                 <span class="side-nav-fadeout-on-closed media-body">Khuyến mãi</span>
                                 <span class="side-nav-control-icon d-flex">
@@ -373,13 +363,11 @@
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
-
                             <ul id="subDiscount" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{route('discount.list')}}">
                                         <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
-                                
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{route('discount.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm khuyến mãi</a>
                                 </li>
@@ -389,66 +377,60 @@
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subSlideshow">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-newspaper"></i>
+                                    <i class="fas fa-images"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Quản lí slideshow</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Slideshow</span>
                                 <span class="side-nav-control-icon d-flex">
                                     <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
                                 <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
-
                             <ul id="subSlideshow" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('slideshow.list')}}">
+                                    <a class="side-nav-menu-link" href="{{route('slide-show.list')}}">
                                         <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
-                                
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('slideshow.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm</a>
+                                    <a class="side-nav-menu-link" href="{{route('slide-show.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm</a>
                                 </li>
                             </ul>
                         </li>
 
-                        
-                        <!-- Settings -->
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link media align-items-center" href="settings.html">
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subComment">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-cogs"></i>
+                                    <i class="fas fa-comments"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Settings</span>
-                            </a>
-                        </li>
-                        <!-- End Settings -->
-
-                        <!-- Static -->
-                        <li class="side-nav-menu-item">
-                            <a class="side-nav-menu-link media align-items-center" href="static-non-auth.html">
-                                <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-file"></i>
+                                <span class="side-nav-fadeout-on-closed media-body">Bình luận</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Static page</span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
+                            <ul id="subComment" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{route('comment.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                </li>
+                            </ul>
                         </li>
-                        <!-- End Static -->
 
                     </ul>
                 </div>
             </div>
 
             <div class="mCSB_scrollTools  mCS-minimal-dark mCSB_scrollTools_vertical" style="display: block;">
-                <div >
-                   
-                        <div class="mCSB_dragger_bar" style="line-height: 0px;"></div>
-                    
+                <div>
+
+                    <div class="mCSB_dragger_bar" style="line-height: 0px;"></div>
+
                     <div class="mCSB_draggerRail"></div>
                 </div>
             </div>
 
 
         </aside>
-        <!-- End Sidebar Nav -->
+       
 
         <div class="content">
             <div class="py-4 px-3 px-md-8">
@@ -463,34 +445,20 @@
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
     <script src="{{asset('bootstrap-5.2.3/js/bootstrap.min.js')}}"></script>
-    <!-- <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script> -->
     @yield('page-sw')
 
     @yield('page-js')
-    <!-- DEMO CHARTS -->
-    <!-- <script src="public/demo/resizeSensor.js"></script>
-<script src="public/demo/chartist.js"></script>
-<script src="public/demo/chartist-plugin-tooltip.js"></script>
-<script src="public/demo/gd.chartist-area.js"></script>
-<script src="public/demo/gd.chartist-bar.js"></script>
-<script src="public/demo/gd.chartist-donut.js"></script>
-<script>
-    $.GDCore.components.GDChartistArea.init('.js-area-chart');
-    $.GDCore.components.GDChartistBar.init('.js-bar-chart');
-    $.GDCore.components.GDChartistDonut.init('.js-donut-chart');
-</script> -->
-
 </body>
 <script>
-$(document).ready(function(){
-    $(".js-custom-scroll").mCustomScrollbar({
-        theme: "minimal-dark",
-        scrollInertia: 300, // Điều chỉnh độ trễ cuộn
-        advanced: {
-            updateOnContentResize: true
-        }
+    $(document).ready(function() {
+        $(".js-custom-scroll").mCustomScrollbar({
+            theme: "minimal-dark",
+            scrollInertia: 300, // Điều chỉnh độ trễ cuộn
+            advanced: {
+                updateOnContentResize: true
+            }
+        });
     });
-});
- 
 </script>
+
 </html>

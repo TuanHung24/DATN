@@ -14,8 +14,10 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\CapacityColorController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DiscountController;
 use App\Http\Controllers\SlideShowController;
+use App\Http\Controllers\StatisticalController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,11 +62,18 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::post('add-new',[NewsController::class, 'hdAddNew'])->name('hd-add-new');
         });
     });
-    Route::prefix('slideshow')->group(function(){
-        Route::name('slideshow.')->group(function(){
+    Route::prefix('slide-show')->group(function(){
+        Route::name('slide-show.')->group(function(){
             Route::get('list', [SlideShowController::class, 'getList'])->name('list');
             Route::get('add-new',[SlideShowController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[SlideShowController::class, 'hdAddNew'])->name('hd-add-new');
+        });
+    });
+    Route::prefix('comment')->group(function(){
+        Route::name('comment.')->group(function(){
+            Route::get('list', [CommentController::class, 'getList'])->name('list');
+            Route::get('rep',[CommentController::class, 'Rep'])->name('rep');
+            Route::post('rep',[CommentController::class, 'hdRep'])->name('hd-rep');
         });
     });
     Route::prefix('provider')->group(function(){
@@ -156,10 +165,12 @@ Route::middleware(['auth', 'check.status'])->group(function(){
 
     Route::get('main',[MainController::class, 'main'])->name('main');
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
+    Route::get('statistical',[StatisticalController::class, 'getList'])->name('statistical');
+    Route::get('statistical-day',[StatisticalController::class, 'statisticalDay'])->name('statistical-day');
+    Route::post('invoices/status-counts', [StatisticalController::class, 'hdstatisticalDay'])->name('statistical-counts');
 });
 Route::middleware('guest')->group(function(){
     Route::get('login',[LoginController::class, 'Login'])->name('login');
     Route::post('login',[LoginController::class, 'hdLogin'])->name('hd-login');
-    
     Route::get('password-reset',[LoginController::class, 'passWordReset'])->name('password-reset');
 });
