@@ -19,6 +19,9 @@
             <tr>
                 <td>{{ $slide->product->name }}</td>
                 <td> <img type="img_url" class="slide" name="img_url" src="{{asset($slide->img_url)}}"> </td>
+                <td>
+                <a href="{{ route('slide-show.update', ['id' => $slide->id]) }}">Sửa</a> | <a href="{{ route('slide-show.delete', ['id' => $slide->id]) }}">Xóa</a>
+                </td>
             </tr>
             @endforeach
         </tbody>

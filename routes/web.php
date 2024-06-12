@@ -67,6 +67,9 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('list', [SlideShowController::class, 'getList'])->name('list');
             Route::get('add-new',[SlideShowController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[SlideShowController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [SlideShowController::class, 'upDate'])->name('update');
+            Route::put('update/{id}', [SlideShowController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [SlideShowController::class, 'delete'])->name('delete');
         });
     });
     Route::prefix('comment')->group(function(){

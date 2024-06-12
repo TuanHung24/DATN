@@ -10,7 +10,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h3>THÊM MỚI SLIDE </h3>
             </div>
-            <form method="POST" action="{{route('slideshow.hd-add-new')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{route('slide-show.hd-add-new')}}" enctype="multipart/form-data">
                 @csrf
                      <div class="row">
                     <div class="col-md-4">
