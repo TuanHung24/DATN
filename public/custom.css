@@ -824,7 +824,7 @@ button.ui-button::-moz-focus-inner {
 
     .form-group label {
         margin-bottom: 5px;
-        font-weight: bold;
+        
     }
 
     .form-group select {
@@ -875,3 +875,60 @@ button.ui-button::-moz-focus-inner {
         height: 20px;
         margin-right: 10px;
     }
+
+
+
+	.profile {
+		
+		max-width: 700px;
+		margin: auto;
+		padding: 20px;
+		
+		border-radius: 10px;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+	
+	
+	
+	.profile img {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		margin-bottom: 20px;
+		object-fit: cover;
+		border: 3px solid #fff;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	}
+	
+	
+	
+	.info-name,.info-email,.info-phone,.info-address,.info-username{
+		width: 600px;
+		margin-bottom: 5px;
+		padding: 30px 0px 0px 10px;
+		border-bottom: 1px solid #000;
+		font-weight: 600;
+	}
+	#info-cn{
+		border: none;
+		width: 80%;
+	}
+	#info-cn:focus{
+		outline: none;
+	}
+	.feather.feather-edit-3{
+		float: right;
+	}
+	#info-save-cn{
+		margin-left: 140px;
+	}
+	
+	
+	
+	
+	.error-message-tt {
+		color: red;
+		font-size: 14px;
+	}
+	
+	

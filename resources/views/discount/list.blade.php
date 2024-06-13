@@ -28,8 +28,8 @@
             
             <td>{{ $disCount->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
-                <a href="{{ route('discount.detail', ['id' => $disCount->id]) }}">Chi tiết</a>|
-                <a href="{{ route('discount.update', ['id' => $disCount->id]) }}">Cập nhật</a>
+                <a href="{{ route('discount.detail', ['id' => $disCount->id]) }}" class="btn btn-outline-primary"><i class="fas fa-info-circle"></i></a>|
+                <a href="{{ route('discount.update', ['id' => $disCount->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
             </td>
         <tr>
         @endforeach

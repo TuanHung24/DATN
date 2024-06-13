@@ -39,6 +39,10 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('update/{id}', [AdminController::class, 'upDate'])->name('update');
             Route::put('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');
+            Route::get('info', [AdminController::class, 'inFo'])->name('info');
+            Route::post('info', [AdminController::class, 'updateInfo'])->name('update-info');
+            Route::get('reset-password', [AdminController::class, 'resetPassword'])->name('reset-password');
+            Route::post('reset-password', [AdminController::class, 'hdResetPassword'])->name('hd-reset-password');
         });
         
     });

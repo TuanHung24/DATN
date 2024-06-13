@@ -37,7 +37,8 @@
         <tr>
             <td>{{ $Brand->name }}</td>
             <td>
-                <a href="{{ route('brand.update', ['id' => $Brand->id]) }}">Sửa</a> | <a href="{{ route('brand.delete', ['id' => $Brand->id]) }}">Xóa</a>
+                <a href="{{ route('brand.update', ['id' => $Brand->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
+                <a href="{{ route('brand.delete', ['id' => $Brand->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         <tr>
         @endforeach
@@ -67,7 +68,7 @@
                   @foreach($listBrandDelete as $brandDelete)
                     <tr>
                         <td>{{$brandDelete->name}}</td>
-                        <td><a href="{{ route('brand.restore',['id'=>$brandDelete->id])}}">Khôi phục</a> | <a href="#">Chi tiết</a></td>
+                        <td><a href="{{ route('brand.restore',['id'=>$brandDelete->id])}}"><i class="fas fa-undo"></i>Khôi phục</a> | <a href="#"><i class="fas fa-info-circle"></i>Chi tiết</a></td>
                     </tr>
                     @endforeach
                 </tbody>

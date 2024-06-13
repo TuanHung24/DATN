@@ -38,9 +38,9 @@
         <td>{{ $Product->description }}</td>
         <td>{{ $Product->brand->name }}</td>
         <td class="chuc-nang">
-            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><span data-feather="chevrons-right"></span>Chi tiết</a> |
-            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><span data-feather="edit"></span> Cập nhật</a> |
-            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><span data-feather="trash-2"></span>Xóa</a>
+            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
+            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a> 
         </td>
     <tr>
     @endforeach

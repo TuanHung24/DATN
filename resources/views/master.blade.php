@@ -16,7 +16,7 @@
     <!-- <link rel="stylesheet" href="public/demo/chartist.css">
     <link rel="stylesheet" href="public/demo/chartist-plugin-tooltip.css"> -->
     <link rel="stylesheet" href="{{asset('css/graindashboard.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{asset('fontawesome-free-6.5.2-web/css/all.min.css')}}">
 
 </head>
 @extends('layout.app')
@@ -105,11 +105,11 @@
 
                         <ul id="profileMenu" class="unfold unfold-user unfold-light unfold-top unfold-centered position-absolute pt-2 pb-1 mt-4 unfold-css-animation unfold-hidden fadeOut" aria-labelledby="profileMenuInvoker" style="animation-duration: 300ms;">
                             <li class="unfold-item">
-                                <a class="unfold-link d-flex align-items-center text-nowrap" href="#">
+                                <a class="unfold-link d-flex align-items-center text-nowrap" href="{{route('admin.info')}}">
                                     <span class="unfold-item-icon mr-3">
                                         <i class="fas fa-user"></i>
                                     </span>
-                                    My Profile
+                                    Thông tin cá nhân
                                 </a>
                             </li>
                             <li class="unfold-item unfold-item-has-divider">

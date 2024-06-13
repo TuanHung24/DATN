@@ -84,7 +84,7 @@
             @endif
             
             <td class="chuc-nang">
-                <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info">Chi tiết</a>
+                <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i>Chi tiết</a>
             </td>
         <tr>
             @endforeach
