@@ -10,6 +10,7 @@
     <table class="table">
         <thead>
             <tr>
+                <th>Tác giả</th>
                 <th>Title</th> <!-- Đã sửa thành </th> -->
                 <th>Nội dung</th>
             </tr>
@@ -17,8 +18,12 @@
         <tbody>
             @foreach($listNews as $News)
             <tr>
+                <td>{{ $News->admin->name }}</td>
                 <td>{{ $News->title }}</td>
                 <td>{!! $News->content !!}</td>
+                <td>
+                <a href="{{ route('news.update', ['id' => $News->id]) }}">Sửa</a> | <a href="{{ route('news.delete', ['id' => $News->id]) }}">Xóa</a>
+                </td>
             </tr> <!-- Đã thêm thẻ đóng </tr> -->
             @endforeach
         </tbody>

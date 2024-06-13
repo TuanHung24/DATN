@@ -9,5 +9,8 @@ class News extends Model
 {
     use HasFactory;
     protected $table='news';
+    public function admin(){
+        return $this->belongsTo(Admin::class);
+    }
     
 }

@@ -60,6 +60,9 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('list', [NewsController::class, 'getList'])->name('list');
             Route::get('add-new',[NewsController::class, 'addNew'])->name('add-new');
             Route::post('add-new',[NewsController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::get('update/{id}', [NewsController::class, 'upDate'])->name('update');
+            Route::put('update/{id}', [NewsController::class, 'hdUpdate'])->name('hd-update');
+            Route::get('delete/{id}', [NewsController::class, 'delete'])->name('delete');
         });
     });
     Route::prefix('slide-show')->group(function(){

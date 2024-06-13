@@ -13,6 +13,10 @@
             <form method="POST" action="{{route('news.hd-add-new')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
+                <div class="col-md-6">
+                <label for="admin_id" class="form-label">Tác giả</label>
+                <input type="text" class="form-control" value="{{Auth::user()->name}}" id="admin_id" name="admin_id" readonly />
+                    </div>
                     <div class="col-md-6">
                         <label for="name" class="form-label">Title</label>
                         <input type="text" class="form-control" name="title">
