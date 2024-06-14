@@ -931,4 +931,10 @@ button.ui-button::-moz-focus-inner {
 		font-size: 14px;
 	}
 	
-	
+#orderChart{
+	max-height: 500px;
+}
+
+
+
+

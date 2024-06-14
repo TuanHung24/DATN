@@ -20,7 +20,7 @@
             <td id="td-color">{{ $product->color->name }}<input type="hidden" value="{{ $product->color->id }}" id="color-id" /></td>
             <td id="td-capacity">{{ $product->capacity->name }}<input type="hidden" value="{{ $product->capacity->id }}" id="capacity-id" /></td>
             <td>{{ $product->price_formatted }}</td>
-            <td>{{ $product->quanlity }}</td>
+            <td>{{ $product->quantity }}</td>
 
             @php
                 $activeDiscount = $product->discount_detail->first(function($discountDetail) {
@@ -37,7 +37,7 @@
             <td>{{$product->price_formatted}}<input type="hidden" value="{{ $product->price }}" name="price" id="price-id" /></td>
             @endif
 
-            <td><input type="number" max="{{ $product->quanlity }}" value="1" min="1" name="quanlity" id='quanlity-id' /></td>
+            <td><input type="number" max="{{ $product->quantity }}" value="1" min="1" name="quantity" id='quantity-id' /></td>
             <td><input type="checkbox" name="buy" id="buy-id"></td>
         </tr>
         @endforeach

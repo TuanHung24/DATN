@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>DANH SÁCH SẢN PHẨM</h3>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
+    <h3>DANH SÁCH DÒNG SẢN PHẨM</h3>
+    <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
 </div>
 @if(session('Error'))
     <div class="alert alert-danger d-flex align-items-center" role="alert">

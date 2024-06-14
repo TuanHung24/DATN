@@ -18,7 +18,7 @@ class InvoiceController extends Controller
     public function addNew()
     {
         $listProduct = Product::whereHas('product_detail', function ($query) {
-            $query->where('quanlity', '>', 0);
+            $query->where('quantity', '>', 0);
         })->with('product_detail')->get();
 
         $listProduct->each(function ($product) {
@@ -46,7 +46,7 @@ class InvoiceController extends Controller
                 $invoiceDetail->product_id = $request->spID[$i];
                 $invoiceDetail->color_id = $request->msID[$i];
                 $invoiceDetail->capacity_id = $request->dlID[$i];
-                $invoiceDetail->quanlity = $request->quanlity[$i];
+                $invoiceDetail->quantity = $request->quantity[$i];
 
                 $productDetail = ProductDetail::where('product_id', $request->spID[$i])
                     ->where('color_id', $request->msID[$i])
@@ -54,7 +54,7 @@ class InvoiceController extends Controller
                     ->first();
                 if (!empty($productDetail)) {
 
-                    $productDetail->quanlity -= $invoiceDetail->quanlity;
+                    $productDetail->quantity -= $invoiceDetail->quantity;
                     $productDetail->save();
                 }
 
@@ -84,7 +84,7 @@ class InvoiceController extends Controller
     {
         $productDetail = ProductDetail::with(['color', 'capacity', 'discount_detail.discount'])
             ->where('product_id', $request->product_id)
-            ->where('quanlity', '>', 0)
+            ->where('quantity', '>', 0)
             // ->whereHas('discount_detail.discount', function ($query) {
             //     $query->where('date_start', '<=', Carbon::now('Asia/Ho_Chi_Minh'))
             //         ->where('date_end', '>=', Carbon::now('Asia/Ho_Chi_Minh'));
@@ -93,7 +93,7 @@ class InvoiceController extends Controller
 
             // $productsWithoutDiscountOrExpired = ProductDetail::with(['color', 'capacity'])
             // ->where('product_id', $request->product_id)
-            // ->where('quanlity', '>', 0)
+            // ->where('quantity', '>', 0)
             // ->whereDoesntHave('discount_detail')
             // ->orWhereHas('discount_detail.discount', function($query) {
             //     $now = Carbon::now('Asia/Ho_Chi_Minh');

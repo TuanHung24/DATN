@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory,SoftDeletes;
     protected $table='products';
     public function product_detail(){
-        return $this->hasMany(ProductDetail::class);
+        return $this->hasMany(ProductDetail::class,'product_id');
     }
     public function comment(){
         return $this->hasMany(Comment::class);
@@ -21,9 +21,9 @@ class Product extends Model
     }
     public function product_description()
     {
-        return $this->hasMany(ProductDescription::class, 'product_id');
+        return $this->hasOne(ProductDescription::class, 'product_id');
     }
-
+    
     public function img_product()
     {
         return $this->hasMany(ImgProduct::class, 'product_id');

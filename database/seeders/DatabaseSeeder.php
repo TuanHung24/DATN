@@ -20,10 +20,10 @@ class DatabaseSeeder extends Seeder
             CapacityTableSeeder::class,
             ColorTableSeeder::class,
             ProductSeeder::class,
-            ProductDescriptionSeeder::class,
             FrontCameraSeeder::class,
             RearCameraSeeder::class,
-            ScreenSeeder::class
+            ScreenSeeder::class,
+            ProductDescriptionSeeder::class,
         ]);
     }
 }

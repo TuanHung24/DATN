@@ -243,7 +243,7 @@
                                 <span class="side-nav-menu-icon d-flex mr-3">
                                     <i class="fas fa-box"></i>
                                 </span>
-                                <span class="side-nav-fadeout-on-closed media-body">Sản phẩm</span>
+                                <span class="side-nav-fadeout-on-closed media-body">Dòng sản phẩm</span>
                                 <span class="side-nav-control-icon d-flex">
                                     <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
                                 </span>
@@ -444,6 +444,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{asset('bootstrap-5.2.3/js/bootstrap.min.js')}}"></script>
     @yield('page-sw')
 

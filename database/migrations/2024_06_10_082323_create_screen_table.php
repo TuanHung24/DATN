@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('screen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_description_id')->constrained('product_description');
             $table->string('technoscreen',30);
             $table->string('resolution', 60);
             $table->string('size', 20);

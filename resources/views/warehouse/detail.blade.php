@@ -23,7 +23,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Mã hóa đơn</th>
+                <th>Mã nhập kho</th>
                 <th>Tên sản phẩm</th>
                 <th>Màu sắc</th>
                 <th>Dung lượng</th>
@@ -36,12 +36,12 @@
         </thead>
         @foreach($listWareHouseDetail as $wareHouseDetail)
         <tr>
-            <td>{{ $wareHouseDetail->warehouse_id }}</td>
+            <td>NK{{ $wareHouseDetail->warehouse_id }}</td>
             <td>{{ $wareHouseDetail->product->name }}</td>
             <td>{{ $wareHouseDetail->color->name }}</td>
             <td>{{ $wareHouseDetail->capacity->name }}</td>
             
-            <td>{{ $wareHouseDetail->quanlity }}</td>
+            <td>{{ $wareHouseDetail->quantity }}</td>
             <td>{{ $wareHouseDetail->in_price_formatted }}</td>
             <td>{{ $wareHouseDetail->out_price_formatted }}</td>
             <td>{{ $wareHouseDetail->into_money_formatted }}</td>

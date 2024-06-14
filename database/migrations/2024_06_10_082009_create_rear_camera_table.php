@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('rear_camera', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('product_description_id')->constrained('product_description');
             $table->string('resolution',50);
             $table->text('record');
             $table->text('feature');

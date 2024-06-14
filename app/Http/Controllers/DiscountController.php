@@ -6,6 +6,7 @@ use App\Models\Discount;
 use App\Models\DiscountDetail;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use Exception;
 use Illuminate\Http\Request;
 
 class DiscountController extends Controller
@@ -19,6 +20,8 @@ class DiscountController extends Controller
         return view('discount.add-new',compact('listProduct'));
     } 
     public function hdAddNew(Request $request){
+        try
+        {
         $disCount = new Discount();
         $disCount->name = $request->discount_name;
         $disCount->date_start = $request->date_start;
@@ -45,6 +48,9 @@ class DiscountController extends Controller
             
         }
         return redirect()->route('discount.list');
+    }catch(Exception $e){
+        return back();
+    }
     } 
     public function upDate($id){
         $disCount = Discount::with('discount_detail')->find($id);

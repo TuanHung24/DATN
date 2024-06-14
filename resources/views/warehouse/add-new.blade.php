@@ -56,9 +56,9 @@
 </div>
 <div class="row">
   <div class="col-md-1">
-    <label for="quanlity" class="form-label">Số lượng:</label>
-    <input type="number" class="form-control" name="quanlity" id="quanlity" value="1" min="1">
-    <span class="error" id="error-quanlity"></span>
+    <label for="quantity" class="form-label">Số lượng:</label>
+    <input type="number" class="form-control" name="quantity" id="quantity" value="1" min="1">
+    <span class="error" id="error-quantity"></span>
   </div>
 </div>
 <div class="row">
@@ -125,7 +125,7 @@
       var idDL = $("#capacity").find(":selected").val();
       var mauSac = $("#color").find(":selected").text();
       var idMS = $("#color").find(":selected").val();
-      var soLuong = $("#quanlity").val();
+      var soLuong = $("#quantity").val();
       var giaNhap = $("#in-price").val();
       var giaBan = $("#out-price").val();
       var thanhTien = soLuong * giaNhap;
@@ -138,7 +138,7 @@
         row.find('td:eq(1)').text(tenSP).append(`<input type="hidden" name="idSP[]" value="${idSP}"/>`);
         row.find('td:eq(2)').text(dungLuong).append(`<input type="hidden" name="capacity_id[]" value="${idDL}"/>`);
         row.find('td:eq(3)').text(mauSac).append(`<input type="hidden" name="color_id[]" value="${idMS}"/>`);
-        row.find('td:eq(4)').text(soLuong).append(`<input type="hidden" name="quanlity[]" value="${soLuong}"/>`);
+        row.find('td:eq(4)').text(soLuong).append(`<input type="hidden" name="quantity[]" value="${soLuong}"/>`);
         row.find('td:eq(5)').text(formatNumber(giaNhap)).append(`<input type="hidden" name="in_price[]" value="${giaNhap}"/>`);
         row.find('td:eq(6)').text(formatNumber(giaBan)).append(`<input type="hidden" name="out_price[]" value="${giaBan}"/>`);
         row.find('td:eq(7)').text(formatNumber(thanhTien)).append(`<input type="hidden" name="into_money[]" value="${thanhTien}"/>`);
@@ -156,10 +156,10 @@
             foundDuplicate = true;
 
             if (confirm('Sản phẩm đã tồn tại, bạn có muốn cập nhật số lượng và giá mới không?')) {
-              var newQuantity = parseInt($(this).find('input[name="quanlity[]"]').val()) + parseInt(soLuong);
+              var newQuantity = parseInt($(this).find('input[name="quantity[]"]').val()) + parseInt(soLuong);
               var newTotal = parseInt(giaNhap) * newQuantity;
 
-              $(this).find('input[name="quanlity[]"]').val(newQuantity.toString());
+              $(this).find('input[name="quantity[]"]').val(newQuantity.toString());
               $(this).find('td').eq(4).text(newQuantity.toString());
 
               $(this).find('input[name="in_price[]"]').val(giaNhap.toString());
@@ -182,7 +182,7 @@
             <td>${tenSP}<input type="hidden" name="idSP[]" value="${idSP}"/></td>
             <td>${dungLuong}<input type="hidden" name="capacity_id[]" value="${idDL}"/></td>
             <td>${mauSac}<input type="hidden" name="color_id[]" value="${idMS}"/></td>
-            <td>${soLuong}<input type="hidden" name="quanlity[]" value="${soLuong}"/></td>
+            <td>${soLuong}<input type="hidden" name="quantity[]" value="${soLuong}"/></td>
             <td>${formatNumber(giaNhap)}<input type="hidden" name="in_price[]" value="${giaNhap}"/></td>
             <td>${formatNumber(giaBan)}<input type="hidden" name="out_price[]" value="${giaBan}"/></td>
             <td>${formatNumber(thanhTien)}<input type="hidden" name="into_money[]" value="${thanhTien}"/></td>
@@ -221,14 +221,14 @@
       $("#product").val(idSP);
       $("#capacity").val(idDL);
       $("#color").val(idMS);
-      $("#quanlity").val(soLuong);
+      $("#quantity").val(soLuong);
       $("#in-price").val(giaNhap);
       $("#out-price").val(giaBan);
 
       isEditMode = true;
     });
 
-    $("#provider, #product, #color, #capacity, #quanlity, #in-price, #out-price").change(function() {
+    $("#provider, #product, #color, #capacity, #quantity, #in-price, #out-price").change(function() {
       $(`#error-${this.id}`).hide();
     });
 
@@ -267,16 +267,16 @@
         $("#error-capacity").text("").hide();
       }
 
-      var soLuong = parseFloat($("#quanlity").val());
+      var soLuong = parseFloat($("#quantity").val());
 
       if (isNaN(soLuong)) {
-        $("#error-quanlity").text("Vui lòng nhập số lượng").show();
+        $("#error-quantity").text("Vui lòng nhập số lượng").show();
         isValid = false;
       } else if (soLuong <= 0) {
-        $("#error-quanlity").text("Số lượng không thể là số âm").show();
+        $("#error-quantity").text("Số lượng không thể là số âm").show();
         isValid = false;
       } else {
-        $("#error-quanlity").text("").hide();
+        $("#error-quantity").text("").hide();
       }
 
       var giaNhap = parseFloat($("#in-price").val());
@@ -308,7 +308,7 @@
       $("#capacity").val("Chọn dung lượng");
       $("#in-price").val("");
       $("#out-price").val("");
-      $("#quanlity").val("1");
+      $("#quantity").val("1");
       $(".error").hide();
     }
 

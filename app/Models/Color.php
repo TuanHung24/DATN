@@ -9,4 +9,7 @@ class Color extends Model
 {
     use HasFactory;
     protected $table = 'colors';
+    public function img_product(){
+        return $this->hasMany(ImgProduct::class,'color_id');
+    }
 }
