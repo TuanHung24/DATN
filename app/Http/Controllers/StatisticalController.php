@@ -15,77 +15,75 @@ class StatisticalController extends Controller
 {
     public function getList()
     {
-        $inVoice=Invoice::where('status',4)->count();
-        $backInvoice=Invoice::where('status',5)->count();
+        $inVoice = Invoice::where('status', 4)->count();
+        $backInvoice = Invoice::where('status', 5)->count();
 
         $toTal = Invoice::where('status', 4)->sum('total');
         $totalInvoice = number_format($toTal, 0, ',', '.');
 
-        $cusTomer=Customer::count();
-        $quanlityProduct=ProductDetail::sum('quanlity');
-        
-        $priceWarehouse=Warehouse::sum('total');
+        $cusTomer = Customer::count();
+        $quantityProduct = ProductDetail::sum('quantity');
+
+        $priceWarehouse = Warehouse::sum('total');
         $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
 
         $sellProduct = InvoiceDetail::select('product_id')
-        ->selectRaw('SUM(quanlity) as totalpd')
-        ->groupBy('product_id')
-        ->orderByDesc('totalpd')
-        ->take(3)
-        ->get();
-        
-        return view('statistical',compact('inVoice','backInvoice','totalInvoice','sellProduct','cusTomer','quanlityProduct','totalWarehouse'));
+            ->selectRaw('SUM(quantity) as totalpd')
+            ->groupBy('product_id')
+            ->orderByDesc('totalpd')
+            ->take(3)
+            ->get();
+
+        return view('statistical', compact('inVoice', 'backInvoice', 'totalInvoice', 'sellProduct', 'cusTomer', 'quantityProduct', 'totalWarehouse'));
     }
-    public function ThongKeHoaDon(Request $request){
-
+    public function statisticalMonth(Request $request)
+    {
         try {
-            $Month = $request->month;
-            $Year = $request->year;
-    
-            // Chỉ lấy dữ liệu nếu cả hai tham số tháng và năm đều được cung cấp
-            if ($Month && $Year) {
-                $data = DB::table('hoa_don')
-                ->join('chi_tiet_hoa_don', 'hoa_don.id', '=', 'chi_tiet_hoa_don.hoa_don_id')
-                ->whereYear('hoa_don.created_at', $Year)
-                ->whereMonth('hoa_don.created_at', $Month)
-                ->where('hoa_don.trang_thai', 4)
-                ->select(
-                    DB::raw('DATE(hoa_don.created_at) as date'),
-                    DB::raw('COUNT(DISTINCT hoa_don.id) as count'), 
-                    DB::raw('SUM(chi_tiet_hoa_don.thanh_tien) as tongtien'),
-                    DB::raw('SUM(chi_tiet_hoa_don.so_luong) as soluong')
-                )
-                ->groupBy('date')
-                ->get();
+        $Month = $request->month;
+        $Year = $request->year;
 
-                
-            } else {
-                // Nếu không có tham số, trả về dữ liệu rỗng hoặc thông báo lỗi
-                $data = [];
-            }
-    
-           
-    
-            // Trả về JSON response sau khi kiểm tra request
-            return response()->json($data);
+        // Chỉ lấy dữ liệu nếu cả hai tham số tháng và năm đều được cung cấp
+        if ($Month && $Year) {
+            $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
+                ->whereYear('invoice.created_at', $Year)
+                ->whereMonth('invoice.created_at', $Month)
+                ->where('invoice.status', 4)
+                ->select(
+                    DB::raw('DATE(invoice.created_at) as date'),
+                    DB::raw('COUNT(DISTINCT invoice.id) as count'),
+                    DB::raw('SUM(invoice_detail.into_money) as tongtien'),
+                    DB::raw('SUM(invoice_detail.quantity) as soluong')
+                )
+                ->groupBy(DB::raw('DATE(invoice.created_at)'))
+                ->get();
+        } else {
+            $data = [];
+        }
+
+        // Trả về JSON response sau khi kiểm tra request
+        return response()->json($data);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['error' => 'Lỗi máy chủ'], 500);
         }
     }
-    public function statisticalDay(){
 
-       
-        
+    public function statisticalDay()
+    {
+
+
+
         return view('statistical-day');
     }
-    public function hdstatisticalDay(Request $request) {
+    public function hdstatisticalDay(Request $request)
+    {
         $day = $request->day;
         $month = $request->month;
         $year = $request->year;
-    
+
         // Helper function to build query with the date filters
-        function applyDateFilters($query, $day, $month, $year) {
+        function applyDateFilters($query, $day, $month, $year)
+        {
             if ($day) {
                 $query->whereDay('date', $day);
             }
@@ -97,7 +95,7 @@ class StatisticalController extends Controller
             }
             return $query;
         }
-    
+
         $statuses = [
             'cho_xu_ly' => applyDateFilters(Invoice::where('status', Invoice::TRANG_THAI_CHO_XU_LY), $day, $month, $year)->count(),
             'da_duyet' => applyDateFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_DUYET), $day, $month, $year)->count(),
@@ -105,8 +103,7 @@ class StatisticalController extends Controller
             'hoan_thanh' => applyDateFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $day, $month, $year)->count(),
             'da_huy' => applyDateFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $day, $month, $year)->count(),
         ];
-    
+
         return response()->json($statuses);
     }
-
 }

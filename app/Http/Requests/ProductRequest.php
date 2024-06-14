@@ -29,17 +29,15 @@ class ProductRequest extends FormRequest
 
             'weight'=>'required|numeric|min:100|max:700',
 
-            'description' => 'required|min:3|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u',
-
-            'size'=>'required|min:10|max:50|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/]+$/u',
-           
-            'screen'=>'required|numeric|min:1|max:50',
+            
 
             'os' => 'required|min:3|max:50|regex:/^[^0-9,^!@#$%^&*()_+{}\[\]:;<>?~\\/\\-][^!@#$%^&*()_+{}\[\]:;<>?~\\/\\-]+$/u',
 
             'ram'=>'required|numeric|min:1|max:16',
 
-            'camera'=>'required|min:3|max:50',
+            'chip'=>'required|min:3|max:50',
+
+            'sims'=>'required|min:5|max:100',
 
             'battery'=>'required|numeric|min:1000|max:6000',
 
@@ -62,18 +60,11 @@ class ProductRequest extends FormRequest
             'weight.min'=>"Trọng lượng phải lớn hơn :min g!",
             'weight.max'=>"Trọng lượng phải nhỏ hơn :max g!",
             
-            'description.required'=>"Mô tả không được bỏ trống!",
-            'description.min'=>"Mô tả phải lớn hơn :min ký tự!",
-            'description.regex'=>"Mô tả không chứa ký tự đặc biệt!",
+            
 
-            'size.required'=>"Kích thước không được bỏ trống!",
-            'size.min'=>"Kích thước từ :min đến :max ký tự!",
-            'size.max'=>"Kích thước từ :min đến :max ký tự!",
-            'size.regex'=>"Kích thước không chứa ký tự đặc biệt!",
+           
 
-            'screen.required'=>"Màn hình không được bỏ trống!",
-            'screen.min'=>"Màn hình phải lớn hơn :min inch!",
-            'screen.max'=>"Màn hình phải nhỏ hơn :max inch!",
+            
             
             'os.required'=>"Hệ điều hành không được bỏ trống!",
             'os.min'=>"Hệ điều hành phải lớn hơn :min ký tự!",
@@ -81,12 +72,16 @@ class ProductRequest extends FormRequest
             'os.regex'=>"Hệ điều hành không bắt đầu bằng số và không chứa ký tự đặc biệt!",
 
             'ram.required'=>"Ram không được bỏ trống!",
-            'ram.min'=>"Ram phải lớn hơn :minGB!", 
-            'ram.max'=>"Ram phải nhỏ hơn :maxGB!", 
+            'ram.min'=>"Ram phải lớn hơn :min GB!", 
+            'ram.max'=>"Ram phải nhỏ hơn :max GB!", 
 
-            'camera.required'=>"Camera không được bỏ trống!",
-            'camera.min'=>"Camera phải lớn hơn :min ký tự!",
-            'camera.max'=>"Camera phải nhỏ hơn :max ký tự!",
+            'chip.required'=>"Chip không được bỏ trống!",
+            'chip.min'=>"Chip phải lớn hơn :min ký tự!",
+            'chip.max'=>"Chip phải nhỏ hơn :max ký tự!",
+
+            'sims.required'=>"Sim không được bỏ trống!",
+            'sims.min'=>"Sim phải lớn hơn :min ký tự!",
+            'sims.max'=>"Sim phải nhỏ hơn :max ký tự!",
 
             'battery.required'=>"battery không được bỏ trống!",
             'battery.min'=>"battery phải lớn hơn :min mAh!", 

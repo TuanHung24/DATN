@@ -39,7 +39,7 @@
             <td>{{ $invoiceDetail->product->name }}</td>
             <td>{{ $invoiceDetail->color->name }}</td>
             <td>{{ $invoiceDetail->capacity->name }}</td>
-            <td>{{ $invoiceDetail->quanlity }}</td>
+            <td>{{ $invoiceDetail->quantity }}</td>
             <td>{{ $invoiceDetail->price_formatted }}</td>
             <td>{{ $invoiceDetail->into_money_formatted }}</td>
         <tr>

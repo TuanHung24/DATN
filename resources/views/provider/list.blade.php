@@ -23,7 +23,8 @@
             <td>{{ $Provider->phone }}</td>
             <td>{{ $Provider->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
-                <a href="{{ route('provider.update', ['id' => $Provider->id]) }}">Sửa</a> | <a href="{{ route('provider.delete', ['id' => $Provider->id]) }}">Xóa</a>
+                <a href="{{ route('provider.update', ['id' => $Provider->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+                 <a href="{{ route('provider.delete', ['id' => $Provider->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         <tr>
         @endforeach

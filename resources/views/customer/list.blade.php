@@ -28,7 +28,8 @@
             
             <td>{{ $cusTomer->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
-                <a href="{{ route('customer.update', ['id' => $cusTomer->id]) }}">Sửa</a> | <a href="{{ route('customer.delete', ['id' => $cusTomer->id]) }}">Xóa</a>
+                <a href="{{ route('customer.update', ['id' => $cusTomer->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
+                <a href="{{ route('customer.delete', ['id' => $cusTomer->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         <tr>
         @endforeach

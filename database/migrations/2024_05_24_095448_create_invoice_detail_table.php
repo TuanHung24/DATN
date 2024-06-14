@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products');
             $table->foreignId('color_id')->constrained('colors');
             $table->foreignId('capacity_id')->constrained('capacity');     
-            $table->integer("quanlity");
+            $table->integer("quantity");
             $table->decimal("price",10,0);
             $table->decimal("into_money",12,0);
             $table->timestamps();

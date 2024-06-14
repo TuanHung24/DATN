@@ -3,8 +3,8 @@
 @section('content')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>DANH SÁCH SẢN PHẨM</h3>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
+    <h3>DANH SÁCH DÒNG SẢN PHẨM</h3>
+    <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
 </div>
 @if(session('Error'))
     <div class="alert alert-danger d-flex align-items-center" role="alert">
@@ -38,9 +38,9 @@
         <td>{{ $Product->description }}</td>
         <td>{{ $Product->brand->name }}</td>
         <td class="chuc-nang">
-            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><span data-feather="chevrons-right"></span>Chi tiết</a> |
-            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><span data-feather="edit"></span> Cập nhật</a> |
-            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><span data-feather="trash-2"></span>Xóa</a>
+            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
+            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a> 
         </td>
     <tr>
     @endforeach

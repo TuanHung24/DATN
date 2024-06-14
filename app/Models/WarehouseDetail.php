@@ -9,6 +9,16 @@ class WarehouseDetail extends Model
 {
     use HasFactory;
     protected $table = 'warehouse_detail';
+    protected $fillable = [
+        'warehouse_id',
+        'product_id',
+        'color_id',
+        'capacity_id',
+        'quanlity',
+        'in_price',
+        'out_price',
+    ];
+
     public function product(){
         return $this->belongsTo(Product::class);
     }

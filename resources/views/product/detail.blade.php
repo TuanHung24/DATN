@@ -51,11 +51,11 @@
                     </li>
                     <li class="info-li">
                         <p class="info-p">Chip:</p>
-                        <span class="info-value">{{ $productDescription->chip }} GB</span>
+                        <span class="info-value">{{ $productDescription->chip }}</span>
                     </li>
                     <li class="info-li">
                         <p class="info-p">Sim:</p>
-                        <span class="info-value">{{ $productDescription->sims }} GB</span>
+                        <span class="info-value">{{ $productDescription->sims }}</span>
                     </li>
                 </ul>
 
@@ -81,7 +81,7 @@
                     <td>{{ $productDetail->color->name }}</td>
                     <td>{{ $productDetail->capacity->name }}</td>
                     <td>{{ $productDetail->price_formatted }}</td>
-                    <td>{{ $productDetail->quanlity }}</td>
+                    <td>{{ $productDetail->quantity }}</td>
                 <tr>
                     @endforeach
             </tbody>

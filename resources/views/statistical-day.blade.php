@@ -44,8 +44,6 @@
 @endsection
 
 @section('page-js')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function() {
         var pieChart;

@@ -39,6 +39,10 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('update/{id}', [AdminController::class, 'upDate'])->name('update');
             Route::put('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');
+            Route::get('info', [AdminController::class, 'inFo'])->name('info');
+            Route::post('info', [AdminController::class, 'updateInfo'])->name('update-info');
+            Route::get('reset-password', [AdminController::class, 'resetPassword'])->name('reset-password');
+            Route::post('reset-password', [AdminController::class, 'hdResetPassword'])->name('hd-reset-password');
         });
         
     });
@@ -129,6 +133,8 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('restore/{id}', [ProductController::class, 'restore'])->name('restore');
             Route::get('deleted/{id}', [ProductController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
+            Route::get('add-img/{id}',[ProductController::class, 'addImg'])->name('add-img');
+            Route::post('add-img/{id}',[ProductController::class, 'hdAddNew'])->name('hd-add-img');
         });
     });
 
@@ -166,6 +172,7 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('detail/{id}', [WarehouseController::class, 'warehouseDetail'])->name('detail');
             Route::get('get-product',[WarehouseController::class, 'getProduct'])->name('get-product');
             Route::post('add-new',[WarehouseController::class, 'hdAddNew'])->name('hd-add-new');
+            Route::post('import', [WareHouseController::class, 'importExcel'])->name('import');
         });
     });
 
@@ -173,10 +180,11 @@ Route::middleware(['auth', 'check.status'])->group(function(){
     Route::get('logout',[LoginController::class, 'logOut'])->name('logout');
     Route::get('statistical',[StatisticalController::class, 'getList'])->name('statistical');
     Route::get('statistical-day',[StatisticalController::class, 'statisticalDay'])->name('statistical-day');
+    Route::get('statistical-month',[StatisticalController::class, 'statisticalMonth'])->name('statistical-month');
     Route::post('invoices/status-counts', [StatisticalController::class, 'hdstatisticalDay'])->name('statistical-counts');
 });
 Route::middleware('guest')->group(function(){
-    Route::get('login',[LoginController::class, 'Login'])->name('login');
-    Route::post('login',[LoginController::class, 'hdLogin'])->name('hd-login');
+    Route::get('/',[LoginController::class, 'Login'])->name('login');
+    Route::post('/',[LoginController::class, 'hdLogin'])->name('hd-login');
     Route::get('password-reset',[LoginController::class, 'passWordReset'])->name('password-reset');
 });

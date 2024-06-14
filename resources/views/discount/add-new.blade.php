@@ -169,7 +169,7 @@
         //     var soLuongHienTai = parseInt(existingRow.find('td').eq(4).text());
         //     var soLuongMoi = parseInt(item.soLuong);
         //     var giaBan = parseInt(item.giaBan);
-        //     var maxQuantity = parseInt(existingRow.find('input[name="quanlity[]"]').attr('max'));
+        //     var maxQuantity = parseInt(existingRow.find('input[name="quantity[]"]').attr('max'));
 
         //     if (soLuongHienTai + soLuongMoi > maxQuantity) {
         //         alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho.");
@@ -179,14 +179,14 @@
         //     var newQuantity = soLuongHienTai + soLuongMoi;
         //     var toTalNew = newQuantity * giaBan;
 
-        //     existingRow.find('input[name="quanlity[]"]').val(newQuantity.toString());
+        //     existingRow.find('input[name="quantity[]"]').val(newQuantity.toString());
         //     existingRow.find('td').eq(4).text(newQuantity.toString());
         //     existingRow.find('input[name="total[]"]').val(toTalNew.toString());
         //     existingRow.find('td').eq(6).text(formatNumber(toTalNew).toString());
 
-        //     if (existingRow.find('td').eq(4).find('input[name="quanlity[]"]').length === 0) {
+        //     if (existingRow.find('td').eq(4).find('input[name="quantity[]"]').length === 0) {
         //         // Nếu không tồn tại, thêm input vào hàng
-        //         existingRow.find('td').eq(4).append(`<input type="hidden" name="quanlity[]" value="${newQuantity}" max="${maxQuantity}"/>`);
+        //         existingRow.find('td').eq(4).append(`<input type="hidden" name="quantity[]" value="${newQuantity}" max="${maxQuantity}"/>`);
         //     }
         //     if (existingRow.find('td').eq(6).find('input[name="total[]"]').length === 0) {
         //         // Nếu không tồn tại, thêm input vào hàng
@@ -204,11 +204,11 @@
                     var mauSac = $(this).find('#td-color').text();
                     var dungLuong = $(this).find('#td-capacity').text();
                     var giamGia = $(this).find('#percent-id').val();
-                    var soLuong = $(this).find('#quanlity-id').val();
+                    var soLuong = $(this).find('#quantity-id').val();
                     var giaBan = $('#price-id', this).val();
                     var MauSacId = $('#color-id', this).val();
                     var DungLuongId = $('#capacity-id', this).val();
-                    // var maxQuantity = parseInt($(this).find('#quanlity-id').attr('max'));
+                    // var maxQuantity = parseInt($(this).find('#quantity-id').attr('max'));
 
                     // // Check if quantity is valid
                     // if (parseInt(soLuong) > maxQuantity) {
@@ -279,7 +279,7 @@
             <td>${tenSP}<input type="hidden" name="spID[]" value="${idSP}"/></td>
             <td>${mauSac}<input type="hidden" name="msID[]" value="${msID}"/></td>
             <td>${dungLuong}<input type="hidden" name="dlID[]" value="${dlID}"/></td>
-            <td>${soLuong}<input type="hidden" name="quanlity[]" value="${soLuong}"/></td>
+            <td>${soLuong}<input type="hidden" name="quantity[]" value="${soLuong}"/></td>
             <td>${formatNumber(giaBan)}<input type="hidden" name="price[]" value="${giaBan}"/></td>
             <td>${giamGia}<input type="hidden" name="percent[]" value="${giamGia}"/></td>
             <td>${formatNumber(thanhTien)}<input type="hidden" name="total[]" value="${thanhTien}"/></td>

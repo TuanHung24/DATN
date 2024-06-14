@@ -47,7 +47,8 @@
             <td>{{ $Admin->roles == 1 ? 'Quản lý' : ($Admin->roles == 2 ? 'Nhân viên' : ($Admin->roles == 3 ? 'Quản lý kho' : 'Không xác định')) }}</td>
             <td>{{ $Admin->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>
-                <a href="{{ route('admin.update', ['id' => $Admin->id]) }}">Sửa</a> | <a href="{{ route('admin.delete', ['id' => $Admin->id]) }}">Xóa</a>
+                <a href="{{ route('admin.update', ['id' => $Admin->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
+                <a href="{{ route('admin.delete', ['id' => $Admin->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         <tr>
         @endforeach
