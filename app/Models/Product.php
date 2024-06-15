@@ -19,6 +19,9 @@ class Product extends Model
     public function brand(){
         return $this->belongsTo(Brand::class);
     }
+    public function product_series(){
+        return $this->belongsTo(ProductSeries::class);
+    }
     public function product_description()
     {
         return $this->hasOne(ProductDescription::class, 'product_id');

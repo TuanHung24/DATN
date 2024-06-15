@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             BrandTableSeeder::class,
             CapacityTableSeeder::class,
             ColorTableSeeder::class,
+            ProductSeriesSeeder::class,
             ProductSeeder::class,
             FrontCameraSeeder::class,
             RearCameraSeeder::class,

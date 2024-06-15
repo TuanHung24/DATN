@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProductRequest;
 use App\Models\Brand;
+use App\Models\ProductSeries;
 use App\Models\Capacity;
 use App\Models\Color;
 use App\Models\FrontCamera;
@@ -36,7 +37,8 @@ class ProductController extends Controller
         $listScreen = Screen::all();
         $listColors = Color::all();
         $listCapacity = Capacity::all();
-        return view('product.add-new', compact('listBrand', 'listFrontCamera', 'listRearCamera', 'listScreen', 'listColors', 'listCapacity'));
+        $listSeries = ProductSeries::all();
+        return view('product.add-new', compact('listBrand','listSeries', 'listFrontCamera', 'listRearCamera', 'listScreen', 'listColors', 'listCapacity'));
     }
     public function hdAddNew(Request $request)
     {
@@ -48,13 +50,11 @@ class ProductController extends Controller
 
 
             $proDuct = new Product();
-            $productOld = Product::where('name', $request->product_name)->first();
-            if ($productOld) {
-                return back()->with(['Error' => 'Tên dòng sản phẩm đã tồn tại']);
-            }
+            
             $proDuct->name = $request->product_name;
             $proDuct->description = $request->hd_description;
             $proDuct->brand_id = $request->brand_id;
+            $proDuct->product_series_id = $request->product_series_id;
             $proDuct->save();
 
             $productDes = new ProductDescription();
@@ -92,13 +92,14 @@ class ProductController extends Controller
 
 
             $listBrand = Brand::where('id', '<>', $id)->get();
+            $listSeries = ProductSeries::where('id', '<>', $id)->get();
             $listFrontCamera = FrontCamera::all();
             $listRearCamera = RearCamera::all();
             $listScreen = Screen::all();
             $listProductDes = ProductDescription::where('product_id', $id)->first();
 
 
-            return view('product.update', compact('proDuct', 'listBrand', 'listFrontCamera', 'listProductDes', 'listRearCamera', 'listScreen'));
+            return view('product.update', compact('proDuct', 'listBrand','listSeries', 'listFrontCamera', 'listProductDes', 'listRearCamera', 'listScreen'));
         } catch (Exception $e) {
             return back()->with(['Error' => $e]);
         }
@@ -114,6 +115,7 @@ class ProductController extends Controller
         $proDuct->name = $request->name;
         $proDuct->description = $request->description;
         $proDuct->brand_id = $request->brand;
+        $proDuct->product_series_id = $request->product_series_id;
         $proDuct->save();
 
         $productDes = ProductDescription::where('product_id', $id)->first();

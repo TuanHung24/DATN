@@ -24,6 +24,10 @@
                     <span class="info-value">{{ $proDuct->name }}</span>
                 </li>
                 <li class="info-li">
+                    <p class="info-p">Dòng sản phẩm:</p> 
+                    <span class="info-value">{{ $proDuct->product_series->name }}</span>
+                </li>
+                <li class="info-li">
                     <p class="info-p">Mô tả:</p> 
                     <span class="info-value">{{ $proDuct->description }}</span>
                 </li>

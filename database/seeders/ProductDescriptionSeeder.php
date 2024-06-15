@@ -66,32 +66,6 @@ class ProductDescriptionSeeder extends Seeder
                 'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
                 
             ],
-            [
-                'product_id' => 5, // Replace with actual product IDs from products table
-                'front_camera_id' => 5,
-                'rear_camera_id' => 5,
-                'screen_id' => 5,
-                'weight' => '195',
-                'os' => 'iOS 14',
-                'battery' => '2815',
-                'ram' => '4',
-                'chip' => 'A14 Bionic',
-                'sims' => 'Dual SIM (Nano-SIM and eSIM)',
-                
-            ],
-            [
-                'product_id' => 6, // Replace with actual product IDs from products table
-                'front_camera_id' => 6,
-                'rear_camera_id' => 6,
-                'screen_id' => 6,
-                'weight' => '175',
-                'os' => 'Android 10',
-                'battery' => '4000',
-                'ram' => '6',
-                'chip' => 'Kirin 9000',
-                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
-                
-            ],
         ]);
     }
 }

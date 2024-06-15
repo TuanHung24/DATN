@@ -15,7 +15,7 @@
 <h5 class="offset-md-6">Thông tin sản phẩm:</h5>
 <div class="row">
     <div class="col-md-4">
-        <label for="name" class="form-label">Tên dòng sản phẩm:</label>
+        <label for="name" class="form-label">Tên sản phẩm:</label>
         <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
         <span class="error" id="error-name"></span>
         @error('name')
@@ -54,7 +54,21 @@
         
         <span class="error" id="error-brand"></span>
     </div>
-    <div class="col-md-3 offset-md-3">
+    <div class="col-md-3">
+        <label for="product_series_id" class="form-label">Dòng sản phẩm:</label>
+        <select  class="form-select" id="product_series_id" require>
+        <option selected disabled>Chọn dòng sản phẩm</option>
+            @foreach($listSeries as $ProductSeries)
+            <option value="{{ $ProductSeries->id }}">
+                {{ $ProductSeries->name }}
+            </option>
+            @endforeach
+
+        </select>
+        
+        <span class="error" id="error-brand"></span>
+    </div>
+    <div class="col-md-3 ">
         <label for="front-camera" class="form-label">Camera trước:</label>
         <select name="front_camera" class="form-select" id="front-camera" required>
             <option selected disabled>Chọn camera trước</option>
@@ -175,6 +189,7 @@
     <br />
     <input type="hidden" id="product-name" name="product_name" />
     <input type="hidden" id="brand-id" name="brand_id" />
+    <input type="hidden" id="product-series-id" name="product_series_id" />
     <input type="hidden" id="hd-description" name="hd_description" />
     <input type="hidden" id="hd-chip" name="hd_chip" />
     <input type="hidden" id="hd-front-camera" name="hd_front_camera" />
@@ -393,8 +408,9 @@
             $('#hd-os').val($('#os').val());
         });
 
-        $('#brand, #size-screen, #front-camera, #rear-camera').on('change', function() {
+        $('#brand,#product_series_id, #size-screen, #front-camera, #rear-camera').on('change', function() {
             $('#brand-id').val($('#brand').val());
+            $('#product-series-id').val($('#product_series_id').val());
             $('#hd-screen').val($('#size-screen').val());
             $('#hd-front-camera').val($('#front-camera').val());
             $('#hd-rear-camera').val($('#rear-camera').val());
