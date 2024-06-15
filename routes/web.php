@@ -133,8 +133,10 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('restore/{id}', [ProductController::class, 'restore'])->name('restore');
             Route::get('deleted/{id}', [ProductController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
-            Route::get('add-img/{id}',[ProductController::class, 'addImg'])->name('add-img');
-            Route::post('add-img/{id}',[ProductController::class, 'hdAddNew'])->name('hd-add-img');
+            Route::get('update-images/{id}',[ProductController::class, 'updateImg'])->name('update-images');
+            Route::post('update-images/{id}',[ProductController::class, 'hdUpdateImg'])->name('hd-update-images');
+            Route::delete('delete-image/{image}', [ProductController::class, 'deleteImage'])->name('delete-image');
+            Route::get('edit-image/{image}', [ProductController::class, 'editImage'])->name('edit-image');
         });
     });
 

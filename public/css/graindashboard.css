@@ -6915,15 +6915,14 @@ mark {
 
 .img-fluid,
 .img-thumbnail {
-    max-width: 100%;
-    height: auto
+    max-width: 130px;
+    max-height: 200px
 }
 
 .img-thumbnail {
-    padding: .25rem;
-    background-color: #f3f5fa;
-    border: 1px solid #cdced6;
-    border-radius: .125rem
+    width: 120px;
+    height: 160px;
+   
 }
 
 .figure {
