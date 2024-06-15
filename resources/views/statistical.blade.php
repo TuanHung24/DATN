@@ -4,7 +4,7 @@
     <div class="count_container count_sp">
         <span data-feather="box" class="align-text-bottom" id="icon-tk"></span>
         <h5>Số lượng sản phẩm</h5>
-        <span>Đang có: {{$quanlityProduct}}</span><br />
+        <span>Đang có: {{$quantityProduct}}</span><br />
         <span>Tổng tiền nhập hàng: {{$totalWarehouse}}đ</span>
     </div>
     <div class="count_container count_hd">

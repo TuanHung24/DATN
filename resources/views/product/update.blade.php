@@ -5,7 +5,7 @@
 <div class="d-flex justify-connamet-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>CẬP NHẬT SẢN PHẨM</h3>
     <div class="col-md-9">
-    <a href="{{route('product.add-img',['id'=>$proDuct->id])}}">Thêm ảnh</a>
+    <a href="{{route('product.update-images',['id'=>$proDuct->id])}}">Thêm ảnh</a>
     </div>
 </div>
 
