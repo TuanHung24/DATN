@@ -23,20 +23,21 @@ class NewsRequest extends FormRequest
     {   
         $id=$this->route('id');
         return [
-            'title' => 'required|max:255|min:3|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u',
+            'title' => 'required|max:255|min:3|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u','unique:news,title,' . $id,
             'content' => 'required|min:3|',
         ];
     }
     public function messages()
     {
         return[
-            'title.required'=>"Tên sản phẩm không được bỏ trống!",
-            'title.min'=>"Tên sản phẩm phải lớn hơn :min ký tự!",
-            'title.max'=>"Tên sản phẩm phải nhỏ hơn :max ký tự!",
-            'title.regex'=>"Tên sản phẩm không được bắt đầu bằng ký tự là số và không chứa ký tự đặc biệt!",
+            'title.required'=>"Tên tiêu đề không được bỏ trống!",
+            'title.min'=>"Tên tiêu đề phải lớn hơn :min ký tự!",
+            'title.max'=>"Tên tiêu đề phải nhỏ hơn :max ký tự!",
+            'title.regex'=>"Tên tiêu đề không được bắt đầu bằng ký tự là số và không chứa ký tự đặc biệt!",
+            'title.unique' => "Tiêu đề này đã có trong hệ thống!",
 
-            'content.required'=>"Tên sản phẩm không được bỏ trống!",
-            'content.min'=>"Tên sản phẩm phải lớn hơn :min ký tự!",
+            'content.required'=>"Tên tiêu đề không được bỏ trống!",
+            'content.min'=>"Tên tiêu đề phải lớn hơn :min ký tự!",
         ];
     }
 }

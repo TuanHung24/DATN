@@ -20,6 +20,9 @@
                     <div class="col-md-6">
                         <label for="name" class="form-label">Title</label>
                         <input type="text" class="form-control" name="title">
+                        @error('title')
+                        <span class="error-message"> {{ $message }} </span>
+                        @enderror
                     </div>
                 </div>
                         <textarea name="content"></textarea>

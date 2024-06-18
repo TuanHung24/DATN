@@ -1,6 +1,13 @@
 @extends('master')
 
 @section('content')
+<head>
+<style>
+        img{
+            height: 20px;
+        }
+    </style>
+</head>
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH TIN TỨC</h3>
 </div>
@@ -13,6 +20,7 @@
                 <th>Tác giả</th>
                 <th>Title</th> <!-- Đã sửa thành </th> -->
                 <th>Nội dung</th>
+                <th>Chức năng</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +28,7 @@
             <tr>
                 <td>{{ $News->admin->name }}</td>
                 <td>{{ $News->title }}</td>
-                <td>{!! $News->content !!}</td>
+                <td>{!!$News->content!!} </td>
                 <td>
                 <a href="{{ route('news.update', ['id' => $News->id]) }}">Sửa</a> | <a href="{{ route('news.delete', ['id' => $News->id]) }}">Xóa</a>
                 </td>

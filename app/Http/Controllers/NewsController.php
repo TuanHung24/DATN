@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use Exception;
 use Illuminate\Http\Request;
+use App\Http\Requests\NewsRequest;
 use Illuminate\Support\Facades\Auth;
  
 use function PHPUnit\Framework\isEmpty;
@@ -18,7 +19,7 @@ class NewsController extends Controller
     public function addNew(){
         return view('news.add-new');
     }
-    public function hdAddNew(Request $request){
+    public function hdAddNew(NewsRequest $request){
         try{
             
             $news= new News();
