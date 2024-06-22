@@ -55,10 +55,12 @@
 
                         <div id="notifications" class="dropdown-menu dropdown-menu-center py-0 mt-4 w-18_75rem w-md-22_5rem unfold-css-animation unfold-hidden fadeOut" aria-labelledby="notificationsInvoker" style="animation-duration: 300ms;">
                             <div class="card">
+                               
                                 <div class="card-header d-flex align-items-center border-bottom py-3">
                                     <h5 class="mb-0">Duyệt đơn hàng</h5>
                                     <!-- <a class="link small ml-auto" href="#">Clear All</a> -->
                                 </div>
+                                @if($quantityInvoice)
                                 <div class="card-body p-0">
                                     <div class="list-group list-group-flush">
                                         @foreach($customerInvoice as $invoice)
@@ -74,10 +76,14 @@
                                             </p>
                                             <a class="list-group-item-closer text-muted" href="#"><i class="fas fa-times"></i></a>
                                         </a>
+
                                         @endif
                                         @endforeach
                                     </div>
                                 </div>
+                                @else
+                                <span class="error-invoice">Không có đơn hàng nào cần duyệt!</span>
+                                @endif
                             </div>
                         </div>
                     </div>

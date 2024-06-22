@@ -1221,6 +1221,10 @@ button#checkDate:hover {
 	color: red;
 	
 }
+.error-invoice{
+	margin-left: 20px;
+	color: red;
+}
 .indicator {
     position: absolute;
     top: 0;
