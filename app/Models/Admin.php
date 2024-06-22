@@ -15,6 +15,9 @@ class Admin extends Authenticate
     protected $hidden = [
         'password', 'remember_token',
     ];
+    protected $fillable = [
+        'name', 'email', 'password', 'token', 
+    ];
     public function isEmployee()
     {
         return $this->roles === 2;

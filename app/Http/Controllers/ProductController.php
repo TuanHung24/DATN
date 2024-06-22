@@ -23,6 +23,19 @@ use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        try{
+            $query = $request->input('query');
+
+            $listProduct = Product::where('name', 'like', '%' . $query . '%')
+                            ->paginate(8);  
+            return view('product.list', compact('listProduct', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
     public function getList()
     {
         $listProduct = Product::paginate(8);
@@ -38,19 +51,16 @@ class ProductController extends Controller
         $listColors = Color::all();
         $listCapacity = Capacity::all();
         $listSeries = ProductSeries::all();
-        return view('product.add-new', compact('listBrand','listSeries', 'listFrontCamera', 'listRearCamera', 'listScreen', 'listColors', 'listCapacity'));
+        return view('product.add-new', compact('listBrand', 'listSeries', 'listFrontCamera', 'listRearCamera', 'listScreen', 'listColors', 'listCapacity'));
     }
     public function hdAddNew(Request $request)
     {
-
-
-
         try {
 
 
 
             $proDuct = new Product();
-            
+
             $proDuct->name = $request->product_name;
             $proDuct->description = $request->hd_description;
             $proDuct->brand_id = $request->brand_id;
@@ -96,75 +106,65 @@ class ProductController extends Controller
             $listFrontCamera = FrontCamera::all();
             $listRearCamera = RearCamera::all();
             $listScreen = Screen::all();
+            $listColors = Color::all();
+            $listCapacity = Capacity::all();
             $listProductDes = ProductDescription::where('product_id', $id)->first();
 
 
-            return view('product.update', compact('proDuct', 'listBrand','listSeries', 'listFrontCamera', 'listProductDes', 'listRearCamera', 'listScreen'));
+            return view('product.update', compact('proDuct', 'listBrand', 'listSeries', 'listFrontCamera', 'listProductDes', 'listRearCamera', 'listScreen', 'listColors', 'listCapacity'));
         } catch (Exception $e) {
             return back()->with(['Error' => $e]);
         }
     }
     public function hdUpdate(ProductRequest $request, $id)
     {
+        try {
 
-        $proDuct = Product::find($id);
-        if (!$proDuct) {
-            return redirect()->route('product.list')->with(["thong_bao" => "Sản phẩm không tồn tại!"]);
-        }
-        $files = $request->img;
-        $proDuct->name = $request->name;
-        $proDuct->description = $request->description;
-        $proDuct->brand_id = $request->brand;
-        $proDuct->product_series_id = $request->product_series_id;
-        $proDuct->save();
 
-        $productDes = ProductDescription::where('product_id', $id)->first();
-        $productDes->product_id = $proDuct->id;
-        // $productDes->camera_id = 1;
-        // $productDes->screen_id = 1;
-        $productDes->weight = $request->weight;
-        $productDes->os = $request->os;
-        $productDes->battery = $request->battery;
-        $productDes->ram = $request->ram;
-        $productDes->chip = $request->chip;
-        $productDes->sims = $request->sims;
-        $productDes->save();
-
-        if (!empty($files)) {
-            $paths = [];
-
-            foreach ($files as $file) {
-                if ($file->isValid() && in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg'])) {
-                    // Kiểm tra kích thước của từng tệp tin
-                    $maxSize = 1024; // 1MB
-                    if ($file->getSize() <= $maxSize * 1024) { // Chuyển đổi sang byte
-                        $paths[] = $file->store('img-product');
-                    } else {
-                        // Kích thước hình ảnh quá lớn
-                        return redirect()->back()->with(['error' => "Kích thước hình ảnh quá lớn. Vui lòng chọn hình ảnh nhỏ hơn 10MB."]);
-                    }
-                } else {
-                    // Tệp không phải là hình ảnh
-                    return redirect()->back()->with(['error' => "Tệp không phải là hình ảnh jpg, png, hoặc jpeg."]);
-                }
+            $proDuct = Product::find($id);
+            if (!$proDuct) {
+                return redirect()->route('product.list')->with(["thong_bao" => "Sản phẩm không tồn tại!"]);
             }
 
-            for ($i = 0; $i < count($paths); $i++) {
-                $imgProduct = new ImgProduct();
-                $imgProduct->product_id = $proDuct->id;
-                $imgProduct->img_url = $paths[$i];
-                $imgProduct->save();
-            }
+            $proDuct->name = $request->name;
+            $proDuct->description = $request->description;
+            $proDuct->brand_id = $request->brand_id;
+            $proDuct->product_series_id = $request->product_series_id;
+            $proDuct->save();
+
+            $productDes = new ProductDescription();
+            $productDes->product_id = $proDuct->id;
+            $productDes->front_camera_id = $request->front_camera;
+            $productDes->rear_camera_id = $request->rear_camera;
+            $productDes->screen_id = $request->size_screen;
+            $productDes->weight = $request->weight;
+            $productDes->os = $request->os;
+            $productDes->battery = $request->battery;
+            $productDes->ram = $request->ram;
+            $productDes->chip = $request->chip;
+            $productDes->sims = $request->sims;
+            $productDes->save();
+
+
+
+            return redirect()->route('product.list')->with(['Success' => "Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
+        } catch (Exception $e) {
+            return back()->withInput();
         }
-        return redirect()->route('product.list')->with(['Success' => "Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
     }
     public function getProductDetail($id)
     {
-        $listProductDetail = ProductDetail::where('product_id', $id)->get();
-        $productDescription = ProductDescription::where('product_id', $id)->first();
-        $proDuct = Product::find($id);
-        $listImg = ImgProduct::where('product_id', $id)->get();
-        return view('product.detail', compact('listProductDetail', 'proDuct', 'listImg', 'productDescription'));
+        try {
+
+
+            $listProductDetail = ProductDetail::where('product_id', $id)->get();
+            $productDescription = ProductDescription::where('product_id', $id)->first();
+            $proDuct = Product::find($id);
+            $listImg = ImgProduct::where('product_id', $id)->get();
+            return view('product.detail', compact('listProductDetail', 'proDuct', 'listImg', 'productDescription'));
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không tìm thấy chi tiết sản phẩm!']);
+        }
     }
 
     public function delete($id)
@@ -199,45 +199,45 @@ class ProductController extends Controller
     }
     public function hdUpdateImg(Request $request, $id)
     {
-        try{
+        try {
 
-        
-        $files = $request->file('img');
-        $paths = [];
-        
-        foreach ($files as $colorId => $fileArray) {
-            foreach ($fileArray as $file) {
-                if ($file->isValid() && in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg'])) {
-                    // Kiểm tra kích thước của từng tệp tin
-                    $maxSize = 10240; // 10MB
-                    if ($file->getSize() <= $maxSize * 1024) { // Chuyển đổi sang byte
-                        $path = $file->store('img-product');
-                        $paths[] = [
-                            'color_id' => $colorId,
-                            'path' => $path
-                        ];
+
+            $files = $request->file('img');
+            $paths = [];
+
+            foreach ($files as $colorId => $fileArray) {
+                foreach ($fileArray as $file) {
+                    if ($file->isValid() && in_array($file->getClientOriginalExtension(), ['jpg', 'png', 'jpeg'])) {
+                        // Kiểm tra kích thước của từng tệp tin
+                        $maxSize = 10240; // 10MB
+                        if ($file->getSize() <= $maxSize * 1024) { // Chuyển đổi sang byte
+                            $path = $file->store('img-product');
+                            $paths[] = [
+                                'color_id' => $colorId,
+                                'path' => $path
+                            ];
+                        } else {
+                            // Kích thước hình ảnh quá lớn
+                            return redirect()->back()->with(['error' => "Kích thước hình ảnh quá lớn. Vui lòng chọn hình ảnh nhỏ hơn 10MB."]);
+                        }
                     } else {
-                        // Kích thước hình ảnh quá lớn
-                        return redirect()->back()->with(['error' => "Kích thước hình ảnh quá lớn. Vui lòng chọn hình ảnh nhỏ hơn 10MB."]);
+                        // Tệp không phải là hình ảnh
+                        return redirect()->back()->with(['error' => "Tệp không phải là hình ảnh jpg, png, hoặc jpeg."]);
                     }
-                } else {
-                    // Tệp không phải là hình ảnh
-                    return redirect()->back()->with(['error' => "Tệp không phải là hình ảnh jpg, png, hoặc jpeg."]);
                 }
             }
-        }
 
-        foreach ($paths as $pathInfo) {
-            $imgProduct = new ImgProduct();
-            $imgProduct->product_id = $id;
-            $imgProduct->color_id = $pathInfo['color_id'];
-            $imgProduct->img_url = $pathInfo['path'];
-            $imgProduct->save();
-        }
+            foreach ($paths as $pathInfo) {
+                $imgProduct = new ImgProduct();
+                $imgProduct->product_id = $id;
+                $imgProduct->color_id = $pathInfo['color_id'];
+                $imgProduct->img_url = $pathInfo['path'];
+                $imgProduct->save();
+            }
 
-        return redirect()->back()->with('Success', 'Cập nhật hình ảnh thành công!');
-        }catch(Exception $e){
-            return back()->with('Error', $e->getMessage());
+            return redirect()->back()->with('Success', 'Cập nhật hình ảnh thành công!');
+        } catch (Exception $e) {
+            return back()->with('Error', 'Thêm ảnh không thành công');
         }
     }
     public function deleteImage($id)
@@ -249,9 +249,104 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'Xóa hình ảnh thành công!');
     }
 
+    public function updateImage(Request $request, $id)
+    {
+        try {
+            $image = ImgProduct::findOrFail($id);
+            $file = $request->file('img');
+
+            if ($file) {
+
+                Storage::delete($image->img_url);
+
+                $path = $file->store('img-product');
+                $image->img_url = $path;
+                $image->save();
+                return redirect()->back()->with('Success', 'Cập nhật hình ảnh thành công!');
+            }
+        } catch (Exception $e) {
+            return redirect()->back()->with('Error', 'Không thể cập nhật hình ảnh.');
+        }
+    }
+
     public function editImage($id)
     {
         $image = ImgProduct::findOrFail($id);
         return view('product.edit_image', compact('image'));
+    }
+    public function deleteDetail($id)
+    {
+
+        $productDetail = ProductDetail::where('quantity', '<=', 0)
+            ->orWhereNull('quantity')
+            ->where('id', $id)
+            ->first();
+
+        if (!$productDetail) {
+            return response()->json(['Error' => 'Product detail not found or invalid quantity'], 404);
+        }
+
+
+        $countProductDetail = ProductDetail::where('product_id', $productDetail->product_id)
+            ->where('color_id', $productDetail->color_id)
+            ->count();
+
+
+        if ($countProductDetail <= 1) {
+
+            $imgProduct = ImgProduct::where('product_id', $productDetail->product_id)
+                ->where('color_id', $productDetail->color_id)
+                ->first();
+
+
+            if ($imgProduct) {
+
+                $filePath = public_path($imgProduct->img_url);
+
+
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+
+
+                $imgProduct->delete();
+            }
+        }
+
+
+        $productDetail->delete();
+
+        return response()->json(['Success' => true]);
+    }
+    public function addDetail(Request $request, $productId)
+    {
+
+        $colors = $request->input('colors');
+        $capacities = $request->input('capacities');
+
+
+
+
+        // Kiểm tra xem chi tiết sản phẩm đã tồn tại chưa
+        $exists = ProductDetail::where('product_id', $productId)
+            ->where('color_id', $colors)
+            ->where('capacity_id', $capacities)
+            ->exists();
+
+        if ($exists) {
+            return response()->json(['Success' => false, 'Message' => 'Màu sắc và dung lượng này đã tồn tại.']);
+        }
+
+        // Thêm chi tiết sản phẩm mới
+        $productDetail = new ProductDetail();
+        $productDetail->product_id = $productId;
+        $productDetail->color_id = $colors;
+        $productDetail->capacity_id = $capacities;
+        $productDetail->quantity = 0; // or any default value
+        $productDetail->price = 0; // or any default value
+        $productDetail->save();
+
+
+        return response()->json(['Success' => true]);
     }
 }

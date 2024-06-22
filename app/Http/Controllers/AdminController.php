@@ -3,17 +3,33 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AdminRequest;
+use App\Http\Requests\InfoRequest;
 use App\Models\Admin;
 use Exception;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
-
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+       
+        $listAdmin = Admin::where('name', 'like', '%' . $query . '%')
+                          ->orWhere('email', 'like', '%' . $query . '%')
+                          ->orWhere('username', 'like', '%' . $query . '%')
+                          ->orWhere('phone', 'like', '%' . $query . '%')
+                          ->orWhere('address', 'like', '%' . $query . '%')
+                          ->paginate(5); 
+
+        
+        return view('admin.list', compact('listAdmin', 'query'));
+    }
+
     public function getList()
     {
         $listAdmin = Admin::paginate(5);
@@ -92,7 +108,10 @@ class AdminController extends Controller
             $aDmin = Admin::findOrFail($id);
 
             if (isset($file)) {
+                Storage::delete($aDmin->avatar_url);
+
                 $path = $file->store('avt');
+
                 $aDmin->avatar_url = $path;
             }
             $aDmin->name = $request->name;
@@ -116,17 +135,39 @@ class AdminController extends Controller
     }
     public function delete($id)
     {
+        try {
+            $aDmin = Admin::findOrFail($id);
+            
+            if ($aDmin->roles == 1) {
+                return redirect()->route('admin.list')->with(['Error' => "Không thể khóa tài khoản này!"]);
+            }
+            if (empty($aDmin)) {
+                return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
+            }
 
-        $aDmin = Admin::findOrFail($id);
-        if ($aDmin->roles == 1) {
-            return redirect()->route('admin.list')->with(['Error' => "Không thể khóa tài khoản này!"]);
+            $aDmin->delete();
+            return redirect()->route('admin.list')->with(['Success' => "Khóa tài khoản {$aDmin->username} thành công!"]);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Lỗi ngoại lệ']);
         }
-        if (empty($aDmin)) {
-            return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
+    }
+
+    public function lock($id)
+    {
+        try {
+            $aDmin = Admin::findOrFail($id);
+            if ($aDmin->roles == 1) {
+                return redirect()->route('admin.list')->with(['Error' => "Không thể khóa tài khoản này!"]);
+            }
+            if (empty($aDmin)) {
+                return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
+            }
+            $aDmin->status = 0;
+            $aDmin->save();
+            return redirect()->route('admin.list')->with(['Success' => "Khóa tài khoản {$aDmin->username} thành công!"]);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Lỗi ngoại lệ']);
         }
-        $aDmin->status = 0;
-        $aDmin->save();
-        return redirect()->route('admin.list')->with(['Success' => "Khóa tài khoản {$aDmin->username} thành công!"]);
     }
 
     public function inFo()
@@ -137,11 +178,12 @@ class AdminController extends Controller
         return redirect()->route('login');
     }
 
-    public function updateInfo(Request $request)
+    public function updateInfo(InfoRequest $request)
     {
 
         $aDmin = Admin::find(Auth::user()->id);
         if (isset($request->avatar)) {
+            Storage::delete($aDmin->avatar_url);
             $file = $request->avatar;
             $path = $file->store('avt');
             $aDmin->avatar_url = $path;
@@ -152,50 +194,36 @@ class AdminController extends Controller
         $aDmin->phone = $request->phone;
         $aDmin->address = $request->address;
         $aDmin->save();
-        return redirect()->route('info')->with(['Success' => "Cập nhật thông tin thành công!"]);
+        return redirect()->route('admin.info')->with(['Success' => "Cập nhật thông tin thành công!"]);
     }
 
     public function resetPassword()
     {
-        return view("admin.reset-password");
+        return view("reset-password");
     }
 
     public function hdResetPassword(Request $rq)
     {
-
+        $rq->validate([
+            'respassword1' => 'required|string|min:7',
+            'respassword' => 'required|string|min:7',
+        ], [
+            'respassword1.required' => 'Mật khẩu không được bỏ trống!',
+            'respassword1.string' => 'Mật khẩu phải là kiểu chuỗi!',
+            'respassword1.min' => 'Mật khẩu phải lớn hơn 6 ký tự!',
+            'respassword.required' => 'Mật khẩu không được bỏ trống!',
+            'respassword.string' => 'Mật khẩu phải là kiểu chuỗi!',
+            'respassword.min' => 'Mật khẩu phải lớn hơn 6 ký tự!',
+        ]);
         if ($rq->respassword != $rq->respassword1) {
-            return redirect()->route("reset-password")->with(['Error' => 'Mật khẩu mới không trùng khớp!']);
+            return redirect()->route("admin.reset-password")->with(['Error' => 'Mật khẩu mới không trùng khớp!']);
         }
         if (!Hash::check($rq->password, Auth::user()->password)) {
-            return redirect()->route("reset-password")->with(['Error' => 'Mật khẩu cũ không đúng!']);
+            return redirect()->route("admin.reset-password")->with(['Error' => 'Mật khẩu cũ không đúng!']);
         }
         $aDmin = Admin::find(Auth::user()->id);
         $aDmin->password = Hash::make($rq->respassword);
         $aDmin->save();
-        return redirect()->route('info')->with(['Success' => "Thay đổi mật khẩu thành công!"]);
-    }
-    public function forgotPassword()
-    {
-        return view("admin.quen-mat-khau");
-    }
-    public function hdforgotPassword(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|exists:admin'
-        ], [
-            'email.required' => "Vui lòng nhập email hợp lệ!",
-            'email.exists' => "Email này không tồn tại!",
-        ]);
-
-        $token = strtoupper(Str::random(20));
-        $aDmin = Admin::where('email', $request->email)->first();
-        $aDmin->update(['token' => $token]);
-
-        Mail::send('email', compact('quanLy'), function ($email) use ($aDmin) {
-            $email->subject('HDK - lấy lại mật khẩu tài khoản');
-            $email->to($aDmin->email, $aDmin->name);
-        });
-
-        return redirect()->back()->with('thong_bao', 'Vui lòng check email để thực hiện đổi mật khẩu!');
+        return redirect()->route('admin.info')->with(['Success' => "Thay đổi mật khẩu thành công!"]);
     }
 }

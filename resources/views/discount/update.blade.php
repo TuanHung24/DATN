@@ -19,17 +19,11 @@
     </div>
     <div class="col-md-6">
         <label for="date-end" class="form-label">Ngày kết thúc</label>
-        <input type="datetime-local" class="form-control" name="date_end" id="date-end" value="{{old('date_end',$disCount->date_start)}}">
+        <input type="datetime-local" class="form-control" name="date_end" id="date-end" value="{{old('date_end',$disCount->date_end)}}">
         <span class="error" id="error-date-end"></span>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-2">
-        <label for="percent" class="form-label">Khuyến mãi</label>
-        <input type="number" class="form-control" name="percent" id="percent" value="{{old('percent',$disCount->percent)}}">
-        <span class="error" id="error-percent"></span>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-2">
         <label>Tìm kiếm</label>

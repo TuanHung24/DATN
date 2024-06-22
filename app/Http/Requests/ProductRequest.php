@@ -25,10 +25,11 @@ class ProductRequest extends FormRequest
         return [ 
             'name' => 'required|min:6|max:50|regex:/^[a-zA-Z][a-zA-Z0-9\s]*$/u|unique:products,name,' . $id,
 
-            // 'resolution'=>'required|min:3|max:30',
+            // 'resolution'=>'required|min:3|max:30', 
 
             'weight'=>'required|numeric|min:100|max:700',
 
+            'description'=>'min:3|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u',
             
 
             'os' => 'required|min:3|max:50|regex:/^[^0-9,^!@#$%^&*()_+{}\[\]:;<>?~\\/\\-][^!@#$%^&*()_+{}\[\]:;<>?~\\/\\-]+$/u',
@@ -62,6 +63,8 @@ class ProductRequest extends FormRequest
             
             
 
+            'description.min'=>"Mô tả phải lớn hơn :min ký tự!",
+            'description.regex'=>"Mô tả không chứa ký tự đặc biệt!",
            
 
             

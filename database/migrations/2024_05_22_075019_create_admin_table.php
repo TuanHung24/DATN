@@ -23,6 +23,7 @@ return new class extends Migration
             $table->integer("roles");
             $table->integer("gender");
             $table->boolean("status")->default(1);
+            $table->string('token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

@@ -172,11 +172,14 @@ $(document).ready(function() {
         var maxQuantity = parseInt(existingRow.find('input[name="quantity[]"]').attr('max'));
 
         if (soLuongHienTai + soLuongMoi > maxQuantity) {
-            alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho.");
+            alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho!");
             return;
         }
-
-        var newQuantity = soLuongHienTai + soLuongMoi;
+        if(soLuongMoi <=0 || isNaN(soLuongMoi)){
+            alert("Số lượng phải lớn hơn 0!");
+            return;
+        }
+        var newQuantity = soLuongHienTai + soLuongMoi; 
         var toTalNew = newQuantity * giaBan;
 
         existingRow.find('input[name="quantity[]"]').val(newQuantity.toString());
@@ -221,6 +224,11 @@ $(document).ready(function() {
                 // Check if quantity is valid
                 if (parseInt(soLuong) > maxQuantity) {
                     alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho.");
+                    return;
+                }
+                
+                if (parseInt(soLuong) <= 0 || isNaN(soLuong)) {
+                    alert("Số lượng mua phải lớn hơn 0");
                     return;
                 }
 

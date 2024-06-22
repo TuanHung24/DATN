@@ -9,8 +9,12 @@ class InvoiceDetail extends Model
 {
     use HasFactory;
     protected $table='invoice_detail';
+    
     public function product(){
         return $this->belongsTo(Product::class);
+    }
+    public function invoice(){
+        return $this->belongsTo(Invoice::class);
     }
     public function color(){
         return $this->belongsTo(Color::class);

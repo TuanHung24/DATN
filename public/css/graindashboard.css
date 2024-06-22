@@ -6603,7 +6603,6 @@ a:hover {
 a:not([href]):not([tabindex]),
 a:not([href]):not([tabindex]):focus,
 a:not([href]):not([tabindex]):hover {
-    color: inherit;
     text-decoration: none
 }
 
@@ -6915,13 +6914,14 @@ mark {
 
 .img-fluid,
 .img-thumbnail {
-    max-width: 130px;
-    max-height: 200px
+    max-width: 160px;
+    max-height: 220px
 }
 
 .img-thumbnail {
-    width: 120px;
-    height: 160px;
+    width: 160px;
+    height: 200px;
+    border-radius: 20px;
    
 }
 
@@ -7497,6 +7497,7 @@ pre code {
     }
 
     .col-md-3 {
+      
         flex: 0 0 25%;
         max-width: 25%
     }
@@ -9919,6 +9920,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-block {
+    padding: 6px 7px;
     display: block;
     width: 100%
 }
@@ -22687,10 +22689,7 @@ input:focus+.focus-hide {
     height: 10px
 }
 
-.indicator-primary {
-    color: #fff;
-    background-color: #265df1
-}
+
 
 .indicator-primary[href]:focus,
 .indicator-primary[href]:hover {
@@ -22842,7 +22841,6 @@ input:focus+.focus-hide {
 }
 
 .indicator-bordered:after {
-    content: "";
     position: absolute;
     top: 50%;
     left: 50%;
@@ -23281,6 +23279,7 @@ body.has-fixed-sidebar-and-header .main {
     width: 15.63rem;
     height: 100%;
     padding: 0;
+    min-width: 80px;
     background-color: #f3f5fa;
     visibility: hidden;
     z-index: 100

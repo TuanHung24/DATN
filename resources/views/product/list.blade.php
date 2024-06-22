@@ -6,28 +6,23 @@
     <h3>DANH SÁCH DÒNG SẢN PHẨM</h3>
     <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
 </div>
-@if(session('Error'))
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <div> 
-              {{session('Error')}}
-        </div>
-    </div>
-@endif
-@if(session('Success'))
-    <div class="alert alert-success d-flex align-items-center" role="alert">
-        <div> 
-              {{session('Success')}}
-        </div>
-    </div>
-@endif
+<div class="custom-search-container">
+    <form action="{{ route('product.search') }}">
+        <input type="text" id="search-input" class="search-input" name="query" value="{{$query??''}}" placeholder="Tìm kiếm...">
+        <button type="submit" id="search-button" class="search-button"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<x-notification />
 @if(isset($listProduct) && $listProduct->isNotEmpty())
 <div class="table-responsive">
     <table class="table">
         <thead>
     <tr class="title_sp">
         <th>Tên sản phẩm</th>
+        
         <th>Mô tả</th>  
         <th>Hãng sản phẩm</th>
+        <th>Dòng sản phẩm</th>
         <th>Tác vụ</th>
     </tr>
     </thead>
@@ -37,9 +32,12 @@
         <td>{{ $Product->name }}</td>
         <td>{{ $Product->description }}</td>
         <td>{{ $Product->brand->name }}</td>
+        <td>{{ $Product->product_series->name }}</td>
         <td class="chuc-nang">
-            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
+            <a href="{{ route('product.update-images', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-camera"></i></a> |
+            
             <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
             <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a> 
         </td>
     <tr>
@@ -66,10 +64,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                  @foreach($listProductDelete as $productDelete)
+                  @foreach($listProductDelete as $proDuct)
                     <tr>
-                        <td>{{$productDelete->name}}</td>
-                        <td><a href="{{ route('product.restore',['id'=>$productDelete->id])}}">Khôi phục</a> | <a href="#">Chi tiết</a></td>
+                        <td>{{$proDuct->name}}</td>
+                        <td><a href="{{ route('product.restore',['id'=>$proDuct->id])}}">Khôi phục</a>
                     </tr>
                     @endforeach
                 </tbody>

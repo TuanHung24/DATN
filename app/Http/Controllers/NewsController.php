@@ -10,6 +10,19 @@ use function PHPUnit\Framework\isEmpty;
 
 class NewsController extends Controller
 {
+    public function search(Request $request)
+    {
+        try{
+            $query = $request->input('query');
+            $listNew = News::where('admin.name', 'like', '%' . $query . '%')
+                            ->orWhere('title', 'like', '%' . $query . '%')
+                            ->orWhere('content', 'like', '%' . $query . '%')
+                            ->paginate(5);
+            return view('news.list', compact('listNew', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
     public function getList(){
         $listNews = News::paginate(5);
         return view('news.list',compact('listNews'));

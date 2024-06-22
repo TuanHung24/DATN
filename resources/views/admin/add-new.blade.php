@@ -97,7 +97,7 @@
     <div class=row>
         <div class="col-md-6">
             <label for="avatar" class="form-label">Chọn ảnh: </label>
-            <input type="file" name="avatar" required /><br />
+            <input type="file" name="avatar" accept="image/*" required /><br />
         </div>
         @error('avatar')
         <span class="error-message"> {{ $message }} </span>

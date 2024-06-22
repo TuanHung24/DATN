@@ -4,6 +4,13 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH KHUYẾN MÃI</h3>
 </div>
+<div class="custom-search-container">
+    <form action="{{ route('discount.search') }}">
+        <input type="text" id="search-input" class="search-input" name="query" value="{{$query??''}}" placeholder="Tìm kiếm...">
+        <button type="submit" id="search-button" class="search-button"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<x-notification />
 @if(isset($listDiscount) && $listDiscount->isNotEmpty())
 <div class="table-responsive">
     <table class="table">
@@ -12,7 +19,6 @@
                 <th>Tên khuyến mãi</th>
                 <th>Ngày bắt đầu</td>
                 <th>Ngày kết thúc</td>
-                <th>Phần trăm khuyến mãi</th>
                 <th>Trạng thái</th>
                 <th>Tác vụ</th>
             </tr>
@@ -24,7 +30,7 @@
             <td>{{ $disCount->formatted_date_start  }}</td>
            
             <td>{{ $disCount->formatted_date_end }}</td>
-            <td>{{ $disCount->percent }}</td>
+            
             
             <td>{{ $disCount->status === 1 ? 'Hoạt động' : 'Không hoạt động' }}</td>
             <td>

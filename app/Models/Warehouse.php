@@ -9,11 +9,11 @@ class Warehouse extends Model
 {
     use HasFactory;
     protected $table = 'warehouse';
-    protected $fillable = [
+    protected $fillable = [ 
         'provider_id',
         'date',
         'total',
-        'status',
+        
     ];
 
     // Định nghĩa mối quan hệ với WarehouseDetail

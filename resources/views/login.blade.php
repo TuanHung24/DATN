@@ -10,14 +10,17 @@
 </head>
 @extends('layout.app')
 <body>
-<div class="row justify-content-md-center">
-    <div class="card-wrapper col-12 col-md-4 mt-5">
-        <div class="brand text-center mb-3">
-            <a href="/"><img src="{{asset('img/logo.png')}}"></a>
+<div class="brand text-center mb-3">
+            <a href="/"><img src="{{asset($logoUrl->img_url)}}" id='logo-login'></a>
         </div>
+<div class="row justify-content-md-center">
+
+    <div class="card-wrapper col-12 col-md-4 mt-5">
+        
         <div class="card">
+            
             <div class="card-body">
-                <h4 class="card-title">Login</h4>
+            <h4>Login</h4>
                 <form method="POST" action="{{route('hd-login')}}">
                     @csrf
                     <div class="form-group">

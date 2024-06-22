@@ -9,21 +9,13 @@
     <h3>DANH SÁCH HÃNG SẢN PHẨM</h3>
     <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Thương hiệu đã xóa</button>
 </div>
-
-@if(session('Error'))
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <div> 
-              {{session('Error')}}
-        </div>
-    </div>
-@endif
-@if(session('Success'))
-    <div class="alert alert-success d-flex align-items-center" role="alert">
-        <div> 
-              {{session('Success')}}
-        </div>
-    </div>
-@endif
+<div class="custom-search-container">
+    <form action="{{ route('brand.search') }}" method="GET">
+        <input type="text" id="search-input" class="search-input" name="query" value="{{$query??''}}" placeholder="Tìm kiếm...">
+        <button type="submit" id="search-button" class="search-button"><i class="fa fa-search"></i></button>
+    </form>
+</div>
+<x-notification/>
 @if(isset($listBrand) && $listBrand->isNotEmpty($listBrand))
 <div class="table-responsive">
     <table class="table">
