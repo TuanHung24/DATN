@@ -23,13 +23,7 @@
         <span class="error" id="error-date-end"></span>
     </div>
 </div>
-<div class="row">
-    <div class="col-md-2">
-        <label for="percent" class="form-label">Khuyến mãi</label>
-        <input type="number" class="form-control" name="percent" id="percent" value="{{old('percent')}}">
-        <span class="error" id="error-percent"></span>
-    </div>
-</div>
+
 <div class="row">
     <div class="col-md-2">
         <label>Tìm kiếm</label>
@@ -39,15 +33,15 @@
             <option value="{{$proDuct->id}}">{{$proDuct->name}}</option>
             @endforeach
         </select>
-        
+
     </div>
 </div>
-<label for="product" class="form-label">Chi tiết sản phẩm:</label> <input type="checkbox" id="checkbox-all" hidden/><label hidden>Chọn tất cả</label>
+<label for="product" class="form-label">Chi tiết sản phẩm:</label> <input type="checkbox" id="checkbox-all" hidden /><label hidden>Chọn tất cả</label>
 <div id="chi-tiet-sp"></div>
 <div class="col-md-2">
     <button type="button" id="btn-them" class="btn btn-success"><span data-feather="plus"></span>Thêm</button>
 </div>
-<br/>
+<br />
 <form method="POST" action="{{route('discount.hd-add-new')}}">
     @csrf
     <div class="table-responsive">
@@ -69,9 +63,9 @@
             </tbody>
         </table>
     </div>
-    <input type="hidden" id="hd-name" name="discount_name" />
-    <input type="datetime-local" id="hd-date-start" name="date_start" hidden />
-    <input type="datetime-local" id='hd-date-end' name="date_end" hidden />
+    <input type="" id="hd-name" name="discount_name" />
+    <input type="datetime-local" id="hd-date-start" name="date_start" />
+    <input type="datetime-local" id='hd-date-end' name="date_end" />
 
     <input type="hidden" id='hd-percent' name="percent_all" />
     <div class="col-md-2">
@@ -87,21 +81,23 @@
         var selectedItems = [];
 
         $("#btn-them").click(function() {
+
             if (!validateInput()) {
                 return;
             }
+
             themVao();
 
             for (var i = 0; i < selectedItems.length; i++) {
                 var item = selectedItems[i];
-                var existingRow = findExistingRow(item);
-                if (existingRow) {
-                    // Sản phẩm đã tồn tại, chỉ cập nhật số lượng
-                    updateExistingRow(existingRow, item);
-                } else {
-                    // Sản phẩm chưa tồn tại, thêm mới
-                    addNewRow(item);
-                }
+                // var existingRow = findExistingRow(item);
+                // if (existingRow) {
+                //     Sản phẩm đã tồn tại, chỉ cập nhật số lượng
+                //     updateExistingRow(existingRow, item);
+                // } else {
+                //     Sản phẩm chưa tồn tại, thêm mới
+                addNewRow(item);
+                // }
             }
 
 
@@ -117,7 +113,7 @@
         });
 
         $("#product").change(function() {
-            $(`#error-${this.id}`).text(""); // Xóa thông báo khi người dùng thay đổi lựa chọn
+            $(`#error-${this.id}`).text("");
         });
 
 
@@ -135,21 +131,19 @@
             });
         });
 
-        $('#name').change(function() {
+        $('#name').on('input', function() {
             $('#hd-name').val($(this).val())
         })
 
         $('#date-start').change(function() {
-            $('#hd-date-start').val($(this).val()).hide()
+            $('#hd-date-start').val($(this).val())
         })
 
         $('#date-end').change(function() {
-            $('#hd-date-end').val($(this).val()).hide()
+            $('#hd-date-end').val($(this).val())
         })
 
-        $('#percent').change(function() {
-            $('#hd-percent').val($(this).val())
-        })
+
 
         function findExistingRow(item) {
             var existingRow = null;
@@ -165,34 +159,6 @@
             return existingRow;
         }
 
-        // function updateExistingRow(existingRow, item) {
-        //     var soLuongHienTai = parseInt(existingRow.find('td').eq(4).text());
-        //     var soLuongMoi = parseInt(item.soLuong);
-        //     var giaBan = parseInt(item.giaBan);
-        //     var maxQuantity = parseInt(existingRow.find('input[name="quantity[]"]').attr('max'));
-
-        //     if (soLuongHienTai + soLuongMoi > maxQuantity) {
-        //         alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho.");
-        //         return;
-        //     }
-
-        //     var newQuantity = soLuongHienTai + soLuongMoi;
-        //     var toTalNew = newQuantity * giaBan;
-
-        //     existingRow.find('input[name="quantity[]"]').val(newQuantity.toString());
-        //     existingRow.find('td').eq(4).text(newQuantity.toString());
-        //     existingRow.find('input[name="total[]"]').val(toTalNew.toString());
-        //     existingRow.find('td').eq(6).text(formatNumber(toTalNew).toString());
-
-        //     if (existingRow.find('td').eq(4).find('input[name="quantity[]"]').length === 0) {
-        //         // Nếu không tồn tại, thêm input vào hàng
-        //         existingRow.find('td').eq(4).append(`<input type="hidden" name="quantity[]" value="${newQuantity}" max="${maxQuantity}"/>`);
-        //     }
-        //     if (existingRow.find('td').eq(6).find('input[name="total[]"]').length === 0) {
-        //         // Nếu không tồn tại, thêm input vào hàng
-        //         existingRow.find('td').eq(6).append(`<input type="hidden" name="total[]" value="${toTalNew}"/>`);
-        //     }
-        // }
 
 
         function themVao() {
@@ -208,13 +174,14 @@
                     var giaBan = $('#price-id', this).val();
                     var MauSacId = $('#color-id', this).val();
                     var DungLuongId = $('#capacity-id', this).val();
-                    // var maxQuantity = parseInt($(this).find('#quantity-id').attr('max'));
 
-                    // // Check if quantity is valid
-                    // if (parseInt(soLuong) > maxQuantity) {
-                    //     alert("Số lượng mua phải bé hơn hoặc bằng số lượng tồn kho.");
-                    //     return;
-                    // }
+                    if (parseInt(giamGia) <= 0 || isNaN(giamGia)) {
+                        alert('Giảm giá phải lớn hơn 0%');
+                        return;
+                    } else if (parseInt(giamGia) > 80) {
+                        alert('Giảm giá không được quá 80%');
+                        return;
+                    }
 
                     selectedItems.push({
                         prdId: productId,
@@ -232,28 +199,51 @@
 
         function validateInput() {
             var isValid = true;
-            if ($("#hd-name").val() === null) {
+            var currentTime = new Date();
+            
+            
+            if ($("#hd-name").val().trim() === "") {
                 $("#error-name").text("Vui lòng nhập tên khuyến mãi!");
                 isValid = false;
             } else {
                 $("#error-name").text("");
             }
 
-            if ($("#hd-date-start").val() === null) {
-                $("#error-date-start").text("Vui lòng nhập số điện thoại!");
+            // Lấy giá trị ngày bắt đầu và ngày kết thúc
+            var startDateVal = $("#hd-date-start").val();
+            var endDateVal = $("#hd-date-end").val();
+
+            // Kiểm tra ngày bắt đầu
+            if (startDateVal.trim() === "") {
+                $("#error-date-start").text("Vui lòng chọn ngày bắt đầu!");
                 isValid = false;
             } else {
-                $("#error-date-start").text("");
+                var startDate = new Date(startDateVal);
+                if (startDate <= currentTime) {
+                    $("#error-date-start").text("Ngày bắt đầu phải lớn hơn giờ hiện tại!");
+                    isValid = false;
+                } else {
+                    $("#error-date-start").text("");
+                }
             }
-            if ($("#hd-date-end").val() === null) {
-                $("#error-date-end").text("Vui lòng chọn sản phẩm!");
+
+            // Kiểm tra ngày kết thúc
+            if (endDateVal.trim() === "") {
+                $("#error-date-end").text("Vui lòng chọn ngày kết thúc!");
                 isValid = false;
             } else {
-                $("#error-date-end").text("");
+                var endDate = new Date(endDateVal);
+                if (startDateVal.trim() !== "" && endDate <= new Date(startDateVal)) {
+                    $("#error-date-end").text("Ngày kết thúc phải lớn hơn ngày bắt đầu!");
+                    isValid = false;
+                } else {
+                    $("#error-date-end").text("");
+                }
             }
 
             return isValid;
         }
+
 
         function addNewRow(item) {
             var stt = $("#tb-ds-product tbody tr").length + 1;

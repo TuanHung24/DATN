@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <div class="row justify-content-md-center">
         <div class="card-wrapper col-12 col-md-4 mt-5">
             <div class="brand text-center mb-3">
@@ -18,31 +19,26 @@
             </div>
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">Reset Password</h4>
-                    <form>
+                    <h4 class="card-title">Khôi phục mật khẩu</h4>
+                    <form method="POST" action="{{route('hd-password-reset')}}">
+                    @csrf 
                         <div class="form-group">
-                            <label for="email">E-Mail Address</label>
+                            <label for="email">Nhập Email cần lấy lại mật khẩu:</label>
                             <input id="email" type="email" class="form-control" name="email" required="" autofocus="">
                         </div>
 
                         <div class="form-group no-margin">
-                            <a href="#" class="btn btn-primary btn-block">
-                                Send Password Reset Link
-                            </a>
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Gửi Email
+                            </button>
                         </div>
-                        <div class="text-center mt-3 small">
-                            Don't have an account? <a href="{{route('login')}}">Sign Up</a>
-                        </div>
+                        
                     </form>
+                    <div class="text-center mt-3 small">
+                            Đã có tài khoản? <a href="{{route('login')}}">Đăng nhập</a>
+                        </div>
                 </div>
             </div>
-            <footer class="footer mt-3">
-                <div class="container-fluid">
-                    <div class="footer-content text-center small">
-                        <span class="text-muted">© 2019 Graindashboard. All Rights Reserved.</span>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
 </body>

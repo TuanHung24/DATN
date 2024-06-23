@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class WarehouseDetail extends Model
 {
     use HasFactory;
-    protected $table = 'warehouse_detail';
+    protected $table = 'warehouse_detail'; 
     protected $fillable = [
         'warehouse_id',
         'product_id',
         'color_id',
         'capacity_id',
-        'quanlity',
+        'quantity',
         'in_price',
         'out_price',
     ];

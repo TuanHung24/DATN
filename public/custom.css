@@ -517,6 +517,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 .md-content {
+	margin-left: 20%;
 	position: relative;
 	display: flex;
 	flex-direction: column;
@@ -787,26 +788,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 
-.option-m-y {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	align-items: center;
-}
 
-.option-m-y>div {
-	border-radius: 8px;
-	padding: 1px;
-	margin-bottom: 10px;
-}
-
-.option-m-y .select-box {
-	display: flex;
-}
-
-.option-m-y label {
-	font-weight: bold;
-}
 
 #pieChart {
 	max-height: 400px;
@@ -845,7 +827,7 @@ button.ui-button::-moz-focus-inner {
 }
 
 button#checkDate {
-	padding: 10px 20px;
+	padding: 4px 10px;
 	background-color: #007bff;
 	color: #fff;
 	border: none;
@@ -865,7 +847,7 @@ button#checkDate:hover {
 
 .invoice-details {
 
-	padding: 15px;
+	padding: 45px;
 	border-radius: 10px;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -891,12 +873,12 @@ button#checkDate:hover {
 
 .profile {
 
-	max-width: 700px;
+	
 	margin: auto;
 	padding: 20px;
 
 	border-radius: 10px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	
 }
 
 
@@ -907,35 +889,31 @@ button#checkDate:hover {
 	border-radius: 50%;
 	margin-bottom: 20px;
 	object-fit: cover;
-	border: 3px solid #fff;
+	
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 
 
-.info-name,
-.info-email,
-.info-phone,
-.info-address,
-.info-username {
-	width: 600px;
-	margin-bottom: 5px;
-	padding: 30px 0px 0px 10px;
-	border-bottom: 1px solid #000;
-	font-weight: 600;
+.info-name,.info-email,.info-phone,.info-address,.info-username{
+    width: 600px;
+    margin-bottom: 5px;
+    padding: 30px 0px 0px 10px;
+    border-bottom: 1px solid #000;
+    font-weight: 600;
+}
+#info-cn{
+    border: none;
+    width: 70%;
+}
+#info-cn:focus{
+    outline: none;
 }
 
-#info-cn {
-	border: none;
-	width: 80%;
-}
-
-#info-cn:focus {
-	outline: none;
-}
-
-.feather.feather-edit-3 {
+#icon-fa-edit{
+	margin-top:5px;
 	float: right;
+	
 }
 
 #info-save-cn {
@@ -975,3 +953,316 @@ button#checkDate:hover {
 #tavle-color-product{
 	max-width: 500px;
 }
+.add_color_capacity{
+	padding: 10px 15px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	background-color: #cdd1cd;
+}
+.product_plus{
+	text-align: center;
+}
+#pr-color-capacity{
+	margin-left: 26%;
+	width: 60%;
+}
+#info-save-repassword{
+	margin-left: 7px;
+}
+#capacity-unit{
+	
+	padding: 10px;
+	
+}
+.edit-form {
+   /* background: rgba(255, 255, 255, 0.8); */
+    padding: 10px;
+    z-index: 1;
+    /* border: 1px solid #ddd; */
+    width: 160px; /* Same width as img-thumbnail */
+}
+
+#task{
+	min-width: 170px;
+}
+
+
+
+
+
+.status-bar-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.status-bar {
+    display: flex;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    position: relative;
+}
+
+.status-step {
+    flex: 1;
+    text-align: center;
+    padding: 10px 5px;
+    background-color: #ddd;
+    border-radius: 5px;
+    margin: 0 5px;
+    transition: background-color 0.3s ease;
+    position: relative;
+}
+
+.status-step.active {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.status-step.active::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    width: 20px;
+    height: 20px;
+    background-color: #4caf50;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.status-step:first-child::before {
+    display: none;
+}
+
+.status-step:last-child::after {
+    display: none;
+}
+
+.invoice-items {
+    margin-top: 20px;
+}
+
+.invoice-items table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.invoice-items th, .invoice-items td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.invoice-items th {
+    background-color: #f2f2f2;
+    text-align: left;
+}
+#td-status{
+	text-align: center;
+}
+#month-year-statis{
+	display: ruby;
+	float: right;
+}
+#thong-ke{
+	margin-top: -2px;
+	padding: 4px 10px;
+}
+
+.statistics-day {
+	
+    background-color: #f8f9fa; /* Màu nền nhạt */
+    padding: 15px; /* Khoảng cách bên trong */
+    border: 1px solid #ddd; /* Đường viền nhạt */
+    border-radius: 5px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+  
+    gap: 20px;
+    font-family: 'Arial', sans-serif; /* Font chữ */
+    color: #333; /* Màu chữ */
+}
+
+/* Định dạng cho từng mục */
+.statistics-day .stat-item {
+    flex: 1;
+    
+    align-items: center; /* Căn giữa theo chiều dọc */
+    justify-content: space-between; /* Căn đều 2 đầu */
+}
+
+/* Định dạng cho các phần tử strong */
+.statistics-day strong {
+    font-size: 18px; /* Kích thước chữ */
+    color: #007bff; /* Màu chữ */
+}
+
+/* Định dạng khi di chuột qua */
+.statistics-day strong:hover {
+    color: #0056b3; /* Màu chữ khi di chuột qua */
+}
+.doanh_thu{
+	display: flex;
+}
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 576px) {
+    .statistics-day {
+		
+        flex-direction: column;
+    }
+    .statistics-day .stat-item {
+        justify-content: center; /* Căn giữa theo chiều ngang */
+    }
+}
+
+
+/* Định dạng tổng thể cho option-m-y */
+.option-m-y {
+    background-color: #f8f9fa; /* Màu nền nhạt */
+    padding: 20px; /* Khoảng cách bên trong */
+    border: 1px solid #ddd; /* Đường viền nhạt */
+    border-radius: 5px; /* Bo góc */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: 'Arial', sans-serif; /* Font chữ */
+    color: #333; /* Màu chữ */
+}
+
+/* Định dạng cho từng mục con */
+.option-m-y > div {
+    flex: 1 1 calc(33.333% - 20px); /* Chia đều mỗi mục trên 3 cột, trừ khoảng cách giữa chúng */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Căn giữa theo chiều dọc */
+    margin: 10px 0;
+}
+
+.option-m-y label {
+    font-weight: bold;
+}
+
+.option-m-y span {
+    font-size: 16px;
+    color: #007bff; /* Màu chữ */
+}
+
+/* Định dạng cho form-group */
+.form-group {
+    flex: 1 1 100%; /* Chiếm toàn bộ chiều rộng */
+    display: flex;
+    justify-content: space-between;
+    
+}
+
+/* Định dạng cho select và button */
+#monthSelect, #yearSelect, #thong-ke {
+    margin: 0 10px;
+}
+
+/* Responsive cho màn hình nhỏ */
+@media (max-width: 768px) {
+    .option-m-y > div {
+        flex: 1 1 100%; /* Chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+    }
+    
+    .form-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    #monthSelect, #yearSelect, #thong-ke {
+        margin: 10px 0;
+    }
+}
+#day-month-year-statis-day{
+	display: contents;
+}
+#statistics-day{
+	display: block;
+}
+#yearSelect{
+	padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+
+
+
+
+/* Thiết lập đường viền và hiệu ứng */
+.custom-search-container {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 400px;
+}
+
+.search-input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+	width: 300px;;
+}
+.header-invoker {
+    position: relative;
+}
+.total-customer-main{
+	float: right;
+	margin-bottom: 20px;
+}
+.total-customer{
+	color: red;
+	
+}
+.error-invoice{
+	margin-left: 20px;
+	color: red;
+}
+.indicator {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    
+    color: red;
+    border-radius: 50%;
+    font-size: 17px;
+    font-weight:bold;
+}
+#logo-login{
+	margin-top: 70px;
+	width: 530px;
+	height: 200px;
+	max-width: 600px;
+	max-height: 200px;
+	border-radius: 20px;
+	margin-bottom: -40px;
+}
+.search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    margin-left: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.search-button:hover {
+    background-color: #0056b3;
+}
+
+
+

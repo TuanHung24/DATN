@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
+use App\Models\Invoice;
+use App\Models\InvoiceDetail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -12,18 +14,35 @@ use function PHPUnit\Framework\isEmpty;
 
 class CustomerController extends Controller
 {
-    public function getList(){
+    public function search(Request $request)
+    {
+        try{
+        $query = $request->input('query');
+        $listCusTomer = Customer::where('name', 'like', '%' . $query . '%')
+                          ->orWhere('email', 'like', '%' . $query . '%')
+                          ->orWhere('phone', 'like', '%' . $query . '%')
+                          ->orWhere('address', 'like', '%' . $query . '%')
+                          ->paginate(6); 
+        return view('customer.list', compact('listCusTomer', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
+    public function getList()
+    {
         $listCusTomer = Customer::paginate(6);
-        return view('customer.list',compact('listCusTomer'));
+        return view('customer.list', compact('listCusTomer'));
     }
 
-    public function AddNew(){
+    public function AddNew()
+    {
         return view('customer.add-new');
     }
-    public function hdAddNew(CustomerRequest $request){
+    public function hdAddNew(CustomerRequest $request)
+    {
 
-        try{
-            
+        try {
+
             // $request->validate([
             //     'name' => 'required|string|max:255',
             //     'email' => 'required|string|email|max:255|unique:cusTomer',
@@ -31,8 +50,8 @@ class CustomerController extends Controller
             //     'phone' => 'required|string|max:11',
             //     'address' => 'required|string|max:255',
             // ]);
-            
-            
+
+
             $newcusTomer = new CusTomer();
             $newcusTomer->name = $request->name;
             $newcusTomer->email = $request->email;
@@ -41,55 +60,82 @@ class CustomerController extends Controller
             $newcusTomer->address = $request->address;
             $newcusTomer->save();
 
-        
-        return redirect()->route('customer.list');
 
-        }catch(Exception $e){
-            return back()->withInput()->with(['error:'=>"Error:".$e->getMessage()]);
+            return redirect()->route('customer.list');
+        } catch (Exception $e) {
+            return back()->withInput()->with(['error:' => "Error:" . $e->getMessage()]);
         }
     }
 
-    public function upDate($id){
-        $cusTomer = CusTomer::find($id);
-        if(empty($cusTomer)){
+    public function upDate($id)
+    {
+        $cusTomer = CusTomer::findOrFail($id);
+        if (empty($cusTomer)) {
             return redirect()->route('customer.list');
         }
         return view('customer.update', compact('cusTomer'));
     }
 
-    public function hdUpdate(CustomerRequest $request, $id){
+    public function hdUpdate(CustomerRequest $request, $id)
+    {
 
-        try{
+        try {
 
-       
-        $cusTomer = CusTomer::find($id);
-       
-        $cusTomer->name = $request->name;
-        $cusTomer->email = $request->email;
-        
-        $cusTomer->password = Hash::make($request->password);
-        $cusTomer->phone = $request->phone;
-        $cusTomer->address = $request->address;
-        $cusTomer->status = isset($request->status) ? 1 : 0;
-        $cusTomer->save();
 
-        
-        return redirect()->route('customer.list');
-        }catch(Exception $e){
-            return back()->withInput()->with(['error:'=>"Error:" . $e->getMessage()]);
+            $cusTomer = CusTomer::findOrFail($id);
+
+            $cusTomer->name = $request->name;
+            $cusTomer->email = $request->email;
+
+            $cusTomer->password = Hash::make($request->password);
+            $cusTomer->phone = $request->phone;
+            $cusTomer->address = $request->address;
+            $cusTomer->status = isset($request->status) ? 1 : 0;
+            $cusTomer->save();
+
+
+            return redirect()->route('customer.list')->with(['Success'=>'Cập nhật khách hàng thành công!']);
+        } catch (Exception $e) {
+            return back()->withInput()->with(['error:' => "Error:" . $e->getMessage()]);
         }
     }
-    public function delete($id){
-        try{
+    public function delete($id)
+    {
+        try {
 
-        
-            
-        $cusTomer=CusTomer::find($id);
-        $cusTomer->status=0;
-        $cusTomer->save();
-        return redirect()->route('cusTomer.list');
-        }catch(Exception $e){
-            return back()->with(['error:'=>"Error:".$e]);
+
+
+            $cusTomer = CusTomer::findOrFail($id);
+            $cusTomer->status = 0;
+            $cusTomer->save();
+            return redirect()->route('cusTomer.list');
+        } catch (Exception $e) {
+            return back()->with(['error:' => "Error:" . $e]);
         }
+    }
+
+    public function getInvoice($id)
+    {
+        $listInvoice = Invoice::where('customer_id', $id)->paginate(3);
+
+        if ($listInvoice->isEmpty()) {
+            return redirect()->route('invoice.list')->with('error', 'Hóa đơn không tồn tại');
+        }
+
+        return view('customer.invoice', compact('listInvoice'));
+    }
+
+    public function getInvoiceDetail($id, $customer_id)
+    {
+        $invoice = Invoice::where('customer_id', $customer_id)
+            ->first();
+
+        $invoiceDetails = InvoiceDetail::where('invoice_id', $id)->get();
+
+        if (!$invoice) {
+            return redirect()->route('invoice.list')->with('error', 'Hóa đơn không tồn tại');
+        }
+
+        return view('customer.invoice_detail', compact('invoice','invoiceDetails'));
     }
 }

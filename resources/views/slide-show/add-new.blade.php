@@ -27,7 +27,7 @@
                     <div class=row>
                     <div class="col-md-6">
                         <label for="img_url" class="form-label">Chọn ảnh: </label>
-                        <input type="file" name="img_url" required /><br />
+                        <input type="file" name="img_url" accept="image/*" required /><br />
                     </div>
                     @error('img_url')
                     <span class="error-message"> {{ $message }} </span>

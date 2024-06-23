@@ -6,28 +6,45 @@
     <h3>THÊM MỚI SẢN PHẨM</h3>
 </div>
 @if(session('Error'))
-    <div class="alert alert-danger d-flex align-items-center" role="alert">
-        <div> 
-              {{session('Error')}}
-        </div>
+<div class="alert alert-danger d-flex align-items-center" role="alert">
+    <div>
+        {{session('Error')}}
     </div>
+</div>
 @endif
+
 <h5 class="offset-md-6">Thông tin sản phẩm:</h5>
 <div class="row">
-    <div class="col-md-4">
-        <label for="name" class="form-label">Tên sản phẩm:</label>
-        <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
-        <span class="error" id="error-name"></span>
-        @error('name')
-            <span class="error-message"> {{ $message }} </span>
-        @enderror
+    <div class="col-md-3">
+        <label for="brand" class="form-label">Hãng sản phẩm:</label>
+        <select name="brand" class="form-select" id="brand" require>
+            <option selected disabled>Chọn hãng sản phẩm</option>
+            @foreach($listBrand as $Brand)
+            <option value="{{ $Brand->id }}">
+                {{ $Brand->name }}
+            </option>
+            @endforeach
+        </select>
+        <span class="error" id="error-brand"></span>
     </div>
-    <div class="col-md-3 offset-md-2">
+    <div class="col-md-3">
+        <label for="product-series-id" class="form-label">Dòng sản phẩm:</label>
+        <select class="form-select" id="product-series-id" require>
+            <option selected disabled>Chọn dòng sản phẩm</option>
+            @foreach($listSeries as $ProductSeries)
+            <option value="{{ $ProductSeries->id }}">
+                {{ $ProductSeries->name }}
+            </option>
+            @endforeach
+        </select>
+        <span class="error" id="error-product-series-id"></span>
+    </div>
+    <div class="col-md-3">
         <label for="chip" class="form-label">Chip:</label>
         <input type="text" id="chip" class="form-control" name="chip" id="chip" value="{{ old('chip') }}">
         <span class="error" id="error-chip"></span>
         @error('chip')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
     <div class="col-md-3">
@@ -35,40 +52,21 @@
         <input type="number" id="weight" class="form-control" id="weight" name="weight" step="0.1" value="{{ old('weight') }}">
         <span class="error" id="error-weight"></span>
         @error('weight')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
-        <label for="brand" class="form-label">Hãng sản phẩm:</label>
-        <select name="brand" class="form-select" id="brand" require>
-        <option selected disabled>Chọn hãng sản phẩm</option>
-            @foreach($listBrand as $Brand)
-            <option value="{{ $Brand->id }}">
-                {{ $Brand->name }}
-            </option>
-            @endforeach
-
-        </select>
-        
-        <span class="error" id="error-brand"></span>
+    <div class="col-md-4">
+        <label for="name" class="form-label">Tên sản phẩm:</label>
+        <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+        <span class="error" id="error-name"></span>
+        @error('name')
+        <span class="error-message"> {{ $message }} </span>
+        @enderror
     </div>
-    <div class="col-md-3">
-        <label for="product_series_id" class="form-label">Dòng sản phẩm:</label>
-        <select  class="form-select" id="product_series_id" require>
-        <option selected disabled>Chọn dòng sản phẩm</option>
-            @foreach($listSeries as $ProductSeries)
-            <option value="{{ $ProductSeries->id }}">
-                {{ $ProductSeries->name }}
-            </option>
-            @endforeach
 
-        </select>
-        
-        <span class="error" id="error-brand"></span>
-    </div>
-    <div class="col-md-3 ">
+    <div class="col-md-3 offset-md-2">
         <label for="front-camera" class="form-label">Camera trước:</label>
         <select name="front_camera" class="form-select" id="front-camera" required>
             <option selected disabled>Chọn camera trước</option>
@@ -94,9 +92,8 @@
     <div class="col-md-6">
         <label for="description" class="form-label">Mô tả:</label>
         <textarea type="text" id="description" class="form-control" id="description" name="description">{{ old('description') }}</textarea>
-
     </div>
-    <div class="col-md-3">
+    <div class="col-md-3 ">
         <label for="size-screen" class="form-label">Độ phân giải - Màn hình:</label>
         <select name="size_screen" class="form-select" id="size-screen" required>
             <option selected disabled>Chọn độ phân giải - màn hình</option>
@@ -111,7 +108,7 @@
         <input type="text" class="form-control" name="os" id="os" value="{{ old('os') }}">
         <span class="error" id="error-os"></span>
         @error('os')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
 </div>
@@ -121,7 +118,7 @@
         <input type="text" id="sims" class="form-control" name="sims" id="sims" value="{{ old('sims') }}">
         <span class="error" id="error-sims"></span>
         @error('sims')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
     <div class="col-md-3">
@@ -129,7 +126,7 @@
         <input type="number" class="form-control" name="battery" id="battery" value="{{ old('battery') }}">
         <span class="error" id="error-battery"></span>
         @error('battery')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
     <div class="col-md-3 offset-md-6">
@@ -137,42 +134,47 @@
         <input type="number" class="form-control" id="ram" value="{{ old('ram') }}">
         <span class="error" id="error-ram"></span>
         @error('ram')
-            <span class="error-message"> {{ $message }} </span>
+        <span class="error-message"> {{ $message }} </span>
         @enderror
     </div>
 </div>
 
 <div class="row">
-        <div class="col-md-3">
-            <label for="colors" class="form-label">Chọn màu:</label>
-            <select name="colors[]" class="form-select" id="colors" multiple>
-                @foreach($listColors as $color)
-                <option value="{{$color->id}}">{{$color->name}}</option>
-                @endforeach
-            </select>
-            @error('colors')
-            <span class="error-message">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="col-md-3">
-            <label for="capacities" class="form-label">Chọn dung lượng:</label>
-            <select name="capacities[]" class="form-select" id="capacities" multiple>
-                @foreach($listCapacity as $capacity)
-                <option value="{{$capacity->id}}">{{$capacity->name}}</option>
-                @endforeach
-            </select>
-            @error('capacities')
-            <span class="error-message">{{ $message }}</span>
-            @enderror
-        </div>
+    <h5 class="add_color_capacity">Thêm màu sắc, dung lượng cho sản phẩm:</h5>
+    <div class="col-md-3 offset-md-3">
+        <label for="colors" class="form-label">Chọn màu:</label>
+        <select name="colors[]" class="form-select" id="colors" multiple>
+            @foreach($listColors as $color)
+            <option value="{{$color->id}}">{{$color->name}}</option>
+            @endforeach
+        </select>
+        @error('colors')
+        <span class="error-message">{{ $message }}</span>
+        @enderror
+    </div>
+    <div class="col-md-3">
+        <label for="capacities" class="form-label">Chọn dung lượng:</label>
+        <select name="capacities[]" class="form-select" id="capacities" multiple>
+            @foreach($listCapacity as $capacity)
+            <option value="{{$capacity->id}}">{{$capacity->name}}</option>
+            @endforeach
+        </select>
+        @error('capacities')
+        <span class="error-message">{{ $message }}</span>
+        @enderror
+    </div>
 </div>
-<button type="button" id="btn-them" class="btn btn-success"><span data-feather="plus"></span>Thêm</button>
+
+    <div class="product_plus">
+        <button type="button" id="btn-them" class="btn btn-success"><span data-feather="plus"></span>Thêm</button>
+    </div>
+
 <br />
-<br />
+
 <form method="POST" action="{{ route('product.hd-add-new') }}" enctype="multipart/form-data">
     @csrf
-    <label>Bảng sản phẩm</label>
-    <div class="table-responsive">
+    <h5>Bảng màu sắc, dung lượng sản phẩm:</h5>
+    <div class="table-responsive" id="pr-color-capacity">
         <table class="table" id="tb-ds-product">
             <thead>
                 <tr>
@@ -187,9 +189,9 @@
         </table>
     </div>
     <br />
-    <input type="hidden" id="product-name" name="product_name" />
     <input type="hidden" id="brand-id" name="brand_id" />
-    <input type="hidden" id="product-series-id" name="product_series_id" />
+    <input type="hidden" id="product-name" name="product_name" />
+    <input type="hidden" id="hd-product-series-id" name="product_series_id" />
     <input type="hidden" id="hd-description" name="hd_description" />
     <input type="hidden" id="hd-chip" name="hd_chip" />
     <input type="hidden" id="hd-front-camera" name="hd_front_camera" />
@@ -200,7 +202,7 @@
     <input type="hidden" id="hd-battery" name="hd_battery" />
     <input type="hidden" id="hd-os" name="hd_os" />
     <input type="hidden" id="hd-ram" name="hd_ram" />
-    
+
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary"><span data-feather="save"></span>Lưu</button>
     </div>
@@ -220,6 +222,9 @@
             }
             var colors = $('#colors').val();
             var capacities = $('#capacities').val();
+            var nameproduct = $('#name').val();
+            var series = $('#product-series-id option:selected').text(); // Get the selected series name
+            var productName = series + ' ' + nameproduct; // Combine series and input name
             var tbody = $('#tb-ds-product tbody');
 
             if (colors.length === 0 || capacities.length === 0) {
@@ -279,110 +284,116 @@
             });
         }
 
-
         function validateInput() {
-    var isValid = true;
+            var isValid = true;
 
-    // Validate product name
-    var productName = $('#name').val();
-    if (!productName.trim()) {
-        $('#error-name').text('Vui lòng nhập tên dòng sản phẩm!').show();
-        isValid = false;
-    } else {
-        $('#error-name').text('').hide();
-    }
+            // Validate product name
+            var productName = $('#name').val();
+            if (!productName.trim()) {
+                $('#error-name').text('Vui lòng nhập tên dòng sản phẩm!').show();
+                isValid = false;
+            } else {
+                $('#error-name').text('').hide();
+            }
 
-    // Validate brand
-    var brandId = $('#brand').val();
-    if (!brandId) {
-        $('#error-brand').text('Vui lòng chọn hãng sản phẩm!').show();
-        isValid = false;
-    } else {
-        $('#error-brand').text('').hide();
-    }
+            // Validate brand
+            var brandId = $('#brand').val();
+            if (!brandId) {
+                $('#error-brand').text('Vui lòng chọn hãng sản phẩm!').show();
+                isValid = false;
+            } else {
+                $('#error-brand').text('').hide();
+            }
 
-    var oS = $('#os').val();
-    if (!oS) {
-        $('#error-os').text('Vui lòng nhập hệ điều hành!').show();
-        isValid = false;
-    } else {
-        $('#error-os').text('').hide();
-    }
+            var series = $('#product-series-id').val();
+            if (!series) {
+                $('#error-product-series-id').text('Vui lòng chọn series sản phẩm!').show();
+                isValid = false;
+            } else {
+                $('#error-brand').text('').hide();
+            }
 
-    // Validate chip
-    var chip = $('#chip').val();
-    if (!chip.trim()) {
-        $('#error-chip').text('Vui lòng nhập thông tin Chip!').show();
-        isValid = false;
-    } else {
-        $('#error-chip').text('').hide();
-    }
+            var oS = $('#os').val();
+            if (!oS) {
+                $('#error-os').text('Vui lòng nhập hệ điều hành!').show();
+                isValid = false;
+            } else {
+                $('#error-os').text('').hide();
+            }
 
-    var ram = $('#ram').val();
-    if (!ram.trim()) {
-        $('#error-ram').text('Vui lòng nhập thông tin Ram!').show();
-        isValid = false;
-    } else {
-        $('#error-ram').text('').hide();
-    }
+            // Validate chip
+            var chip = $('#chip').val();
+            if (!chip.trim()) {
+                $('#error-chip').text('Vui lòng nhập thông tin Chip!').show();
+                isValid = false;
+            } else {
+                $('#error-chip').text('').hide();
+            }
 
-    // Validate front camera
-    var frontCamera = $('#front-camera').val();
-    if (!frontCamera) {
-        $('#error-front-camera').text('Vui lòng chọn camera trước!').show();
-        isValid = false;
-    } else {
-        $('#error-front-camera').text('').hide();
-    }
+            var ram = $('#ram').val();
+            if (!ram.trim()) {
+                $('#error-ram').text('Vui lòng nhập thông tin Ram!').show();
+                isValid = false;
+            } else {
+                $('#error-ram').text('').hide();
+            }
 
-    // Validate rear camera
-    var rearCamera = $('#rear-camera').val();
-    if (!rearCamera) {
-        $('#error-rear-camera').text('Vui lòng chọn camera sau!').show();
-        isValid = false;
-    } else {
-        $('#error-rear-camera').text('').hide();
-    }
+            // Validate front camera
+            var frontCamera = $('#front-camera').val();
+            if (!frontCamera) {
+                $('#error-front-camera').text('Vui lòng chọn camera trước!').show();
+                isValid = false;
+            } else {
+                $('#error-front-camera').text('').hide();
+            }
 
-    // Validate screen size
-    var screenSize = $('#size-screen').val();
-    if (!screenSize) {
-        $('#error-size-screen').text('Vui lòng chọn độ phân giải - màn hình!').show();
-        isValid = false;
-    } else {
-        $('#error-size-screen').text('').hide();
-    }
+            // Validate rear camera
+            var rearCamera = $('#rear-camera').val();
+            if (!rearCamera) {
+                $('#error-rear-camera').text('Vui lòng chọn camera sau!').show();
+                isValid = false;
+            } else {
+                $('#error-rear-camera').text('').hide();
+            }
 
-    // Validate sims
-    var sims = $('#sims').val();
-    if (!sims.trim()) {
-        $('#error-sims').text('Vui lòng nhập thông tin SIM!').show();
-        isValid = false;
-    } else {
-        $('#error-sims').text('').hide();
-    }
+            // Validate screen size
+            var screenSize = $('#size-screen').val();
+            if (!screenSize) {
+                $('#error-size-screen').text('Vui lòng chọn độ phân giải - màn hình!').show();
+                isValid = false;
+            } else {
+                $('#error-size-screen').text('').hide();
+            }
 
-    // Validate battery
-    var battery = $('#battery').val();
-    if (!battery) {
-        $('#error-battery').text('Vui lòng nhập dung lượng pin!').show();
-        isValid = false;
-    } else {
-        $('#error-battery').text('').hide();
-    }
+            // Validate sims
+            var sims = $('#sims').val();
+            if (!sims.trim()) {
+                $('#error-sims').text('Vui lòng nhập thông tin SIM!').show();
+                isValid = false;
+            } else {
+                $('#error-sims').text('').hide();
+            }
 
-    // Validate weight
-    var weight = $('#weight').val();
-    if (!weight) {
-        $('#error-weight').text('Vui lòng nhập trọng lượng!').show();
-        isValid = false;
-    } else {
-        $('#error-weight').text('').hide();
-    }
+            // Validate battery
+            var battery = $('#battery').val();
+            if (!battery) {
+                $('#error-battery').text('Vui lòng nhập dung lượng pin!').show();
+                isValid = false;
+            } else {
+                $('#error-battery').text('').hide();
+            }
 
-    return isValid;
-}
+            // Validate weight
+            var weight = $('#weight').val();
+            if (!weight) {
+                $('#error-weight').text('Vui lòng nhập trọng lượng!').show();
+                isValid = false;
+            } else {
+                $('#error-weight').text('').hide();
+            }
 
+            return isValid;
+        }
 
         // Function to update hidden fields storing selected colors and capacities
         function updateHiddenFields() {
@@ -408,13 +419,20 @@
             $('#hd-os').val($('#os').val());
         });
 
-        $('#brand,#product_series_id, #size-screen, #front-camera, #rear-camera').on('change', function() {
+        $('#brand,#product-series-id, #size-screen, #front-camera, #rear-camera').on('change', function() {
             $('#brand-id').val($('#brand').val());
-            $('#product-series-id').val($('#product_series_id').val());
+            $('#hd-product-series-id').val($('#product-series-id').val());
             $('#hd-screen').val($('#size-screen').val());
             $('#hd-front-camera').val($('#front-camera').val());
             $('#hd-rear-camera').val($('#rear-camera').val());
         });
+
+        $('#product-series-id').on('change', function() {
+            var selectedSeries = $(this).find(':selected').text().trim();
+            $('#name').val(selectedSeries);
+        });
     });
 </script>
+
+
 @endsection

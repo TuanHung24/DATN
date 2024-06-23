@@ -15,47 +15,29 @@
     </select>
     <span class="error" id="error-provider"></span>
   </div>
-
-  <div class="col-md-2">
-    <label for="product" class="form-label">Sản phẩm:</label>
-    <select name="product" class="form-select" id="product">
-      <option selected disabled>Chọn sản phẩm</option>
-      @foreach($listProduct as $Product)
-      <option value="{{$Product->id}}">{{$Product->name}}</option>
+  <div class="col-md-3">
+    <label for="series" class="form-label">Dòng sản phẩm:</label>
+    <select name="series" class="form-select" id="series">
+      <option selected disabled>Chọn dòng sản phẩm</option>
+      @foreach($listSeries as $series)
+      <option value="{{$series->id}}">{{$series->name}}</option>
       @endforeach
+    </select>
+    <span class="error" id="error-series"></span>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <label for="productDetails" class="form-label">Chọn sản phẩm:</label>
+    <select name="productDetails" class="form-select" id="productDetails">
+      <option selected disabled>Chọn sản phẩm</option>
     </select>
     <span class="error" id="error-product"></span>
   </div>
-</div>
 
+</div>
 <div class="row">
   <div class="col-md-2">
-    <label for="color" class="form-label">Màu sắc:</label>
-    <select name="color" class="form-select" id="color">
-      <option selected disabled>Chọn màu</option>
-      @foreach($listColor as $Color)
-      <option value="{{$Color->id}}">{{$Color->name}}</option>
-      @endforeach
-    </select>
-    <span class="error" id="error-color"></span>
-  </div>
-  <div class="offset-md-1 col-md-2">
-    <label for="capacity" class="form-label">Dung lượng:</label>
-    <select name="capacity" class="form-select" id="capacity">
-      <option selected disabled>Chọn dung lượng</option>
-      @foreach($listCapacity as $Capacity)
-      <option value="{{$Capacity->id}}">{{$Capacity->name}}</option>
-      @endforeach
-    </select>
-    <span class="error" id="error-capacity"></span>
-  </div>
-</div>
-
-<div class="row">
-  
-</div>
-<div class="row">
-  <div class="col-md-1">
     <label for="quantity" class="form-label">Số lượng:</label>
     <input type="number" class="form-control" name="quantity" id="quantity" value="1" min="1">
     <span class="error" id="error-quantity"></span>
@@ -75,7 +57,9 @@
     <span class="error" id='error-out-price'></span>
   </div>
 </div>
-<button type="button" id="btn-them" class="btn btn-success"><span data-feather="plus"></span>Thêm</button>
+<div class="col-md-2">
+  <button type="button" id="btn-them" class="btn btn-success">Thêm</button>
+</div>
 <br>
 <br>
 <form method="POST" action="{{route('warehouse.hd-add-new')}}">
@@ -85,14 +69,13 @@
       <thead>
         <tr>
           <th>STT</th>
+          <th>Tên dòng sản phẩm</th>
           <th>Sản phẩm</th>
-          <th>Dung lượng</th>
-          <th>Màu sắc</th>
           <th>Số lượng</th>
           <th>Giá nhập</th>
           <th>Giá bán</th>
           <th>Thành tiền</th>
-          <th></th>
+          <th>Chức năng</th>
         </tr>
       </thead>
       <tbody>
@@ -118,119 +101,185 @@
         return;
       }
 
-      var stt = $("#tb-ds-product tbody tr").length + 1;
-      var tenSP = $("#product").find(":selected").text();
-      var idSP = $("#product").find(":selected").val();
-      var dungLuong = $("#capacity").find(":selected").text();
-      var idDL = $("#capacity").find(":selected").val();
-      var mauSac = $("#color").find(":selected").text();
-      var idMS = $("#color").find(":selected").val();
-      var soLuong = $("#quantity").val();
-      var giaNhap = $("#in-price").val();
-      var giaBan = $("#out-price").val();
+      var stt = isEditMode ? editIndex + 1 : $("#tb-ds-product tbody tr").length + 1;
+
+      var nameSeries = $("#series option:selected").text();
+      var idSeries = $("#series").val();
+      var nameDetail = $("#productDetails option:selected").text();
+      var idDetail = $("#productDetails").val();
+      var soLuong = parseInt($("#quantity").val());
+      var giaNhap = parseFloat($("#in-price").val());
+      var giaBan = parseFloat($("#out-price").val());
       var thanhTien = soLuong * giaNhap;
 
       var foundDuplicate = false;
 
-      if (isEditMode) {
-        // Sửa thông tin sản phẩm
-        var row = $("#tb-ds-product tbody tr").eq(editIndex);
-        row.find('td:eq(1)').text(tenSP).append(`<input type="hidden" name="idSP[]" value="${idSP}"/>`);
-        row.find('td:eq(2)').text(dungLuong).append(`<input type="hidden" name="capacity_id[]" value="${idDL}"/>`);
-        row.find('td:eq(3)').text(mauSac).append(`<input type="hidden" name="color_id[]" value="${idMS}"/>`);
-        row.find('td:eq(4)').text(soLuong).append(`<input type="hidden" name="quantity[]" value="${soLuong}"/>`);
-        row.find('td:eq(5)').text(formatNumber(giaNhap)).append(`<input type="hidden" name="in_price[]" value="${giaNhap}"/>`);
-        row.find('td:eq(6)').text(formatNumber(giaBan)).append(`<input type="hidden" name="out_price[]" value="${giaBan}"/>`);
-        row.find('td:eq(7)').text(formatNumber(thanhTien)).append(`<input type="hidden" name="into_money[]" value="${thanhTien}"/>`);
-        
-        isEditMode = false;
-        editIndex = -1;
-        $('#btn-them').text("Thêm");
-      } else {
-        // Thêm sản phẩm mới
-        $("#tb-ds-product tbody tr").each(function() {
-          var productId = $(this).find('input[name="idSP[]"]').val();
-          var capacityId = $(this).find('input[name="capacity_id[]"]').val();
-          var colorId = $(this).find('input[name="color_id[]"]').val();
-          if (idSP == productId && idDL == capacityId && idMS == colorId) {
-            foundDuplicate = true;
+      // Loop through existing rows to check for duplicates
+      $("#tb-ds-product tbody tr").each(function(index) {
+        var seriesId = $(this).find('input[name="id_series[]"]').val();
+        var detailId = $(this).find('input[name="id_detail[]"]').val();
 
-            if (confirm('Sản phẩm đã tồn tại, bạn có muốn cập nhật số lượng và giá mới không?')) {
-              var newQuantity = parseInt($(this).find('input[name="quantity[]"]').val()) + parseInt(soLuong);
-              var newTotal = parseInt(giaNhap) * newQuantity;
+        if (idSeries == seriesId && idDetail == detailId && index !== editIndex) {
+          foundDuplicate = true;
+          if (confirm('Sản phẩm đã tồn tại, bạn có muốn cập nhật số lượng và giá mới không?')) {
+            var existingQuantity = parseInt($(this).find('input[name="quantity[]"]').val());
+            var newQuantity = existingQuantity + parseInt(soLuong);
+            var newTotal = parseFloat(giaNhap) * newQuantity;
 
-              $(this).find('input[name="quantity[]"]').val(newQuantity.toString());
-              $(this).find('td').eq(4).text(newQuantity.toString());
+            // Update the existing row with new values
+            $(this).find('td').eq(3).text(newQuantity);
+            $(this).find('td').eq(4).text(formatNumber(giaNhap));
+            $(this).find('td').eq(5).text(formatNumber(giaBan));
+            $(this).find('td').eq(6).text(formatNumber(newTotal));
 
-              $(this).find('input[name="in_price[]"]').val(giaNhap.toString());
-              $(this).find('td').eq(5).text(formatNumber(giaNhap.toString()));
+            $(this).find('input[name="quantity[]"]').val(newQuantity);
+            $(this).find('input[name="in_price[]"]').val(giaNhap);
+            $(this).find('input[name="out_price[]"]').val(giaBan);
+            $(this).find('input[name="into_money[]"]').val(newTotal);
 
-              $(this).find('input[name="out_price[]"]').val(giaBan.toString());
-              $(this).find('td').eq(6).text(formatNumber(giaBan.toString()));
 
-              $(this).find('input[name="into_money[]"]').val(newTotal.toString());
-              $(this).find('td').eq(7).text(formatNumber(newTotal));
-
-              return false; // Thoát khỏi vòng lặp nếu tìm thấy bản sao
+           
+            if ($(this).find('td').eq(3).find('input[name="quantity[]"]').length === 0) {
+              // Nếu không tồn tại, thêm input vào hàng
+              $(this).find('td').eq(3).append(`<input type="hidden" name="quantity[]" value="${newQuantity}"/>`);
             }
+            if ($(this).find('td').eq(4).find('input[name="in_price[]"]').length === 0) {
+              // Nếu không tồn tại, thêm input vào hàng
+              $(this).find('td').eq(4).append(`<input type="hidden" name="in_price[]" value="${giaNhap}"/>`);
+            }
+            if ($(this).find('td').eq(5).find('input[name="out_price[]"]').length === 0) {
+              // Nếu không tồn tại, thêm input vào hàng
+              $(this).find('td').eq(5).append(`<input type="hidden" name="out_price[]" value="${giaBan}"/>`);
+            }
+            if ($(this).find('td').eq(6).find('input[name="into_money[]"]').length === 0) {
+              // Nếu không tồn tại, thêm input vào hàng
+              $(this).find('td').eq(6).append(`<input type="hidden" name="into_money[]" value="${newTotal}"/>`);
+            }
+
+            // Reset form and disable provider if necessary
+            clearForm();
+            toggleProvider();
+            foundDuplicate = true;
+            return false; // Exit the loop if duplicate is found
           }
-        });
+        }
+      });
 
-        if (!foundDuplicate) {
+      if (!foundDuplicate) {
+        if (isEditMode) {
+          // Update existing row if in edit mode
+          var row = $("#tb-ds-product tbody tr").eq(editIndex);
+          row.find('td').eq(0).text(stt);
+          row.find('td').eq(1).text(nameSeries);
+          row.find('td').eq(2).text(nameDetail);
+          row.find('td').eq(3).text(soLuong);
+          row.find('td').eq(4).text(formatNumber(giaNhap));
+          row.find('td').eq(5).text(formatNumber(giaBan));
+          row.find('td').eq(6).text(formatNumber(thanhTien));
+
+          row.find('input[name="id_series[]"]').val(idSeries);
+          row.find('input[name="id_detail[]"]').val(idDetail);
+          row.find('input[name="quantity[]"]').val(soLuong);
+          row.find('input[name="in_price[]"]').val(giaNhap);
+          row.find('input[name="out_price[]"]').val(giaBan);
+          row.find('input[name="into_money[]"]').val(thanhTien);
+
+
+          if (row.find('td').eq(1).find('input[name="id_series[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(1).append(`<input type="hidden" name="id_series[]" value="${idSeries}"/>`);
+          }
+          if (row.find('td').eq(2).find('input[name="id_detail[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(2).append(`<input type="hidden" name="id_detail[]" value="${idDetail}"/>`);
+          }
+          if (row.find('td').eq(3).find('input[name="quantity[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(3).append(`<input type="hidden" name="quantity[]" value="${soLuong}"/>`);
+          }
+          if (row.find('td').eq(4).find('input[name="in_price[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(4).append(`<input type="hidden" name="in_price[]" value="${giaNhap}"/>`);
+          }
+          if (row.find('td').eq(5).find('input[name="out_price[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(5).append(`<input type="hidden" name="out_price[]" value="${giaBan}"/>`);
+          }
+          if (row.find('td').eq(6).find('input[name="into_money[]"]').length === 0) {
+            // Nếu không tồn tại, thêm input vào hàng
+            row.find('td').eq(6).append(`<input type="hidden" name="into_money[]" value="${thanhTien}"/>`);
+          }
+
+
+          // Reset form and disable provider if necessary
+          clearForm();
+          toggleProvider();
+          isEditMode = false;
+          editIndex = -1;
+          $('#btn-them').text("Thêm"); // Reset button text to "Thêm" after editing
+        } else {
+          // Add new row if not in edit mode
           var row = `<tr>
-            <td>${stt}</td>
-            <td>${tenSP}<input type="hidden" name="idSP[]" value="${idSP}"/></td>
-            <td>${dungLuong}<input type="hidden" name="capacity_id[]" value="${idDL}"/></td>
-            <td>${mauSac}<input type="hidden" name="color_id[]" value="${idMS}"/></td>
-            <td>${soLuong}<input type="hidden" name="quantity[]" value="${soLuong}"/></td>
-            <td>${formatNumber(giaNhap)}<input type="hidden" name="in_price[]" value="${giaNhap}"/></td>
-            <td>${formatNumber(giaBan)}<input type="hidden" name="out_price[]" value="${giaBan}"/></td>
-            <td>${formatNumber(thanhTien)}<input type="hidden" name="into_money[]" value="${thanhTien}"/></td>
-            <td>
-              <button type="button" class="btn btn-primary btn-sua">Sửa</button>
-              <button type="button" class="btn btn-danger btn-xoa">Xóa</button>
-            </td>
-          </tr>`;
+                <td>${stt}</td>
+                <td>${nameSeries}<input type="hidden" name="id_series[]" value="${idSeries}"/></td>
+                <td>${nameDetail}<input type="hidden" name="id_detail[]" value="${idDetail}"/></td>
+                <td>${soLuong}<input type="hidden" name="quantity[]" value="${soLuong}"/></td>
+                <td>${formatNumber(giaNhap)}<input type="hidden" name="in_price[]" value="${giaNhap}"/></td>
+                <td>${formatNumber(giaBan)}<input type="hidden" name="out_price[]" value="${giaBan}"/></td>
+                <td>${formatNumber(thanhTien)}<input type="hidden" name="into_money[]" value="${thanhTien}"/></td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-sua">Sửa</button>
+                    <button type="button" class="btn btn-danger btn-xoa">Xóa</button>
+                </td>
+            </tr>`;
 
-          $('#tb-ds-product').find('tbody').append(row);
-          STT++;
+          if (isEditMode && editIndex >= 0) {
+            $("#tb-ds-product tbody tr").eq(editIndex).replaceWith(row);
+          } else {
+            $('#tb-ds-product').find('tbody').append(row);
+          }
+
+          // Increment STT and reset form and disable provider if necessary
+          STT = $("#tb-ds-product tbody tr").length;
+          clearForm();
+          toggleProvider();
         }
       }
-
-      clearForm();
-      toggleProvider();
     });
 
     $('#tb-ds-product').on('click', '.btn-xoa', function() {
-      $(this).closest('tr').remove();
-      STT--;
-      toggleProvider();
-    });
+            $(this).closest('tr').remove();
+            clearForm();
+            toggleProvider();
+        });
+
+    function reindexRows() {
+      $('#tb-ds-product tbody tr').each(function(index) {
+        $(this).find('td:first').text(index + 1);
+      });
+      STT = $("#tb-ds-product tbody tr").length;
+    }
 
     $('#tb-ds-product').on('click', '.btn-sua', function() {
-      $('#btn-them').text("Sửa");
+      $('#btn-them').text("Lưu"); // Đổi nút thành "Lưu" khi nhấn vào nút "Sửa"
       var row = $(this).closest('tr');
-      editIndex = row.index();
-      var idSP = row.find('input[name="idSP[]"]').val();
-      var idDL = row.find('input[name="capacity_id[]"]').val();
-      var idMS = row.find('input[name="color_id[]"]').val();
-      var soLuong = row.find('td:eq(4)').text();
-      var giaNhap = removeCommas(row.find('td:eq(5)').text());
-      var giaBan = removeCommas(row.find('td:eq(6)').text());
+      editIndex = row.index(); // Lưu chỉ số của hàng đang được sửa đổi
+      var idSeries = row.find('input[name="id_series[]"]').val();
+      var idDetail = row.find('input[name="id_detail[]"]').val();
+      var soLuong = parseInt(row.find('input[name="quantity[]"]').val());
+      var giaNhap = parseFloat(row.find('input[name="in_price[]"]').val());
+      var giaBan = parseFloat(row.find('input[name="out_price[]"]').val());
 
-      $("#product").val(idSP);
-      $("#capacity").val(idDL);
-      $("#color").val(idMS);
+      // Đổ dữ liệu từ hàng cũ vào form chỉnh sửa
+      $("#series").val(idSeries);
+      $("#productDetails").val(idDetail);
       $("#quantity").val(soLuong);
       $("#in-price").val(giaNhap);
       $("#out-price").val(giaBan);
 
-      isEditMode = true;
+      isEditMode = true; // Đặt chế độ chỉnh sửa thành true
     });
 
-    $("#provider, #product, #color, #capacity, #quantity, #in-price, #out-price").change(function() {
-      $(`#error-${this.id}`).hide();
-    });
 
     $("#provider").click(function() {
       $("#ncc-id").val(this.value);
@@ -246,26 +295,20 @@
         $("#error-provider").text("").hide();
       }
 
-      if ($("#product").val() === null) {
-        $("#error-product").text("Vui lòng chọn sản phẩm!").show();
+      if ($("#series").val() === null) {
+        $("#error-series").text("Vui lòng chọn dòng sản phẩm!").show();
         isValid = false;
       } else {
-        $("#error-product").text("").hide();
+        $("#error-series").text("").hide();
       }
 
-      if ($("#color").val() === null) {
-        $("#error-color").text("Vui lòng chọn màu!").show();
+      if ($("#productDetails").val() === null) {
+        $("#error-productDetails").text("Vui lòng chọn dòng sản phẩm!").show();
         isValid = false;
       } else {
-        $("#error-color").text("").hide();
+        $("#error-productDetails").text("").hide();
       }
 
-      if ($("#capacity").val() === null) {
-        $("#error-capacity").text("Vui lòng chọn dung lượng!").show();
-        isValid = false;
-      } else {
-        $("#error-capacity").text("").hide();
-      }
 
       var soLuong = parseFloat($("#quantity").val());
 
@@ -285,14 +328,21 @@
       if (isNaN(giaNhap)) {
         $("#error-in-price").text("Vui lòng nhập giá nhập!").show();
         isValid = false;
-      } else {
+      } else if(giaNhap<=0){
+        $("#error-in-price").text("Giá nhập phải lớn hơn 0!").show();
+        isValid = false;
+      }else{
         $("#error-in-price").text("").hide();
       }
 
       if (isNaN(giaBan)) {
         $("#error-out-price").text("Vui lòng nhập giá bán!").show();
         isValid = false;
-      } else if (giaBan <= giaNhap) {
+      } else if(giaBan<=0){
+
+        $("#error-out-price").text("Giá bán phải lớn hơn 0!").show();
+        isValid = false;
+      }else if (giaBan <= giaNhap) {
         $("#error-out-price").text("Giá bán phải lớn hơn giá nhập!").show();
         isValid = false;
       } else {
@@ -303,9 +353,8 @@
     }
 
     function clearForm() {
-      $("#product").val("Chọn sản phẩm");
-      $("#color").val("Chọn màu");
-      $("#capacity").val("Chọn dung lượng");
+      $("#series").val("Chọn dòng sản phẩm");
+      $("#productDetails").val("Chọn sản phẩm");
       $("#in-price").val("");
       $("#out-price").val("");
       $("#quantity").val("1");
@@ -326,6 +375,29 @@
 
     function removeCommas(x) {
       return x.replace(/\./g, "");
+    }
+  });
+
+
+  $('#series').change(function() {
+    var seriesId = $(this).val();
+    if (seriesId) {
+      $.ajax({
+        url: '/warehouse/getProductDetailsBySeries/' + seriesId,
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          $('#productDetails').empty().append('<option selected disabled>Chọn sản phẩm</option>');
+
+          $.each(data.productDetails, function(index, detail) {
+            var optionText = detail.product_name + ' - ' + detail.color_name + ' - ' + detail.capacity_name;
+            $('#productDetails').append('<option value="' + detail.id + '">' + optionText + '</option>');
+          });
+        },
+        error: function(xhr, status, error) {
+          console.log("Có lỗi xảy ra: " + error);
+        }
+      });
     }
   });
 </script>

@@ -8,6 +8,21 @@ use Exception;
 
 class ProviderController extends Controller
 {
+
+    public function search(Request $request)
+    {
+        try{
+        $query = $request->input('query');
+        $listProvider = Provider::where('name', 'like', '%' . $query . '%')
+                          ->orWhere('phone', 'like', '%' . $query . '%')
+                          ->orWhere('address', 'like', '%' . $query . '%')
+                          ->paginate(8);
+        return view('provider.list', compact('listProvider', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
+
     public function getList(){
         $listProvider = Provider::paginate(8);
         return view('provider.list',compact('listProvider'));

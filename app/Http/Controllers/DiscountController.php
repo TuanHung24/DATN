@@ -11,6 +11,17 @@ use Illuminate\Http\Request;
 
 class DiscountController extends Controller
 {
+    public function search(Request $request)
+    {
+        try{
+        $query = $request->input('query');
+        $listDiscount = Discount::where('name', 'like', '%' . $query . '%')
+                        ->paginate(8);
+        return view('discount.list', compact('listDiscount', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
     public function getList(){
         $listDiscount = Discount::paginate(8);
         return view('discount.list', compact('listDiscount'));
@@ -26,7 +37,7 @@ class DiscountController extends Controller
         $disCount->name = $request->discount_name;
         $disCount->date_start = $request->date_start;
         $disCount->date_end = $request->date_end;
-        $disCount->percent = $request->percent_all;
+        
         $disCount->save();
         for($i=0;$i<count($request->spID);$i++){
 
@@ -87,7 +98,7 @@ class DiscountController extends Controller
     } 
     public function getProduct(Request $request)
     {
-        $productDetail = ProductDetail::where('product_id', $request->product_id)->where('quanlity','>',0)->get();
+        $productDetail = ProductDetail::where('product_id', $request->product_id)->where('quantity','>',0)->get();
         return view('discount.get-product-ajax', compact('productDetail'));
     }
     public function getDetail($id){

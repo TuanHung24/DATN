@@ -9,6 +9,22 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
+    public function search(Request $request)
+    {
+        try{
+
+            $query = $request->input('query');
+            $listComment = Comment::where('name', 'like', '%' . $query . '%')
+                            ->orWhere('email', 'like', '%' . $query . '%')
+                            ->orWhere('phone', 'like', '%' . $query . '%')
+                            ->orWhere('address', 'like', '%' . $query . '%')
+                            ->paginate(5);
+            return view('comment.list', compact('listComment', 'query'));
+            
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
     public function getList()
     {
         $listComment = Comment::paginate(5);

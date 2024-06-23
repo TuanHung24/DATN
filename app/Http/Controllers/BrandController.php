@@ -9,6 +9,13 @@ use Exception;
 
 class BrandController extends Controller
 {
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        $listBrand = Brand::where('name', 'like', '%' . $query . '%')
+        ->paginate(8); 
+        return view('brand.list', compact('listBrand', 'query'));
+    }
     public function getList(){
         $listBrand = Brand::paginate(8);
         $listBrandDelete = Brand::onlyTrashed()->get();

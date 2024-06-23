@@ -27,15 +27,13 @@
         <nav class="navbar flex-nowrap p-0">
             <div class="navbar-brand-wrapper d-flex align-items-center col-auto">
                 <!-- Logo For Mobile View -->
-                <a class="navbar-brand navbar-brand-mobile" href="/">
-                    <img class="img-fluid w-100" src="{{asset('img/logo-mini.png')}}" alt="Graindashboard">
-                </a>
+
                 <!-- End Logo For Mobile View -->
 
-                <!-- Logo For Desktop View -->
-                <a class="navbar-brand navbar-brand-desktop" href="/">
-                    <img class="side-nav-show-on-closed" src="{{asset('img/logo-mini.png')}}" alt="Graindashboard" style="width: auto; height: 33px;">
-                    <img class="side-nav-hide-on-closed" src="{{asset('img/logo.png')}}" alt="Graindashboard" style="width: auto; height: 33px;">
+                <!-- Logo For Desktop View navbar-brand navbar-brand-desktop -->
+                <a href="/">
+                    <img class="side-nav-show-on-closed" src="{{asset($logoUrl->img_url)}}" alt="Graindashboard" style="width: 90px; height: 70px;">
+                    <img class="side-nav-hide-on-closed" src="{{asset($logoUrl->img_url)}}" alt="Graindashboard" style="width: 250px; height: 70px;">
                 </a>
                 <!-- End Logo For Desktop View -->
             </div>
@@ -51,43 +49,41 @@
                     <!-- User Notifications -->
                     <div class="dropdown ml-auto">
                         <a id="notificationsInvoker" class="header-invoker" href="#" aria-controls="notifications" aria-haspopup="true" aria-expanded="false" data-unfold-event="click" data-unfold-target="#notifications" data-unfold-type="css-animation" data-unfold-duration="300" data-unfold-animation-in="fadeIn" data-unfold-animation-out="fadeOut">
-                            <span class="indicator indicator-bordered indicator-top-right indicator-primary rounded-circle"></span>
+                            <span class="indicator indicator-bordered indicator-top-right indicator-primary rounded-circle">{{$quantityInvoice}}</span>
                             <i class="fas fa-bell"></i>
                         </a>
 
                         <div id="notifications" class="dropdown-menu dropdown-menu-center py-0 mt-4 w-18_75rem w-md-22_5rem unfold-css-animation unfold-hidden fadeOut" aria-labelledby="notificationsInvoker" style="animation-duration: 300ms;">
                             <div class="card">
+                               
                                 <div class="card-header d-flex align-items-center border-bottom py-3">
-                                    <h5 class="mb-0">Notifications</h5>
-                                    <a class="link small ml-auto" href="#">Clear All</a>
+                                    <h5 class="mb-0">Duyệt đơn hàng</h5>
+                                    <!-- <a class="link small ml-auto" href="#">Clear All</a> -->
                                 </div>
-
+                                @if($quantityInvoice)
                                 <div class="card-body p-0">
                                     <div class="list-group list-group-flush">
-                                        <div class="list-group-item list-group-item-action">
+                                        @foreach($customerInvoice as $invoice)
+                                        @if($invoice->customer) <!-- Kiểm tra xem có khách hàng không -->
+                                        <a href="{{route('invoice.list')}}" class="list-group-item list-group-item-action">
                                             <div class="d-flex align-items-center text-nowrap mb-2">
                                                 <i class="fas fa-info-circle icon-text text-primary mr-2"></i>
-                                                <h6 class="font-weight-semi-bold mb-0">New Update</h6>
-                                                <span class="list-group-item-date text-muted ml-auto">just now</span>
+                                                <h6 class="font-weight-semi-bold mb-0">Đơn hàng</h6>
+                                                <!-- <span class="list-group-item-date text-muted ml-auto">Duyệt</span> -->
                                             </div>
                                             <p class="mb-0">
-                                                Order <strong>#10000</strong> has been updated.
+                                                Khách hàng: <strong>{{ $invoice->customer->name }} </strong> đang chờ duyệt
                                             </p>
                                             <a class="list-group-item-closer text-muted" href="#"><i class="fas fa-times"></i></a>
-                                        </div>
-                                        <div class="list-group-item list-group-item-action">
-                                            <div class="d-flex align-items-center text-nowrap mb-2">
-                                                <i class="fas fa-info-circle icon-text text-primary mr-2"></i>
-                                                <h6 class="font-weight-semi-bold mb-0">New Update</h6>
-                                                <span class="list-group-item-date text-muted ml-auto">just now</span>
-                                            </div>
-                                            <p class="mb-0">
-                                                Order <strong>#10001</strong> has been updated.
-                                            </p>
-                                            <a class="list-group-item-closer text-muted" href="#"><i class="fas fa-times"></i></a>
-                                        </div>
+                                        </a>
+
+                                        @endif
+                                        @endforeach
                                     </div>
                                 </div>
+                                @else
+                                <span class="error-invoice">Không có đơn hàng nào cần duyệt!</span>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -138,17 +134,33 @@
                         <li class="sidebar-heading h6">Trang chủ</li>
 
                         <!-- Dashboard -->
-                        <li class="side-nav-menu-item active">
-                            <a class="side-nav-menu-link media align-items-center" href="{{ route('statistical')}}">
+
+                        <li class="side-nav-menu-item side-nav-has-menu">
+                            <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subStatistical">
                                 <span class="side-nav-menu-icon d-flex mr-3">
                                     <i class="fas fa-chart-line"></i>
                                 </span>
                                 <span class="side-nav-fadeout-on-closed media-body">Thống kê</span>
+                                <span class="side-nav-control-icon d-flex">
+                                    <i class="fas fa-angle-right side-nav-fadeout-on-closed"></i>
+                                </span>
+                                <span class="side-nav__indicator side-nav-fadeout-on-closed"></span>
                             </a>
+                            <ul id="subStatistical" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{ route('statistical')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-calendar-alt"></i></span>Theo năm</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{ route('statistical-month')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-calendar"></i></span>Theo tháng</a>
+                                </li>
+                                <li class="side-nav-menu-item">
+                                    <a class="side-nav-menu-link" href="{{ route('statistical-day')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-calendar-day"></i></span>Theo ngày</a>
+                                </li>
+                            </ul>
                         </li>
                         <!-- End Dashboard -->
 
-                       
+
 
                         <li class="sidebar-heading h6">Quản lý</li>
 
@@ -340,14 +352,12 @@
                             </a>
                             <ul id="subColorCapacity" class="side-nav-menu side-nav-menu-second-level mb-0" style="display: none;">
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('capacity_color.list')}}">
-                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
+                                    <a class="side-nav-menu-link" href="{{route('capacity.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách dung lượng</a>
                                 </li>
                                 <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('capacity_color.add-new-capacity')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới dung lượng</a>
-                                </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{route('capacity_color.add-new-color')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới màu sắc</a>
+                                    <a class="side-nav-menu-link" href="{{route('color.list')}}">
+                                        <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách màu sắc</a>
                                 </li>
                             </ul>
                         </li>
@@ -430,7 +440,7 @@
 
 
         </aside>
-       
+
 
         <div class="content">
             <div class="py-4 px-3 px-md-8">
@@ -445,6 +455,7 @@
     <script src="{{asset('js/graindashboard.js')}}"></script>
     <script src="{{asset('js/graindashboard.vendor.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ asset('sweetalert2/sweetalert2.all.min.js')}}"></script>
     <script src="{{asset('bootstrap-5.2.3/js/bootstrap.min.js')}}"></script>
     @yield('page-sw')
 
@@ -454,7 +465,7 @@
     $(document).ready(function() {
         $(".js-custom-scroll").mCustomScrollbar({
             theme: "minimal-dark",
-            scrollInertia: 300, // Điều chỉnh độ trễ cuộn
+            scrollInertia: 300,
             advanced: {
                 updateOnContentResize: true
             }

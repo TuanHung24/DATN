@@ -24,7 +24,13 @@ class DiscountDetail extends Model
     {
         return number_format($this->price, 0, ',', '.');
     }
-
+    public function scopeIsActive($query)
+    {
+        $now = Carbon::now('Asia/Ho_Chi_Minh');
+        return $query->whereHas('discount', function($query) use ($now) {
+            $query->where('date_start', '<=', $now)->where('date_end', '>=', $now);
+        });
+    }
     public function isActive($id)
     {
         $now = Carbon::now('Asia/Ho_Chi_Minh');

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name',50);
             $table->datetime('date_start');
             $table->datetime('date_end');
-            $table->integer('percent');
+           
             $table->boolean('status')->default(1);
             $table->timestamps();
         });

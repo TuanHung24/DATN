@@ -16,16 +16,16 @@ class CapacityTableSeeder extends Seeder
     public function run(): void
     {
         $capacity=new Capacity();
-        $capacity->name="64GB";
+        $capacity->name="64 GB";
         $capacity->save();
         $capacity=new Capacity();
-        $capacity->name="256GB";
+        $capacity->name="256 GB";
         $capacity->save();
         $capacity=new Capacity();
-        $capacity->name="512GB";
+        $capacity->name="512 GB";
         $capacity->save();
         $capacity=new Capacity();
-        $capacity->name="1TB";
+        $capacity->name="1 TB";
         $capacity->save();
         echo "Thêm dung lượng thành công!";
     }

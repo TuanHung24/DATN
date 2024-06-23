@@ -15,6 +15,19 @@ use SebastianBergmann\Exporter\Exporter;
 
 class InvoiceController extends Controller
 {
+    public function search(Request $request)
+    {
+        try{
+            $query = $request->input('query');
+            $listInvoice = Invoice::where('customer.name', 'like', '%' . $query . '%')
+                            ->orWhere('phone', 'like', '%' . $query . '%')
+                            ->orWhere('address', 'like', '%' . $query . '%')
+                            ->paginate(10); 
+            return view('invoice.list', compact('listInvoice', 'query'));
+        }catch(Exception $e){
+            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        }
+    }
     public function addNew()
     {
         $listProduct = Product::whereHas('product_detail', function ($query) {

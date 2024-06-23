@@ -13,19 +13,19 @@ class ProductSeriesSeeder extends Seeder
     public function run(): void
     {
         $productSeries=new ProductSeries();
-        $productSeries->name="Iphone 11 Series";
+        $productSeries->name="Iphone 11";
         $productSeries->save();
         
         $productSeries=new ProductSeries();
-        $productSeries->name="Samsung Galaxy Series";
+        $productSeries->name="Samsung Galaxy";
         $productSeries->save();
 
         $productSeries=new ProductSeries();
-        $productSeries->name="Iphone 12 Series";
+        $productSeries->name="Iphone 12";
         $productSeries->save();
         
         $productSeries=new ProductSeries();
-        $productSeries->name="Iphone 13 Series";
+        $productSeries->name="Iphone 13";
         $productSeries->save();
 
         echo "Thêm Series thành công!";
