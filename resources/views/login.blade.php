@@ -11,7 +11,7 @@
 @extends('layout.app')
 <body>
 <div class="brand text-center mb-3">
-            <a href="/"><img src="{{asset($logoUrl->img_url)}}" id='logo-login'></a>
+            <a href="/"><img src="{{asset($logoUrl->img_url ?? '')}}" id='logo-login' alt="logo"></a>
         </div>
 <div class="row justify-content-md-center">
 
