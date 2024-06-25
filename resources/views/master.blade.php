@@ -32,8 +32,8 @@
 
                 <!-- Logo For Desktop View navbar-brand navbar-brand-desktop -->
                 <a href="/">
-                    <img class="side-nav-show-on-closed" src="{{asset($logoUrl->img_url)}}" alt="Graindashboard" style="width: 90px; height: 70px;">
-                    <img class="side-nav-hide-on-closed" src="{{asset($logoUrl->img_url)}}" alt="Graindashboard" style="width: 250px; height: 70px;">
+                    <img class="side-nav-show-on-closed" src="{{asset($logoUrl->img_url )}}" alt="Graindashboard" style="width: 90px; height: 70px;">
+                    <img class="side-nav-hide-on-closed" src="{{asset($logoUrl->img_url )}}" alt="Graindashboard" style="width: 250px; height: 70px;">
                 </a>
                 <!-- End Logo For Desktop View -->
             </div>

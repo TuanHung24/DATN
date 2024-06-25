@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RearCameraSeeder::class,
             ScreenSeeder::class,
             ProductDescriptionSeeder::class,
+            LogoSeeder::class,
         ]);
     }
 }

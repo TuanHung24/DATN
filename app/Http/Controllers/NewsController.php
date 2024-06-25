@@ -34,8 +34,14 @@ class NewsController extends Controller
     }
     public function hdAddNew(NewsRequest $request){
         try{
-            
+            $file = $request->file('img_url');
             $news= new News();
+
+            if (isset($file)) {
+                $path = $file->store('new');
+
+                $news->img_url = $path;
+            }
             $news->admin_id=Auth::user()->id;
             $news->title= $request->title;
             $news->content= $request->content;
@@ -55,7 +61,14 @@ class NewsController extends Controller
     }
     public function hdUpdate(Request $request, $id){
         try{
-        $news = News::findOrFail($id);
+            $file = $request->file('img_url');
+            $news = News::findOrFail($id);
+
+            if (isset($file)) {
+                $path = $file->store('new');
+
+                $news->img_url = $path;
+            }
         $news->admin_id=Auth::user()->id;
         $news->title= $request->title;
         $news->content= $request->content;
