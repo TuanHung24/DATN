@@ -38,52 +38,38 @@ class APIProductController extends Controller
             'data' => $listProduct
         ]);
     }
-    public function getProductDetail($id)
+    public function getProductDetail($name)
     {
-        try {
-            $proDuct = Product::whereHas('product_detail', function ($query) {
-                $query->where('quantity', '>', 0);
-            })
+        
+            $product = Product::where('name', $name)
+                ->whereHas('product_detail', function ($query) {
+                    $query->where('quantity', '>', 0);
+                })
                 ->with([
                     'product_description.front_camera',
                     'product_description.rear_camera',
                     'product_description.screen',
                     'rate',
-                    'comment.customer' => function ($query) {
-                        $query->select('id', 'name');
-                    },
-                    'comment.comment_detail.admin' => function ($query) {
-                        $query->select('id', 'name');
-                    },
+                    'comment.customer:id,name',
+                    'comment.comment_detail.admin:id,name',
                     'brand',
                     'product_series',
                     'img_product',
                     'product_detail.color',
                     'product_detail.capacity',
                     'product_detail.discount_detail' => function ($query) {
-                        $query->isActive()->with(['discount' => function ($query) {
-                            $query->select('id', 'date_start', 'date_end'); // Chọn cột 'date_start' và 'date_end' từ bảng 'discount'
-                        }]);
+                        $query->isActive()->with(['discount:id,date_start,date_end']);
                     }
                 ])
-                ->findOrFail($id);
-            if (empty($proDuct)) {
-                return response()->json([
-                    'success' => false,
-                    'message' => "Sản phẩm ID {$id} không tồn tại"
-                ]);
-            }
+                ->firstOrFail();
+
             return response()->json([
                 'success' => true,
-                'data' => $proDuct
+                'data' => $product
             ]);
-        } catch (ModelNotFoundException $e) {
-            return response()->json([
-                'success' => false,
-                'message' => "Sản phẩm ID {$id} không tồn tại"
-            ]);
-        }
+       
     }
+
 
     public function timKiem(Request $request)
     {

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Illuminate\Support\Str;
 class Product extends Model
 {
     use HasFactory,SoftDeletes;
@@ -26,7 +26,6 @@ class Product extends Model
     {
         return $this->hasOne(ProductDescription::class, 'product_id');
     }
-    
     public function img_product()
     {
         return $this->hasMany(ImgProduct::class, 'product_id');

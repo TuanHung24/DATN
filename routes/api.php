@@ -28,7 +28,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/login',[APIAuthController::class,"loGin"]);
 
 Route::get('/product',[APIProductController::class, "listProduct"]);
-Route::get('/product/{id}',[APIProductController::class, "getProductDetail"]);
+Route::get('/product/{slug}',[APIProductController::class, "getProductDetail"]);
 
 Route::get('/brand',[APIBrandController::class, "listBrand"]);
 Route::get('/brand/{id}',[APIBrandController::class, "getBrandDetail"]);
