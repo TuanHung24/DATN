@@ -10,18 +10,20 @@
         <div class="col-md-6">
             <label for="name" class="form-label">Tên Hãng</label>
             <input type="text" class="form-control" name="name" value="{{old('name', $bRand->name)}}">
-        </div>
-        @error('name')
+            @error('name')
             <span class="error-message"> {{ $message }} </span>
-        @enderror
-        <div class="col-md-6">
+            @enderror
+        </div>
+    </div>
+    <div class="row">
+    <div class="col-md-6">
             <label for="img_url" class="form-label">Chọn Logo </label>
-            <input type="file" name="img_url" value="{{old('img_url', $bRand->img_url)}}" accept="image/*"
-                required /><br />
-        </div>
-        @error('img_url')
+            <input type="file" name="img_url" value="{{old('img_url', $bRand->img_url)}}" accept="image/*"/><br />
+
+            @error('img_url')
             <span class="error-message"> {{ $message }} </span>
-        @enderror
+            @enderror
+        </div>
     </div>
     <div class="row">
         <div class="col-md-2">

@@ -6,20 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+
 class Product extends Model
 {
-    use HasFactory,SoftDeletes;
-    protected $table='products';
-    public function product_detail(){
-        return $this->hasMany(ProductDetail::class,'product_id');
+    use HasFactory, SoftDeletes;
+    protected $table = 'products';
+    public function product_detail()
+    {
+        return $this->hasMany(ProductDetail::class, 'product_id');
     }
-    public function comment(){
+    public function comment()
+    {
         return $this->hasMany(Comment::class);
     }
-    public function brand(){
+    public function brand()
+    {
         return $this->belongsTo(Brand::class);
     }
-    public function product_series(){
+    public function product_series()
+    {
         return $this->belongsTo(ProductSeries::class);
     }
     public function product_description()
@@ -30,7 +35,12 @@ class Product extends Model
     {
         return $this->hasMany(ImgProduct::class, 'product_id');
     }
-    public function rate(){
+    public function rate()
+    {
         return $this->hasMany(Rate::class, 'product_id');
+    }
+    public function imgProductByColor($colorId)
+    {
+        return $this->hasMany(ImgProduct::class)->where('color_id', $colorId);
     }
 }

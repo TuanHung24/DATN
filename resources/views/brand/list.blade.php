@@ -15,8 +15,8 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH HÃNG SẢN PHẨM</h3>
-    <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-        aria-controls="offcanvasRight">Thương hiệu đã xóa</button>
+    <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+        aria-controls="offcanvasRight"><i class="fa fa-trash"></i>Thương hiệu đã xóa</button>
 </div>
 <div class="custom-search-container">
     <form action="{{ route('brand.search') }}" method="GET">

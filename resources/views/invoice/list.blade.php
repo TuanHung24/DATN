@@ -16,12 +16,12 @@
     <table class="table">
         <thead>
             <tr class="title_hd">
-                <th>Mã hóa đơn</th>
+                <th>MAHD</th>
                 <th>Khách hàng</th>
                 <th>Điện thoại</th>
                 <th>Địa chỉ</th>
                 <th>Tổng tiền</th>
-                <th>Phương thức thanh toán</th>
+                <th>PT thanh toán</th>
                 <th>Ngày tạo</th>
                 <th>Trạng thái</th>
                 <th>Tác vụ</th>
@@ -29,43 +29,44 @@
         </thead>
         @foreach($listInvoice as $inVoice)
         <tr>
-            <td>{{$inVoice->id}}</td>
+            <td>HD{{$inVoice->id}}</td>
             <td>{{ $inVoice->customer->name }}</td>
             <td>{{ $inVoice->phone }}</td>
             <td>{{ $inVoice->address }}</td>
             <td>{{ $inVoice->total_formatted }}</td>
             <td>{{ $inVoice->payment_method }}</td>
-            <td>{{ $inVoice->date }}</td>
-           
+            <td>{{ \Carbon\Carbon::parse($inVoice->date)->format('d/m/Y H:i') }}</td>
+            <td class="status">
             @if ($inVoice->status == 1)
-            <td>
+            
                 <button type="button" class="btn btn-danger cancel-btn" data-id="{{ $inVoice->id }}">Hủy</button>
                 &nbsp;
                 <a href="{{route('invoice.update-status-approved', ['id' => $inVoice->id])}}">
                     <button type="submit" class="btn btn-success">Duyệt</button>
                 </a>
-            </td>
+            
             @elseif ($inVoice->status == 2)
-            <td>
+           
                 <a href="{{route('invoice.update-status-delivering',['id'=> $inVoice->id])}}">
                     <button type="submit" class="btn btn-warning">Đang vận chuyển</button>
                 </a>
-            </td>
+            
             @elseif ($inVoice->status == 3)
-            <td>
+            
                 <a href="{{route('invoice.update-status-complete',['id'=> $inVoice->id])}}">
                     <button type="submit" class="btn btn-secondary">Đã giao</button>
                 </a>
-            </td>
+           
             @elseif ($inVoice->status == 4)
-            <td>
+            
                 <button class="btn btn-light">Hoàn thành</button>
-            </td>
+            
             @elseif ($inVoice->status == 5)
-            <td>
+            
                 <button type="submit" class="btn btn-light">Đã hủy</button>
-            </td>
+            
             @endif
+            </td>
             <td class="chuc-nang">
                 <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i>Chi tiết</a>
                 <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-success"><i class="fas fa-file-export"></i>PDF</a>

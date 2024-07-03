@@ -59,9 +59,74 @@ class ProductDescriptionSeeder extends Seeder
                 'rear_camera_id' => 4,
                 'screen_id' => 4,
                 'weight' => '190',
-                'os' => 'Android 13',
+                'os' => 'iOS 13',
                 'battery' => '4800',
                 'ram' => '12',
+                'chip' => 'Snapdragon 8 Gen 1',
+                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
+                
+            ],
+            [
+                'product_id' => 5, // Replace with actual product IDs from products table
+                'front_camera_id' => 5,
+                'rear_camera_id' => 5,
+                'screen_id' => 5,
+                'weight' => '190',
+                'os' => 'Android 13',
+                'battery' => '4800',
+                'ram' => '8',
+                'chip' => 'Snapdragon 8 Gen 1',
+                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
+                
+            ],
+            [
+                'product_id' => 6, // Replace with actual product IDs from products table
+                'front_camera_id' => 6,
+                'rear_camera_id' => 6,
+                'screen_id' => 5,
+                'weight' => '190',
+                'os' => 'Android 13',
+                'battery' => '4800',
+                'ram' => '8',
+                'chip' => 'Snapdragon 8 Gen 1',
+                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
+                
+            ],
+            [
+                'product_id' => 7, // Replace with actual product IDs from products table
+                'front_camera_id' => 5,
+                'rear_camera_id' => 5,
+                'screen_id' => 5,
+                'weight' => '190',
+                'os' => 'Android 13',
+                'battery' => '4800',
+                'ram' => '8',
+                'chip' => 'Snapdragon 8 Gen 1',
+                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
+                
+            ],
+            [
+                'product_id' => 8, // Replace with actual product IDs from products table
+                'front_camera_id' => 6,
+                'rear_camera_id' => 6,
+                'screen_id' => 5,
+                'weight' => '190',
+                'os' => 'Android 13',
+                'battery' => '4800',
+                'ram' => '8',
+                'chip' => 'Snapdragon 8 Gen 1',
+                'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
+                
+            ],
+            [
+                'product_id' => 9, // Replace with actual product IDs from products table
+                'front_camera_id' => 6,
+                'rear_camera_id' => 6,
+                'screen_id' => 5,
+                'weight' => '190',
+                'os' => 'Android 13',
+                'battery' => '4800',
+                'ram' => '8',
                 'chip' => 'Snapdragon 8 Gen 1',
                 'sims' => 'Dual SIM (Nano-SIM, dual stand-by)',
                 

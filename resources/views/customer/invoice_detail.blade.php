@@ -22,8 +22,7 @@
                 <thead>
                     <tr>
                         <th>Sản phẩm</th>
-                        <th>Màu sắc</th>
-                        <th>Dung lượng</th>
+                       
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th>Thành tiền</th>
@@ -32,9 +31,7 @@
                 <tbody>
                     @foreach($invoiceDetails as $detail)
                     <tr>
-                        <td>{{ $detail->product->name }}</td>
-                        <td>{{ $detail->color->name }}</td>
-                        <td>{{ $detail->capacity->name }}</td>
+                        <td>{{ $detail->product->name }} - {{ $detail->color->name }} - {{ $detail->capacity->name }}</td>
                         <td>{{ $detail->quantity }}</td>
                         <td>{{ number_format($detail->price, 0, ',', '.') }} đ</td>
                         <td>{{ number_format($detail->into_money, 0, ',', '.') }} đ</td>

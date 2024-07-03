@@ -46,7 +46,7 @@ class ProviderController extends Controller
         }
     } 
     public function upDate($id){
-        $proVider= Provider::find($id);
+        $proVider= Provider::findOrFail($id);
         if(empty($proVider)){
             return redirect()->route('provider.list');
         }
@@ -55,7 +55,7 @@ class ProviderController extends Controller
     public function hdUpdate(Request $request, $id){
         try{
 
-            $provider= Provider::find($id);
+            $provider= Provider::findOrFail($id);
             $provider->name   = $request->name;
             $provider->phone  = $request->phone;
             $provider->address= $request->address;

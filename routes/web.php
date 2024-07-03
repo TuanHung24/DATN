@@ -43,6 +43,7 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('update/{id}', [AdminController::class, 'upDate'])->name('update');
             Route::put('update/{id}', [AdminController::class, 'hdUpdate'])->name('hd-update');
             Route::get('lock/{id}', [AdminController::class, 'lock'])->name('lock');
+            Route::get('unlock/{id}', [AdminController::class, 'unlock'])->name('unlock');
             Route::get('delete/{id}', [AdminController::class, 'delete'])->name('delete');
             Route::get('info', [AdminController::class, 'inFo'])->name('info');
             Route::post('info', [AdminController::class, 'updateInfo'])->name('update-info');
@@ -59,8 +60,10 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::post('add-new', [CustomerController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('list', [CustomerController::class, 'getList'])->name('list');
             Route::get('update/{id}', [CustomerController::class, 'upDate'])->name('update');
-            Route::post('update/{id}', [CustomerController::class, 'hdUpdate'])->name('hd-update');
+            Route::put('update/{id}', [CustomerController::class, 'hdUpdate'])->name('hd-update');
             Route::get('delete/{id}', [CustomerController::class, 'delete'])->name('delete');
+            Route::get('lock/{id}', [CustomerController::class, 'lock'])->name('lock');
+            Route::get('unlock/{id}', [CustomerController::class, 'unlock'])->name('unlock');
             Route::get('get-invoice/{id}', [CustomerController::class, 'getInvoice'])->name('get-invoice');
             Route::get('get-invoice-detail/{customer_id}/{id}', [CustomerController::class, 'getInvoiceDetail'])->name('get-invoice-detail');
         });
@@ -94,7 +97,7 @@ Route::middleware(['auth', 'check.status'])->group(function(){
         Route::name('comment.')->group(function(){
             Route::get('search', [SlideShowController::class, 'search'])->name('search');
             Route::get('list', [CommentController::class, 'getList'])->name('list');
-            Route::get('rep',[CommentController::class, 'Rep'])->name('rep');
+            Route::get('rep/{id}',[CommentController::class, 'Rep'])->name('rep');
             Route::post('rep',[CommentController::class, 'hdRep'])->name('hd-rep');
         });
     });
@@ -109,6 +112,7 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('delete/{id}', [ProviderController::class, 'delete'])->name('delete');
         });
     });
+    
     Route::prefix('brand')->middleware('role:1,2')->group(function(){
         Route::name('brand.')->group(function(){
             Route::get('search', [BrandController::class, 'search'])->name('search');

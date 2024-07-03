@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\ProductDetail;
 use App\Models\Warehouse;
+use App\Models\WarehouseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -40,27 +41,50 @@ class StatisticalController extends Controller
 
     public function getListYear()
     {
-        $inVoice = Invoice::whereBetween('status', [1, 5])->count();
+        $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', now()->year)->count();
         $backInvoice = Invoice::where('status', 5)->count();
 
-        $toTal = Invoice::where('status', 4)->sum('total');
+        $toTal = Invoice::where('status', 4)->whereYear('date', now()->year)->sum('total');
         $totalInvoice = number_format($toTal, 0, ',', '.');
 
-        $cusTomer = Customer::count();
-        $quantityProduct = ProductDetail::sum('quantity');
+        $cusTomer = Customer::whereYear('created_at', now()->year)->count();
+        $quantityProduct = ProductDetail::whereYear('created_at', now()->year)->sum('quantity');
 
-        $priceWarehouse = Warehouse::sum('total');
+        $priceWarehouse = Warehouse::whereYear('date', now()->year)->sum('total');
         $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
 
         $sellProduct = InvoiceDetail::select('product_id')
             ->selectRaw('SUM(quantity) as totalpd')
             ->groupBy('product_id')
             ->orderByDesc('totalpd')
+            ->whereYear('created_at', now()->year)
             ->take(3)
             ->get();
 
-        return view('statistical', compact('inVoice', 'backInvoice', 'totalInvoice', 'sellProduct', 'cusTomer', 'quantityProduct', 'totalWarehouse'));
+        $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
+            $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
+        }])->whereYear('date', now()->year)->get();
+
+        $interestRate = 0;
+
+        foreach ($Invoice1 as $invoice) {
+            foreach ($invoice->invoice_detail as $detail) {
+                $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
+                    ->where('color_id', $detail->color_id)
+                    ->where('capacity_id', $detail->capacity_id)
+                    ->select('in_price')
+                    ->orderByDesc('created_at')
+                    ->first();
+
+                if ($wareHouseDetail) {
+                    $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
+                }
+            }
+        }
+
+        return view('statistical', compact('inVoice', 'backInvoice', 'totalInvoice', 'sellProduct', 'cusTomer', 'quantityProduct', 'totalWarehouse', 'interestRate'));
     }
+
 
     public function statisticalMonth(Request $request)
     {
@@ -70,22 +94,43 @@ class StatisticalController extends Controller
 
             if ($Month && $Year) {
                 $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
-                    ->whereYear('invoice.created_at', $Year)
-                    ->whereMonth('invoice.created_at', $Month)
+                    ->whereYear('invoice.date', $Year)
+                    ->whereMonth('invoice.date', $Month)
                     ->whereBetween('invoice.status', [1, 4])
                     ->select(
-                        DB::raw('DATE(invoice.created_at) as date'),
+                        DB::raw('DATE(invoice.date) as date'),
                         DB::raw('COUNT(DISTINCT invoice.id) as count'),
                         DB::raw('SUM(invoice_detail.into_money) as tongtien'),
                         DB::raw('SUM(invoice_detail.quantity) as soluong')
                     )
-                    ->groupBy(DB::raw('DATE(invoice.created_at)'))
+                    ->groupBy(DB::raw('DATE(invoice.date)'))
                     ->get();
             } else {
                 $data = [];
             }
 
-            return response()->json($data);
+            $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
+                $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
+            }])->whereYear('date', $Year)->whereMonth('date', $Month)->where('status',4)->get();
+    
+            $interestRate = 0;
+    
+            foreach ($Invoice1 as $invoice) {
+                foreach ($invoice->invoice_detail as $detail) {
+                    $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
+                        ->where('color_id', $detail->color_id)
+                        ->where('capacity_id', $detail->capacity_id)
+                        ->select('in_price')
+                        ->orderByDesc('created_at')
+                        ->first();
+    
+                    if ($wareHouseDetail) {
+                        $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
+                    }
+                }
+            }
+
+            return response()->json(['data'=>$data,'interestRate'=>$interestRate]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['error' => 'Lỗi máy chủ'], 500);
@@ -101,16 +146,16 @@ class StatisticalController extends Controller
 
 
 
-        $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date',$Year)->count();
-        $backInvoice = Invoice::where('status', 5)->count();
+        $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', $Year)->count();
+        $backInvoice = Invoice::where('status', 5)->whereYear('date', $Year)->count();
 
-        $toTal = Invoice::whereYear('date',$Year)->where('status', 4)->sum('total');
+        $toTal = Invoice::whereYear('date', $Year)->where('status', 4)->sum('total');
         $totalInvoice = number_format($toTal, 0, ',', '.');
 
-        $cusTomer = Customer::whereYear('created_at',$Year)->count();
-        //$quantityProduct = ProductDetail::sum('quantity');
+        $cusTomer = Customer::whereYear('created_at', $Year)->count();
+        $quantityProduct = ProductDetail::whereYear('created_at', $Year)->sum('quantity');
 
-        $priceWarehouse = Warehouse::whereYear('date',$Year)->sum('total');
+        $priceWarehouse = Warehouse::whereYear('date', $Year)->sum('total');
         $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
 
         $sellProduct = InvoiceDetail::select('products.name as product_name', 'colors.name as color_name', 'capacity.name as capacity_name')
@@ -143,14 +188,38 @@ class StatisticalController extends Controller
         } else {
             $invoice = [];
         }
-        $data=[
-            'inVoice'=>$inVoice,
-            'backInvoice'=> $backInvoice,
-            'totalInvoice'=>$totalInvoice,
-            'cusTomer'=>$cusTomer,
-            'totalWarehouse'=>$totalWarehouse,
-            'sellProduct'=>$sellProduct,
-            'invoice'=>$invoice
+
+        $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
+            $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
+        }])->whereYear('date', $Year)->where('status',4)->get();
+        
+        $interestRate = 0;
+
+        foreach ($Invoice1 as $invoice1) {
+            foreach ($invoice1->invoice_detail as $detail) {
+                $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
+                    ->where('color_id', $detail->color_id)
+                    ->where('capacity_id', $detail->capacity_id)
+                    ->select('in_price')
+                    ->orderByDesc('created_at')
+                    ->first();
+
+                if ($wareHouseDetail) {
+                    $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
+                }
+            }
+        }
+        $interestRate = number_format($interestRate, 0, ',', '.');
+        $data = [
+            'inVoice' => $inVoice,
+            'backInvoice' => $backInvoice,
+            'totalInvoice' => $totalInvoice,
+            'cusTomer' => $cusTomer,
+            'totalWarehouse' => $totalWarehouse,
+            'sellProduct' => $sellProduct,
+            'invoice' => $invoice,
+            'interestRate'=>$interestRate,
+            'quantityProduct'=>$quantityProduct
         ];
         return response()->json($data);
         // } catch (\Exception $e) {
@@ -272,11 +341,32 @@ class StatisticalController extends Controller
             'da_huy' => applyDayFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $day, $month, $year)->count(),
         ];
 
+        $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
+            $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
+        }])->whereYear('date', $year)->whereMonth('date', $month)->whereDay('date',$day)->where('status',4)->get();
+
+        $interestRate = 0;
+
+        foreach ($Invoice1 as $invoice) {
+            foreach ($invoice->invoice_detail as $detail) {
+                $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
+                    ->where('color_id', $detail->color_id)
+                    ->where('capacity_id', $detail->capacity_id)
+                    ->select('in_price')
+                    ->orderByDesc('created_at')
+                    ->first();
+
+                if ($wareHouseDetail) {
+                    $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
+                }
+            }
+        }
 
         $data = [
             'sellProduct' => $sellProduct,
             'statuses' => $statuses,
             'revenue' => $revenue,
+            'interestRate'=>$interestRate
         ];
 
         return response()->json($data);
@@ -334,33 +424,33 @@ class StatisticalController extends Controller
 
         return response()->json($data);
     }
-    public function statisticalYear(Request $request)
-    {
-        try {
+    // public function statisticalYear(Request $request)
+    // {
+    //     try {
 
-            $Year = $request->year;
+    //         $Year = $request->year;
 
-            if ($Year) {
-                $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
-                    ->whereYear('invoice.created_at', $Year)
+    //         if ($Year) {
+    //             $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
+    //                 ->whereYear('invoice.date', $Year)
 
-                    ->whereBetween('invoice.status', [1, 4])
-                    ->select(
-                        DB::raw('DATE(invoice.created_at) as date'),
-                        DB::raw('COUNT(DISTINCT invoice.id) as count'),
-                        DB::raw('SUM(invoice_detail.into_money) as tongtien'),
-                        DB::raw('SUM(invoice_detail.quantity) as soluong')
-                    )
-                    ->groupBy(DB::raw('DATE(invoice.created_at)'))
-                    ->get();
-            } else {
-                $data = [];
-            }
+    //                 ->whereBetween('invoice.status', [1, 4])
+    //                 ->select(
+    //                     DB::raw('DATE(invoice.date) as date'),
+    //                     DB::raw('COUNT(DISTINCT invoice.id) as count'),
+    //                     DB::raw('SUM(invoice_detail.into_money) as tongtien'),
+    //                     DB::raw('SUM(invoice_detail.quantity) as soluong')
+    //                 )
+    //                 ->groupBy(DB::raw('DATE(invoice.date)'))
+    //                 ->get();
+    //         } else {
+    //             $data = [];
+    //         }
 
-            return response()->json($data);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
-            return response()->json(['error' => 'Lỗi máy chủ'], 500);
-        }
-    }
+    //         return response()->json($data);
+    //     } catch (\Exception $e) {
+    //         Log::error($e->getMessage());
+    //         return response()->json(['error' => 'Lỗi máy chủ'], 500);
+    //     }
+    // }
 }

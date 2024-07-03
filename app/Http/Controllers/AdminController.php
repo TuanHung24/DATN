@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
+use function Laravel\Prompts\error;
+
 class AdminController extends Controller
 {
 
@@ -44,16 +46,7 @@ class AdminController extends Controller
     {
 
         try {
-            $request->validate([
-                'avatar' => 'nullable|image', // Optional avatar field validation
-                'name' => 'required|string|max:255',
-                'email' => 'required|string|email|max:255|unique:admin',
-                'username' => 'required|string|max:255|unique:admin',
-                'password' => 'required|string|min:6',
-                'phone' => 'required|string|max:20',
-                'address' => 'required|string|max:255',
-                'roles' => 'required|integer|in:1,2,3',
-            ]);
+           
 
             $file = $request->file('avatar');
             $newAdmin = new Admin();
@@ -77,7 +70,7 @@ class AdminController extends Controller
 
             $newAdmin->gender = $request->gender;
             $newAdmin->save();
-
+            
 
             return redirect()->route('admin.list')->with(['Success' => "Thêm mới tài khoản {$newAdmin->username} thành công !"]);
         } catch (Exception $e) {
@@ -169,7 +162,21 @@ class AdminController extends Controller
             return back()->with(['Error' => 'Lỗi ngoại lệ']);
         }
     }
-
+    public function unlock($id)
+    {
+        try {
+            $aDmin = Admin::findOrFail($id);
+            
+            if (empty($aDmin)) {
+                return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
+            }
+            $aDmin->status = 1;
+            $aDmin->save();
+            return redirect()->route('admin.list')->with(['Success' => "Mở tài khoản {$aDmin->username} thành công!"]);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Lỗi ngoại lệ']);
+        }
+    }
     public function inFo()
     {
         if (Auth::check()) {
@@ -181,7 +188,7 @@ class AdminController extends Controller
     public function updateInfo(InfoRequest $request)
     {
 
-        $aDmin = Admin::find(Auth::user()->id);
+        $aDmin = Admin::findOrFail(Auth::user()->id);
         if (isset($request->avatar)) {
             Storage::delete($aDmin->avatar_url);
             $file = $request->avatar;
@@ -221,7 +228,7 @@ class AdminController extends Controller
         if (!Hash::check($rq->password, Auth::user()->password)) {
             return redirect()->route("admin.reset-password")->with(['Error' => 'Mật khẩu cũ không đúng!']);
         }
-        $aDmin = Admin::find(Auth::user()->id);
+        $aDmin = Admin::findOrFail(Auth::user()->id);
         $aDmin->password = Hash::make($rq->respassword);
         $aDmin->save();
         return redirect()->route('admin.info')->with(['Success' => "Thay đổi mật khẩu thành công!"]);

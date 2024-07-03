@@ -12,6 +12,12 @@ class Comment extends Model
     public function comment_detail(){
         return $this->hasMany(CommentDetail::class);
     }
+    public function color(){
+        return $this->belongsTo(Color::class);
+    }
+    public function capacity(){
+        return $this->belongsTo(Capacity::class);
+    }
     public function customer(){
         return $this->belongsTo(Customer::class);
     }

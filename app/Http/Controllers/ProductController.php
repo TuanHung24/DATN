@@ -33,7 +33,7 @@ class ProductController extends Controller
                             ->paginate(8);  
             return view('product.list', compact('listProduct', 'query'));
         }catch(Exception $e){
-            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+            return back()->with(['Error'=>'Không tìm thấy sản phẩm']);
         }
     }
     public function getList()
@@ -98,7 +98,7 @@ class ProductController extends Controller
         try {
 
 
-            $proDuct = Product::with(['product_detail', 'product_description.front_camera', 'product_description.rear_camera', 'product_description.screen'])->find($id);
+            $proDuct = Product::with(['product_detail', 'product_description.front_camera', 'product_description.rear_camera', 'product_description.screen'])->findOrFail($id);
 
 
             $listBrand = Brand::where('id', '<>', $id)->get();
@@ -121,9 +121,9 @@ class ProductController extends Controller
         try {
 
 
-            $proDuct = Product::find($id);
+            $proDuct = Product::findOrFail($id);
             if (!$proDuct) {
-                return redirect()->route('product.list')->with(["thong_bao" => "Sản phẩm không tồn tại!"]);
+                return redirect()->route('product.list')->with(["Error" => "Sản phẩm không tồn tại!"]);
             }
 
             $proDuct->name = $request->name;
@@ -132,7 +132,7 @@ class ProductController extends Controller
             $proDuct->product_series_id = $request->product_series_id;
             $proDuct->save();
 
-            $productDes = new ProductDescription();
+            $productDes = ProductDescription::where('product_id',$proDuct->id)->first();
             $productDes->product_id = $proDuct->id;
             $productDes->front_camera_id = $request->front_camera;
             $productDes->rear_camera_id = $request->rear_camera;
@@ -144,10 +144,10 @@ class ProductController extends Controller
             $productDes->chip = $request->chip;
             $productDes->sims = $request->sims;
             $productDes->save();
+            
 
 
-
-            return redirect()->route('product.list')->with(['Success' => "Cập nhật sản phẩm {$proDuct->ten} thành công!"]);
+            return redirect()->route('product.list')->with(['Success' => "Cập nhật sản phẩm {$proDuct->name} thành công!"]);
         } catch (Exception $e) {
             return back()->withInput();
         }
@@ -159,7 +159,7 @@ class ProductController extends Controller
 
             $listProductDetail = ProductDetail::where('product_id', $id)->get();
             $productDescription = ProductDescription::where('product_id', $id)->first();
-            $proDuct = Product::find($id);
+            $proDuct = Product::findOrFail($id);
             $listImg = ImgProduct::where('product_id', $id)->get();
             return view('product.detail', compact('listProductDetail', 'proDuct', 'listImg', 'productDescription'));
         } catch (Exception $e) {
@@ -169,7 +169,7 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        $proDuct = Product::find($id);
+        $proDuct = Product::findOrFail($id);
         if (empty($proDuct)) {
             return "Sản phẩm không tồn tại";
         }
@@ -179,14 +179,14 @@ class ProductController extends Controller
 
     public function restore($id)
     {
-        $proDuct = Product::withTrashed()->find($id);
+        $proDuct = Product::withTrashed()->findOrFail($id);
         $proDuct->restore();
         return redirect()->route('product.list')->with(['Success' => "Phục hồi sản phẩm {$proDuct->name} thành công "]);
     }
 
     public function deleted($id)
     {
-        $proDuct = Product::withTrashed()->find($id);
+        $proDuct = Product::withTrashed()->findOrFail($id);
         $proDuct->forceDelete();
         return redirect()->route('product.list')->with(['Success' => "Xóa vĩnh viễn sản phẩm {$proDuct->name} thành công "]);
     }

@@ -21,8 +21,11 @@
     </div>
 </div>
 <div class="form-group statistics-day" id="statistics-day">
-<div class="stat-item">
+    <div class="stat-item">
         <span>Doanh thu: <strong id='revenue'>0 VND</strong></span>
+    </div>
+    <div class="stat-item">
+        <span>Lãi: <strong id='interestRate'>0 VND</strong></span>
     </div>
     <div class="stat-item">
         <span>Sản phẩm bán chạy: <strong id='top-product'></strong></span>
@@ -44,14 +47,24 @@
     $(document).ready(function() {
         var pieChart;
 
+        var currentYear = new Date().getFullYear();
+        var currentMonth = new Date().getMonth() + 1;
+        var currentDay = new Date().getDate();
 
         for (var month = 1; month <= 12; month++) {
             $('#month').append('<option value="' + month + '">Tháng ' + month + '</option>');
         }
 
-        var currentYear = new Date().getFullYear();
         for (var year = 2023; year <= currentYear; year++) {
             $('#year').append('<option value="' + year + '">Năm ' + year + '</option>');
+        }
+
+        function populateDays(maxDays) {
+            const daySelect = $('#day');
+            daySelect.empty();
+            for (let i = 1; i <= maxDays; i++) {
+                daySelect.append('<option value="' + i + '">Ngày ' + i + '</option>');
+            }
         }
 
         function drawPieChart(data) {
@@ -142,23 +155,6 @@
             }
         }
 
-        // Vẽ biểu đồ khi tải trang
-        drawPieChart({
-            cho_xu_ly: 0,
-            da_duyet: 0,
-            dang_giao: 0,
-            da_giao: 0,
-            da_huy: 0
-        });
-
-        function populateDays(maxDays) {
-            const daySelect = $('#day');
-            daySelect.empty();
-            for (let i = 1; i <= maxDays; i++) {
-                daySelect.append('<option value="' + i + '">Ngày ' + i + '</option>');
-            }
-        }
-
         function updateDays() {
             const month = parseInt($('#month').val());
             const year = parseInt($('#year').val());
@@ -172,31 +168,16 @@
         }
 
         function setDefaultDate() {
-            const today = new Date();
-            $('#day').val(today.getDate());
-            $('#month').val(today.getMonth() + 1); // Tháng bắt đầu từ 0
-            $('#year').val(today.getFullYear());
-        }
-
-        $('#year, #month').on('change', function() {
+            $('#year').val(currentYear);
+            $('#month').val(currentMonth);
             updateDays();
-        });
-
-        function formatNumber(number) {
-            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            $('#day').val(currentDay);
         }
-        setDefaultDate();
-        updateDays();
 
-        $('#checkDate').click(function() {
+        function loadStatistics() {
             const day = $('#day').val();
             const month = $('#month').val();
             const year = $('#year').val();
-
-            if (!day || !month || !year) {
-                alert('Vui lòng nhập đầy đủ ngày, tháng, năm.');
-                return;
-            }
 
             $.ajax({
                 url: "{{ route('statistical-counts') }}",
@@ -208,18 +189,15 @@
                     _token: '{{ csrf_token() }}'
                 },
                 success: function(data) {
-                   
                     var topProductsHtml = '';
                     console.log(data.sellProduct);
                     data.sellProduct.forEach(function(product) {
-                        topProductsHtml += '<li>Tên sản phẩm: ' + product.product_name + ' - ' + product.color_name + ' - '+ product.capacity_name +', Số lượng bán: ' + product.totalpd + '</li>';
+                        topProductsHtml += '<li>Tên sản phẩm: ' + product.product_name + ' - ' + product.color_name + ' - ' + product.capacity_name + ', Số lượng bán: ' + product.totalpd + '</li>';
                     });
                     $('#top-product').html('<ul>' + topProductsHtml + '</ul>');
-
                     
                     $('#revenue').text(formatNumber(data.revenue) + " VND");
-                    
-                    
+                    $('#interestRate').text(formatNumber(data.interestRate) + ' VND')
                     drawPieChart(data.statuses);
                 },
                 error: function(xhr, status, error) {
@@ -227,8 +205,30 @@
                     alert("Có lỗi xảy ra: " + error);
                 }
             });
+        }
 
+        $('#year, #month').on('change', function() {
+            updateDays();
+        });
 
+        function formatNumber(number) {
+            return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+        }
+
+        setDefaultDate();
+        loadStatistics();
+
+        $('#checkDate').click(function() {
+            const day = $('#day').val();
+            const month = $('#month').val();
+            const year = $('#year').val();
+
+            if (!day || !month || !year) {
+                alert('Vui lòng nhập đầy đủ ngày, tháng, năm.');
+                return;
+            }
+
+            loadStatistics();
         });
     });
 </script>

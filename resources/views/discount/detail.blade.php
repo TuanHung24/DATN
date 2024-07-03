@@ -24,8 +24,7 @@
         <thead>
             <tr>
                 <th>Sản phẩm</th>
-                <th>Màu sắc</th>
-                <th>Dung lượng</th>
+               
                 <th>Giá gốc</th>
                 <th>Khuyến mãi(%)</th>
                 <th>Giá khuyến mãi</th>
@@ -33,9 +32,8 @@
         </thead>
         @foreach($listDiscountDetail as $discountDetail)
         <tr>
-            <td>{{ $discountDetail->product_detail->product->name }}</td>
-            <td>{{ $discountDetail->product_detail->color->name }}</td>
-            <td>{{ $discountDetail->product_detail->capacity->name }}</td>
+            <td>{{ $discountDetail->product_detail->product->name }} - {{ $discountDetail->product_detail->color->name }} - {{ $discountDetail->product_detail->capacity->name }}</td>
+           
             <td>{{ $discountDetail->product_detail->price_formatted }}</td>
             <td>{{ $discountDetail->percent }}</td>
             <td>{{ $discountDetail->price_formatted }}</td>

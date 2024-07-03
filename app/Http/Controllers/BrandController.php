@@ -6,7 +6,7 @@ use App\Http\Requests\BrandRequest;
 use Illuminate\Http\Request;
 use App\Models\Brand;
 use Exception;
-
+use Illuminate\Support\Facades\Storage;
 class BrandController extends Controller
 {
     public function search(Request $request)
@@ -51,8 +51,8 @@ class BrandController extends Controller
         try {
 
 
-            $bRand = Brand::find($id);
-
+            $bRand = Brand::findOrFail($id);
+            
             return view('brand.update', compact('bRand'));
         } catch (Exception $e) {
             return redirect()->route('brand.list');
@@ -62,11 +62,11 @@ class BrandController extends Controller
     {
         try {
             $file = $request->file('img_url');
-            $bRand = Brand::find($id);
+            $bRand = Brand::findOrFail($id);
 
             if (isset($file)) {
+                Storage::delete($bRand->img_url);
                 $path = $file->store('logo_brand');
-
                 $bRand->img_url = $path;
             }
 
@@ -80,25 +80,28 @@ class BrandController extends Controller
 
     public function delete($id)
     {
-        $bRand = Brand::find($id);
+        $bRand = Brand::findOrFail($id);
         if (empty($bRand)) {
             return "Thương hiệu không tồn tại";
         }
-
+        if($bRand->img_url){
+            Storage::delete($bRand->img_url);
+        }
+        
         $bRand->delete();
         return redirect()->route('brand.list')->with(['Success' => "Xóa thương hiệu {$bRand->name} thành công!"]);
     }
 
     public function restore($id)
     {
-        $bRand = Brand::withTrashed()->find($id);
+        $bRand = Brand::withTrashed()->findOrFail($id);
         $bRand->restore();
         return redirect()->route('brand.list')->with(['Success' => "Phục hồi thương hiệu {$bRand->name} thành công "]);
     }
 
     public function deleted($id)
     {
-        $bRand = Brand::withTrashed()->find($id);
+        $bRand = Brand::withTrashed()->findOrFail($id);
         $bRand->forceDelete();
         return redirect()->route('brand.list')->with(['Success' => "Xóa vĩnh viễn thương hiệu {$bRand->name} thành công "]);
     }

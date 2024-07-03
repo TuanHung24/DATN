@@ -35,7 +35,7 @@ class CustomerRequest extends FormRequest
 
             //'username'=>'required|min:6|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]*$/u|not_regex:/[\p{P}\p{M}\p{S}\p{C}\p{Z}]/u|not_regex:/[^\p{L}\p{N}]/u|unique:khach_hang,ten_dang_nhap,' . $id,
             
-            'password'=>'required|min:6|max:128',
+            'password' => $this->isMethod('post') ? 'required|min:6|max:128|unique:customer,password,'.$id : 'nullable|min:6|max:128|unique:customer,password,'.$id,
 
             'phone' =>'required|regex:/^0\d{9}$/',
 

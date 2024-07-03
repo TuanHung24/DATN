@@ -57,10 +57,10 @@
     <span class="error" id='error-out-price'></span>
   </div>
 </div>
-<div class="col-md-2">
+<div>
   <button type="button" id="btn-them" class="btn btn-success">Thêm</button>
 </div>
-<br>
+
 <br>
 <form method="POST" action="{{route('warehouse.hd-add-new')}}">
   @csrf

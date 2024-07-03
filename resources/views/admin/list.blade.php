@@ -12,7 +12,15 @@
         <button type="submit" id="search-button" class="search-button"><i class="fa fa-search"></i></button>
     </form>
 </div>
-<x-notification />
+<x-notification />@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 @if(isset($listAdmin) && $listAdmin->isNotEmpty($listAdmin))
 <div class="table-responsive">
     <table class="table">
@@ -49,8 +57,10 @@
             </td>
             <td id="task">
                 <a href="{{ route('admin.update', ['id' => $Admin->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+                @if($Admin->status === 1)
                 <a href="{{ route('admin.lock', ['id' => $Admin->id]) }}" class="btn btn-outline-warning"><i class="fas fa-lock"></i></a>
-                @if($Admin->status === 0)
+                @elseif($Admin->status === 0)
+                <a href="{{ route('admin.unlock', ['id' => $Admin->id]) }}" class="btn btn-outline-success"><i class="fas fa-unlock"></i></a>
                 | <a href="{{ route('admin.delete', ['id' => $Admin->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                 @endif
             </td>

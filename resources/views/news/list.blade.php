@@ -25,20 +25,20 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Ảnh nền</th>
                     <th>Tác giả</th>
                     <th>Title</th>
-                    <th>Ảnh nền</th>
-                    <th>Nội dung</th>
-                    <th>Chức năng</th>
+                    
+                   
+                    <th>Tác vụ</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($listNews as $News)
                     <tr>
+                        <td><img src="{{asset($News->img_url)}}" class="img" alt="avatar" /></td>
                         <td>{{ $News->admin->name }}</td>
                         <td>{{ $News->title }}</td>
-                        <td><img src="{{asset($News->img_url)}}" class="img" alt="avatar" /></td>
-                        <td>{!!$News->content!!} </td>
                         <td>
                             <a href="{{ route('news.update', ['id' => $News->id]) }}" class="btn btn-outline-primary"><i
                                     class="fas fa-edit"></i></a> |

@@ -31,36 +31,37 @@
                 <td>{{ $inVoice->total_formatted }}</td>
                 <td>{{ $inVoice->payment_method }}</td>
                 <td>{{ $inVoice->date }}</td>
-
+                <td class="status">
                 @if ($inVoice->status == 1)
-                <td>
+                
                     <button type="button" class="btn btn-danger cancel-btn" data-id="{{ $inVoice->id }}">Hủy</button>
                     &nbsp;
                     <a href="{{route('invoice.update-status-approved', ['id' => $inVoice->id])}}">
                         <button type="submit" class="btn btn-success">Duyệt</button>
                     </a>
-                </td>
+               
                 @elseif ($inVoice->status == 2)
-                <td>
+                
                     <a href="{{route('invoice.update-status-delivering',['id'=> $inVoice->id])}}">
                         <button type="submit" class="btn btn-warning">Đang giao</button>
                     </a>
-                </td>
+                
                 @elseif ($inVoice->status == 3)
-                <td>
+                
                     <a href="{{route('invoice.update-status-complete',['id'=> $inVoice->id])}}">
                         <button type="submit" class="btn btn-secondary">Đã giao</button>
                     </a>
-                </td>
+                
                 @elseif ($inVoice->status == 4)
-                <td>
+                
                     <button class="btn btn-light">Hoàn thành</button>
-                </td>
+                
                 @elseif ($inVoice->status == 5)
-                <td>
+                
                     <button type="submit" class="btn btn-light">Đã hủy</button>
-                </td>
+                
                 @endif
+            </td>
 
                 <td class="chuc-nang">
                 <a href="{{ route('customer.get-invoice-detail', ['customer_id' => $listInvoice->first()->customer->id, 'id' => $inVoice->id]) }}" class="btn btn-outline-info">

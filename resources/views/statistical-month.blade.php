@@ -9,12 +9,16 @@
         <label for="doanh-thu">Doanh thu:</label>
         <span id="doanh-thu">VND</span>
     </div>
+    <div class="doanh_thu">
+        <label for="interestRate">Lãi:</label>
+        <span id="interestRate">VND</span>
+    </div>
     <!-- <div class="lai"> Lãi: <span id='lai'></span>đ</div> -->
     <div class="sp-da-ban">
         <label for="so-luong">Số lượng sản phẩm:</label>
         <span id="so-luong"></span>
     </div>
-    
+   
     <div class="hd-da-ban">
         <label for="so-luong-hoa-don">Số lượng đơn hàng:</label>
         <span id="so-luong-hoa-don"></span>
@@ -56,17 +60,21 @@
 <script type="text/javascript">
     $(document).ready(function() {
 
-        thongKe();
+        var currentYear = new Date().getFullYear();
+        var currentMonth = new Date().getMonth() + 1;
 
         for (var month = 1; month <= 12; month++) {
             $('#monthSelect').append('<option value="' + month + '">Tháng ' + month + '</option>');
         }
 
-        var currentYear = new Date().getFullYear();
+        
         for (var year = 2023; year <= currentYear; year++) {
             $('#yearSelect').append('<option value="' + year + '">' + year + '</option>');
         }
-
+        $('#yearSelect').val(currentYear);
+        $('#monthSelect').val(currentMonth);
+        thongKe();
+        StatisTr();
         $('#thong-ke').click(function() {
             thongKe();
             StatisTr();
@@ -84,6 +92,7 @@
                     'year': selectedYear
                 },
                 success: function(response) {
+                    
                     var daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
                     var counts = Array(daysInMonth).fill(0);
 
@@ -95,20 +104,21 @@
                     canvasContainer.append('<canvas id="orderChart"></canvas>');
                     var ctx = $("#orderChart");
 
-                    for (var i in response) {
-                        var date = new Date(response[i].date);
+                    for (var i in response.data) {
+                        var date = new Date(response.data[i].date);
                         var day = date.getDate();
-                        counts[day - 1] = response[i].count;
-                        tongTienHoaDon += parseFloat(response[i].tongtien);
-                        tongSoLuong += parseInt(response[i].soluong);
-                        tongHoaDon += parseInt(response[i].count);
+                        counts[day - 1] = response.data[i].count;
+                        tongTienHoaDon += parseFloat(response.data[i].tongtien);
+                        tongSoLuong += parseInt(response.data[i].soluong);
+                        tongHoaDon += parseInt(response.data[i].count);
                     }
 
                     let formattedTongTienHoaDon = formatNumber(tongTienHoaDon);
-                    $('#doanh-thu').text(formattedTongTienHoaDon);
+                    let formattedInterestRate = formatNumber(response.interestRate);
+                    $('#doanh-thu').text(formattedTongTienHoaDon+' VND');
                     $('#so-luong').text(tongSoLuong);
                     $('#so-luong-hoa-don').text(tongHoaDon);
-
+                    $('#interestRate').text(formattedInterestRate+ ' VND');
                     var chartData = {
                         labels: Array.from({
                             length: daysInMonth

@@ -40,36 +40,34 @@ class APIProductController extends Controller
     }
     public function getProductDetail($name)
     {
-        
-            $product = Product::where('name', $name)
-                ->whereHas('product_detail', function ($query) {
-                    $query->where('quantity', '>', 0);
-                })
-                ->with([
-                    'product_description.front_camera',
-                    'product_description.rear_camera',
-                    'product_description.screen',
-                    'rate',
-                    'comment.customer:id,name',
-                    'comment.comment_detail.admin:id,name',
-                    'brand',
-                    'product_series',
-                    'img_product',
-                    'product_detail.color',
-                    'product_detail.capacity',
-                    'product_detail.discount_detail' => function ($query) {
-                        $query->isActive()->with(['discount:id,date_start,date_end']);
-                    }
-                ])
-                ->firstOrFail();
 
-            return response()->json([
-                'success' => true,
-                'data' => $product
-            ]);
-       
+        $product = Product::where('name', $name)
+            ->whereHas('product_detail', function ($query) {
+                $query->where('quantity', '>', 0);
+            })
+            ->with([
+                'product_description.front_camera',
+                'product_description.rear_camera',
+                'product_description.screen',
+                'rate',
+                'comment.customer:id,name',
+                'comment.comment_detail.admin:id,name',
+                'brand',
+                'product_series',
+                'img_product',
+                'product_detail.color',
+                'product_detail.capacity',
+                'product_detail.discount_detail' => function ($query) {
+                    $query->isActive()->with(['discount:id,date_start,date_end']);
+                }
+            ])
+            ->firstOrFail();
+
+        return response()->json([
+            'success' => true,
+            'data' => $product
+        ]);
     }
-
 
     public function timKiem(Request $request)
     {
@@ -107,6 +105,37 @@ class APIProductController extends Controller
             'data' => $proDuct
         ]);
     }
+    public function search(Request $request)
+    {
+        $searchTerm = $request->query('search');
+
+        if ($searchTerm) {
+
+            $listProduct = Product::whereHas('product_detail', function ($query) {
+                $query->where('quantity', '>', 0);
+            })
+                ->with([
+                    'brand',
+                    'img_product',
+                    'product_series',
+                    'rate',
+                    'product_description',
+                    'product_detail.color',
+                    'product_detail.capacity',
+                    'product_detail.discount_detail' => function ($query) {
+                        $query->isActive();
+                    }
+                ])
+                ->where('name', 'LIKE', '%' . $searchTerm . '%')->get();
+                return response()->json([
+                    'success' => true,
+                    'data' => $listProduct
+                ]);
+        } else {
+            return response()->json([], 400);
+        }
+    }
+
     public function setPrice($searchTerm, $priceRange)
     {
         $name = $searchTerm;

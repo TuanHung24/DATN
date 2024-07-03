@@ -11,9 +11,13 @@
     </div>
 </div>
 @endif
+
+
+
+
 <form method="POST" action="{{ route('admin.hd-update', ['id'=> $aDmin->id]) }}" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
+    @method('PUT') 
     <div class="row">
         <div class="col-md-6">
             <label for="name" class="form-label">Họ tên</label>
@@ -75,7 +79,7 @@
         </div>
         <div class="col-md-2" id='p-roles'>
             <label for="roles" class="form-label">Chức vụ:</label>
-            <select name="roles" class="form-control" id='select-roles'>
+            <select name="roles" class="form-select" id='select-roles'>
                 <option value="1" {{ $aDmin->roles == 1 ? 'selected' : '' }}>Quản lý</option>
                 <option value="2" {{ $aDmin->roles == 2 ? 'selected' : '' }}>Nhân viên</option>
                 <option value="3" {{ $aDmin->roles == 3 ? 'selected' : '' }}>Quản lý kho</option>

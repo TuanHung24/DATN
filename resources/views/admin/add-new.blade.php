@@ -80,7 +80,7 @@
             @error('gender')
             <span class="error-message"> {{ $message }} </span>
             @enderror
-        </div>
+        </div> 
         <div class="col-md-2" id='p-roles'>
             <label for="roles" class="form-label">Chức vụ:</label>
             <select name="roles" class="form-select" id='select-roles'>

@@ -6,17 +6,10 @@
     <h3>CẬP NHẬT SẢN PHẨM</h3>
 
 </div>
+<x-notification />
 
-@if(session('Error'))
-<div class="alert alert-danger d-flex align-items-center" role="alert">
-    <div>
-        {{session('Error')}}
-    </div>
-</div>
-@endif
-<form method="POST" action="{{ route('product.hd-update',['id'=>$proDuct->id]) }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('product.hd-update', ['id' => $proDuct->id]) }}" enctype="multipart/form-data">
     @csrf
-    <h5 class="offset-md-6">Thông tin sản phẩm:</h5>
     <div class="row">
         <div class="col-md-4">
             <label for="name" class="form-label">Tên sản phẩm:</label>
@@ -28,7 +21,7 @@
         </div>
         <div class="col-md-3 offset-md-2">
             <label for="chip" class="form-label">Chip:</label>
-            <input type="text" id="chip" class="form-control" name="chip" id="chip" value="{{ old('chip', optional($proDuct->product_description)->chip) }}">
+            <input type="text" class="form-control" name="chip" id="chip" value="{{ old('chip', optional($proDuct->product_description)->chip) }}">
             <span class="error" id="error-chip"></span>
             @error('chip')
             <span class="error-message"> {{ $message }} </span>
@@ -36,8 +29,7 @@
         </div>
         <div class="col-md-3">
             <label for="weight" class="form-label">Trọng lượng(g):</label>
-            <input type="number" id="weight" class="form-control" name="weight" step="0.1" value="{{ old('weight', optional($proDuct->product_description)->weight) }}">
-
+            <input type="number" class="form-control" name="weight" id="weight" step="0.1" value="{{ old('weight', optional($proDuct->product_description)->weight) }}">
             <span class="error" id="error-weight"></span>
             @error('weight')
             <span class="error-message"> {{ $message }} </span>
@@ -47,8 +39,8 @@
     <div class="row">
         <div class="col-md-3">
             <label for="brand" class="form-label">Hãng sản phẩm:</label>
-            <select name="brand_id" class="form-select" id="brand" require>
-                <option type="text" class="form-control" value="{{ old('brand', $proDuct->brand->id) }}">
+            <select name="brand_id" class="form-select" id="brand" required>
+                <option value="{{ $proDuct->brand->id }}">
                     {{ $proDuct->brand->name }}
                 </option>
                 @foreach($listBrand as $Brand)
@@ -63,8 +55,8 @@
         </div>
         <div class="col-md-3">
             <label for="product-series-id" class="form-label">Dòng sản phẩm:</label>
-            <select class="form-select" id="product-series-id" name="product_series_id" require>
-                <option type="text" class="form-control" value="{{ old('product_series', $proDuct->product_series->id) }}">
+            <select class="form-select" id="product-series-id" name="product_series_id" required>
+                <option value="{{ $proDuct->product_series->id }}">
                     {{ $proDuct->product_series->name }}
                 </option>
                 @foreach($listSeries as $ProductSeries)
@@ -80,27 +72,26 @@
         <div class="col-md-3">
             <label for="front-camera" class="form-label">Camera trước:</label>
             <select name="front_camera" class="form-select" id="front-camera" required>
-                <option type="text" class="form-control" value="{{old('front_camera',$proDuct->product_description->front_camera->id)}}">
-                    {{$proDuct->product_description->front_camera->resolution . ' ' . $proDuct->product_description->front_camera->record}}
+                <option value="{{ $proDuct->product_description->front_camera->id }}">
+                    {{ $proDuct->product_description->front_camera->resolution . ' ' . $proDuct->product_description->front_camera->record }}
                 </option>
                 @foreach($listFrontCamera as $frontCamera)
                 @if($frontCamera->id != $proDuct->product_description->front_camera->id)
-                <option value="{{$frontCamera->id}}">{{$frontCamera->resolution . ' ' . $frontCamera->record}}</option>
+                <option value="{{ $frontCamera->id }}">{{ $frontCamera->resolution . ' ' . $frontCamera->record }}</option>
                 @endif
                 @endforeach
             </select>
             <span class="error" id="error-front-camera"></span>
         </div>
-
         <div class="col-md-3">
             <label for="rear-camera" class="form-label">Camera sau:</label>
             <select name="rear_camera" class="form-select" id="rear-camera" required>
-                <option type="text" class="form-control" value="{{old('rear_camera',$proDuct->product_description->rear_camera->id)}}">
-                    {{$proDuct->product_description->rear_camera->resolution . ' ' . $proDuct->product_description->rear_camera->record}}
+                <option value="{{ $proDuct->product_description->rear_camera->id }}">
+                    {{ $proDuct->product_description->rear_camera->resolution . ' ' . $proDuct->product_description->rear_camera->record }}
                 </option>
                 @foreach($listRearCamera as $rearCamera)
                 @if($rearCamera->id != $proDuct->product_description->rear_camera->id)
-                <option value="{{$rearCamera->id}}">{{$rearCamera->resolution . ' ' . $rearCamera->record}}</option>
+                <option value="{{ $rearCamera->id }}">{{ $rearCamera->resolution . ' ' . $rearCamera->record }}</option>
                 @endif
                 @endforeach
             </select>
@@ -110,18 +101,17 @@
     <div class="row">
         <div class="col-md-6">
             <label for="description" class="form-label">Mô tả:</label>
-            <textarea type="text" id="description" class="form-control" id="description" name="description">{{ old('description',$proDuct->description) }}</textarea>
-
+            <textarea class="form-control" id="description" name="description">{{ old('description', $proDuct->description) }}</textarea>
         </div>
         <div class="col-md-3">
             <label for="size-screen" class="form-label">Độ phân giải - Màn hình:</label>
             <select name="size_screen" class="form-select" id="size-screen" required>
-                <option type="text" class="form-control" value="{{old('size_screen',$proDuct->product_description->screen->id)}}">
-                    {{$proDuct->product_description->screen->resolution . ' - ' . $proDuct->product_description->screen->size}}
+                <option value="{{ $proDuct->product_description->screen->id }}">
+                    {{ $proDuct->product_description->screen->resolution . ' - ' . $proDuct->product_description->screen->size }}
                 </option>
                 @foreach($listScreen as $Screen)
                 @if($Screen->id != $proDuct->product_description->screen->id)
-                <option value="{{$Screen->id}}">{{$Screen->resolution . ' - ' . $Screen->size}}</option>
+                <option value="{{ $Screen->id }}">{{ $Screen->resolution . ' - ' . $Screen->size }}</option>
                 @endif
                 @endforeach
             </select>
@@ -139,7 +129,7 @@
     <div class="row">
         <div class="col-md-3 offset-md-6">
             <label for="sims" class="form-label">Sim:</label>
-            <input type="text" id="sims" class="form-control" name="sims" id="sims" value="{{ old('sims', $proDuct->product_description->sims) }}">
+            <input type="text" class="form-control" name="sims" id="sims" value="{{ old('sims', $proDuct->product_description->sims) }}">
             <span class="error" id="error-sims"></span>
             @error('sims')
             <span class="error-message"> {{ $message }} </span>
@@ -155,18 +145,18 @@
         </div>
         <div class="col-md-3 offset-md-6">
             <label for="ram" class="form-label">Ram(GB):</label>
-            <input type="number" class="form-control" id="ram" name='ram' value="{{ old('ram', $proDuct->product_description->ram) }}">
+            <input type="number" class="form-control" id="ram" name="ram" value="{{ old('ram', $proDuct->product_description->ram) }}">
             <span class="error" id="error-ram"></span>
             @error('ram')
             <span class="error-message"> {{ $message }} </span>
             @enderror
         </div>
     </div>
-
     <div class="col-md-2">
         <button type="submit" class="btn btn-primary"><span data-feather="save"></span>Lưu</button>
     </div>
 </form>
+
 <br />
 <div class="row">
     <h5 class="add_color_capacity">Thêm màu sắc, dung lượng cho sản phẩm:</h5>

@@ -1,7 +1,7 @@
 @extends('master')
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-<h3>Thống kê theo năm</h3>
+    <h3>Thống kê theo năm</h3>
 
     <div>
         <select id="yearSelect">
@@ -18,7 +18,7 @@
     <div class="count_container count_sp">
         <span data-feather="box" class="align-text-bottom" id="icon-tk"></span>
         <h5>Số lượng sản phẩm</h5>
-        <span>Đang có: {{$quantityProduct}}</span><br />
+        <span>Đang có: <strong id="quantityProduct"></strong></span><br />
         <span>Tổng tiền nhập hàng: <strong id="totalWarehouse"></strong></span>
     </div>
     <div class="count_container count_hd">
@@ -26,7 +26,8 @@
         <h5>Số lượng hóa đơn</h5>
         <span>Hóa đơn: <strong id="inVoice"></strong></span><br />
         <span>Đã hủy: <strong id="backInvoice"></strong></span><br />
-        <span>Doanh thu: <strong id="totalInvoice"></strong></span>
+        <span>Doanh thu: <strong id="totalInvoice"></strong></span><br />
+        <span>Lãi: <strong id="interestRate"></strong></span>
     </div>
     <div class="count_container count_nd">
         <span data-feather="users" class="align-text-bottom" id="icon-tk"></span>
@@ -37,9 +38,9 @@
     <div class="count_container sp_top">
         <span data-feather="shopping-cart" class="align-text-bottom" id="icon-tk"></span>
         <h5>Sản phẩm bán chạy</h5>
-        
+
         <span id="top-product"></span><br />
-        
+
     </div>
 </span><br><br>
 <h4>Thống kê theo biểu đồ:</h4>
@@ -112,13 +113,13 @@
                         tongHoaDon += parseInt(response.invoice[i].count);
                     }
 
-                    console.log(response)
+
                     var topProductsHtml = '';
-                    response.sellProduct.forEach(function(product) {
-                        topProductsHtml += '<li>Tên sản phẩm: ' + product.product_name + ' - ' + product.color_name + ' - ' + product.capacity_name + ', Số lượng bán: ' + product.totalpd + '</li>';
+                    response.sellProduct.forEach(function(product, index) {
+                        topProductsHtml += '<li>Top ' + (index + 1) + ': ' + product.product_name + ' - ' + product.color_name + ' - ' + product.capacity_name + ', Số lượng bán: ' + product.totalpd + '</li>';
                     });
                     $('#top-product').html('<ul>' + topProductsHtml + '</ul>');
-
+                    
                     $('#doanh-thu').text(response.totalInvoice);
                     $('#cusTomer').text(response.cusTomer);
                     $('#so-luong-hoa-don').text(tongHoaDon);
@@ -126,7 +127,10 @@
                     $('#inVoice').text(response.inVoice);
                     $('#backInvoice').text(response.backInvoice);
                     $('#totalInvoice').text(response.totalInvoice + ' VND')
+                    $('#interestRate').text(response.interestRate + ' VND')
+                    $('#quantityProduct').text(response.quantityProduct)
                     // Cập nhật biểu đồ cột
+                    
                     updateColumnChart(monthsData);
                 },
                 error: function(data) {

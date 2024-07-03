@@ -23,7 +23,7 @@ class NewsRequest extends FormRequest
     {   
         $id=$this->route('id');
         return [
-            'title' => 'required|max:255|min:3|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u','unique:news,title,' . $id,
+            'title' => 'required|max:255|min:3|unique:news,title,' . $id,
             'content' => 'required|min:3|',
         ];
     }
@@ -33,7 +33,7 @@ class NewsRequest extends FormRequest
             'title.required'=>"Tên tiêu đề không được bỏ trống!",
             'title.min'=>"Tên tiêu đề phải lớn hơn :min ký tự!",
             'title.max'=>"Tên tiêu đề phải nhỏ hơn :max ký tự!",
-            'title.regex'=>"Tên tiêu đề không được bắt đầu bằng ký tự là số và không chứa ký tự đặc biệt!",
+           
             'title.unique' => "Tiêu đề này đã có trong hệ thống!",
 
             'content.required'=>"Tên tiêu đề không được bỏ trống!",

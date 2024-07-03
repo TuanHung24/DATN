@@ -24,9 +24,8 @@
         <thead>
             <tr>
                 <th>Mã hóa đơn</th>
-                <th>Tên sản phẩm</th>
-                <th>Màu sắc</th>
-                <th>Dung lượng</th>
+                <th>Sản phẩm</th>
+               
                 <th>Số lượng</th>
                 <th>Đơn giá</th>
                 <th>Thành tiền</th>
@@ -36,9 +35,8 @@
         @foreach($listInvoiceDetail as $invoiceDetail)
         <tr>
             <td>{{ $invoiceDetail->invoice_id }}</td>
-            <td>{{ $invoiceDetail->product->name }}</td>
-            <td>{{ $invoiceDetail->color->name }}</td>
-            <td>{{ $invoiceDetail->capacity->name }}</td>
+            <td>{{ $invoiceDetail->product->name }} - {{ $invoiceDetail->color->name }} - {{ $invoiceDetail->capacity->name }}</td>
+           
             <td>{{ $invoiceDetail->quantity }}</td>
             <td>{{ $invoiceDetail->price_formatted }}</td>
             <td>{{ $invoiceDetail->into_money_formatted }}</td>

@@ -102,21 +102,38 @@ class CustomerController extends Controller
     public function delete($id)
     {
         try {
-
-
-
             $cusTomer = CusTomer::findOrFail($id);
-            $cusTomer->status = 0;
-            $cusTomer->save();
-            return redirect()->route('cusTomer.list');
+            $cusTomer->delete();
+            return redirect()->route('cusTomer.list')->with(['Success'=>"Xóa tài khoản {$cusTomer->name} thành công!"]);
         } catch (Exception $e) {
             return back()->with(['error:' => "Error:" . $e]);
         }
     }
-
+    public function lock($id)
+    {
+        try {
+            $cusTomer = Customer::findOrFail($id);
+            $cusTomer->status = 0;
+            $cusTomer->save();
+            return redirect()->route('customer.list')->with(['Success' => "Khóa tài khoản {$cusTomer->name} thành công!"]);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không thể khóa tài khoản này']);
+        }
+    }
+    public function unlock($id)
+    {
+        try {
+            $cusTomer = Customer::findOrFail($id);
+            $cusTomer->status = 1;
+            $cusTomer->save();
+            return redirect()->route('customer.list')->with(['Success' => "Mở tài khoản {$cusTomer->name} thành công!"]);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không thể mở tài khoản này']);
+        }
+    }
     public function getInvoice($id)
     {
-        $listInvoice = Invoice::where('customer_id', $id)->paginate(3);
+        $listInvoice = Invoice::where('customer_id', $id)->paginate(5);
 
         if ($listInvoice->isEmpty()) {
             return redirect()->route('invoice.list')->with('error', 'Hóa đơn không tồn tại');
@@ -125,15 +142,15 @@ class CustomerController extends Controller
         return view('customer.invoice', compact('listInvoice'));
     }
 
-    public function getInvoiceDetail($id, $customer_id)
+    public function getInvoiceDetail($customer_id, $id )
     {
         $invoice = Invoice::where('customer_id', $customer_id)
             ->first();
 
         $invoiceDetails = InvoiceDetail::where('invoice_id', $id)->get();
 
-        if (!$invoice) {
-            return redirect()->route('invoice.list')->with('error', 'Hóa đơn không tồn tại');
+        if (!$invoiceDetails) {
+            return back()->with('Error', 'Hóa đơn không tồn tại');
         }
 
         return view('customer.invoice_detail', compact('invoice','invoiceDetails'));

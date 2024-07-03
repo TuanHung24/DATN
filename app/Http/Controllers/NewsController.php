@@ -49,7 +49,7 @@ class NewsController extends Controller
             return redirect()->route('news.list')->with(['Success'=>"Thêm mới tin tức thành công !"]);
 
         }catch(Exception $e){
-            return back()->with("error: ".$e);
+            return back()->withInput()->with("error: ".$e);
         }
     }
     public function upDate($id){

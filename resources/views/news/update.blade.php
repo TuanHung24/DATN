@@ -28,18 +28,18 @@
     @method('PUT')
     <div class="row">
         <div class="col-md-6">
-            <label for="admin_id" class="form-label">Tác giả</label>
+            <label for="admin_id" class="form-label">Tác giả:</label>
             <input type="text" class="form-control" value="{{$news->admin->name}}" id="admin_id" name="admin_id"
                 readonly />
         </div>
         <div class="col-md-6">
-            <label for="name" class="form-label">Title</label>
+            <label for="title" class="form-label">Tiêu đề:</label>
             <input type="text" class="form-control" value="{{old('title', $news->title)}}" name="title">
         </div>
     </div>
     <div class="col-md-6">
         <label for="img_url" class="form-label">Chọn ảnh nền </label>
-        <input type="file" name="img_url" value="{{old('img_url', $news->img_url)}}" accept="image/*" required /><br />
+        <input type="file" name="img_url" accept="image/*"/><br />
 
         @error('img_url')
             <span class="error-message"> {{ $message }} </span>

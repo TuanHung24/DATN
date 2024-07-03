@@ -231,7 +231,7 @@
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subProductTypes">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-tags"></i>
+                                    <i class="fas fa-industry"></i>
                                 </span>
                                 <span class="side-nav-fadeout-on-closed media-body">Hãng sản phẩm</span>
                                 <span class="side-nav-control-icon d-flex">
@@ -365,7 +365,7 @@
                         <li class="side-nav-menu-item side-nav-has-menu">
                             <a class="side-nav-menu-link media align-items-center" href="#" data-target="#subDiscount">
                                 <span class="side-nav-menu-icon d-flex mr-3">
-                                    <i class="fas fa-tags"></i>
+                                    <i class="fas fa-gift"></i>
                                 </span>
                                 <span class="side-nav-fadeout-on-closed media-body">Khuyến mãi</span>
                                 <span class="side-nav-control-icon d-flex">

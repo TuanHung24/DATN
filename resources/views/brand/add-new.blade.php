@@ -14,7 +14,9 @@
         @error('name')
             <span class="error-message"> {{ $message }} </span>
         @enderror
-        <div class="col-md-6">
+    </div>
+    <div class="row">
+    <div class="col-md-6">
             <label for="img_url" class="form-label">Chọn Logo </label>
             <input type="file" name="img_url" accept="image/*" required /><br />
         </div>

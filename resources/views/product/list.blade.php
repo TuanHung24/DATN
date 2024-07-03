@@ -4,7 +4,7 @@
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH DÒNG SẢN PHẨM</h3>
-    <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">Sản phẩm đã xóa</button>
+    <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa fa-trash"></i>Sản phẩm đã xóa</button>
 </div>
 <div class="custom-search-container">
     <form action="{{ route('product.search') }}">
@@ -33,7 +33,7 @@
         <td>{{ $Product->description }}</td>
         <td>{{ $Product->brand->name }}</td>
         <td>{{ $Product->product_series->name }}</td>
-        <td class="chuc-nang">
+        <td class="chuc-nang-product">
             <a href="{{ route('product.update-images', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-camera"></i></a> |
             
             <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |

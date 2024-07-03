@@ -12,4 +12,7 @@ class CommentDetail extends Model
     public function comment(){
         return $this->belongsTo(Comment::class);
     }
+    public function admin(){
+        return $this->belongsTo(Admin::class);
+    }
 }

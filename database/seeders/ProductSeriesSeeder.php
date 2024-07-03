@@ -28,6 +28,14 @@ class ProductSeriesSeeder extends Seeder
         $productSeries->name="Iphone 13";
         $productSeries->save();
 
+        $productSeries=new ProductSeries();
+        $productSeries->name="Oppo Find";
+        $productSeries->save();
+
+        $productSeries=new ProductSeries();
+        $productSeries->name="Xiaomi Mi";
+        $productSeries->save();
+
         echo "Thêm Series thành công!";
     }
 }

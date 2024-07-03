@@ -48,7 +48,7 @@ class WarehouseController extends Controller
             $toTal = 0;
             
             for ($i = 0; $i < count($request->id_detail); $i++) {
-                $productDetail = ProductDetail::find($request->id_detail[$i]);
+                $productDetail = ProductDetail::findOrFail($request->id_detail[$i]);
                 if($productDetail)
                 {
                     $productDetail->price=$request->out_price[$i];

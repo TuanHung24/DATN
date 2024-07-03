@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\InvoiceDetail;
 use App\Models\Product;
 use App\Models\ProductDetail;
+use App\Models\Rate;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -120,7 +121,7 @@ class InvoiceController extends Controller
     }
     public function updateStatusComplete($id)
     {
-        $inVoice = Invoice::find($id);
+        $inVoice = Invoice::findOrFail($id);
 
         if (empty($inVoice) || $inVoice->status != 3) {
             return redirect()->route('invoice.list');
@@ -133,7 +134,7 @@ class InvoiceController extends Controller
 
     public function updateStatusDelivering($id)
     {
-        $inVoice = Invoice::find($id);
+        $inVoice = Invoice::findOrFail($id);
 
         if (empty($inVoice) || $inVoice->status != 2) {
             return redirect()->route('invoice.list');
@@ -146,10 +147,29 @@ class InvoiceController extends Controller
 
     public function updateStatusApproved($id)
     {
-        $inVoice = Invoice::find($id);
+        $inVoice = Invoice::findOrFail($id);
 
         if (empty($inVoice) || $inVoice->status != 1) {
             return redirect()->route('invoice.list');
+        }
+
+        $invoiceDetail=InvoiceDetail::where('invoice_id',$id)->get();
+
+        if (!$invoiceDetail) {
+            return redirect()->route('hoa-don.danh-sach')->with('error', "Chi tiết hóa đơn không tồn tại.");
+        }
+
+        
+            foreach ($invoiceDetail as $item) {
+                $productDetail = ProductDetail::where('product_id', $item->product_id)
+                                    ->where('color_id', $item->color_id)
+                                    ->where('capacity_id', $item->capacity_id)
+                                    ->first();
+                if (!$productDetail) {  
+                    return redirect()->route('hoa-don.danh-sach')->with('error', "Chi tiết hóa đơn không tồn tại.");
+                }
+                $productDetail->quantity -= $item->quantity;
+                $productDetail->save();
         }
 
         $inVoice->status = Invoice::TRANG_THAI_DA_DUYET;
@@ -159,7 +179,7 @@ class InvoiceController extends Controller
 
     public function updateStatusCancel($id)
     {
-        $inVoice = Invoice::find($id);
+        $inVoice = Invoice::findOrFail($id);
 
         if (empty($inVoice) || $inVoice->status != 1) {
             return redirect()->route('invoice.list');
@@ -175,4 +195,6 @@ class InvoiceController extends Controller
         $listInvoiceDetail = InvoiceDetail::where('invoice_id', $id)->get();
         return view('invoice.detail', compact('listInvoiceDetail'));
     }
+
+   
 }

@@ -41,9 +41,14 @@
             </td>
             
             <td>
-                <a href="{{ route('customer.get-invoice', ['id'=> $cusTomer->id ]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a>
+                <a href="{{ route('customer.get-invoice', ['id'=> $cusTomer->id ]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
                 <a href="{{ route('customer.update', ['id' => $cusTomer->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
-                <a href="{{ route('customer.delete', ['id' => $cusTomer->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                @if($cusTomer->status === 1)
+                <a href="{{ route('customer.lock', ['id' => $cusTomer->id]) }}" class="btn btn-outline-warning"><i class="fas fa-lock"></i></a>
+                @elseif($cusTomer->status === 0)
+                    <a href="{{ route('customer.unlock', ['id' => $cusTomer->id]) }}" class="btn btn-outline-success"><i class="fas fa-unlock"></i></a>
+                |  <a href="{{ route('customer.delete', ['id' => $cusTomer->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                @endif
             </td>
         <tr>
         @endforeach

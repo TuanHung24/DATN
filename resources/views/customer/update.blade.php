@@ -6,6 +6,7 @@
             </div>
             <form method="POST" action="{{ route('customer.hd-update', ['id'=> $cusTomer->id]) }}" enctype="multipart/form-data">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-md-6">
                         <label for="name" class="form-label">Họ tên</label>
@@ -21,16 +22,6 @@
                         <input type="text" class="form-control" name="email" value="{{ old('email', $cusTomer->email)}}">
                     </div>
                     @error('email')
-                        <span class="error-message"> {{ $message }} </span>
-                    @enderror
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="password" class="form-label">Mật khẩu</label>
-                        <input type="password" class="form-control" name="password" value="{{ old('password', $cusTomer->password)}}">
-                    </div>
-                    @error('password')
                         <span class="error-message"> {{ $message }} </span>
                     @enderror
                 </div>
