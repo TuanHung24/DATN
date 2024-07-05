@@ -24,7 +24,7 @@ class ProviderController extends Controller
     }
 
     public function getList(){
-        $listProvider = Provider::paginate(8);
+        $listProvider = Provider::whereBetween('status',[0,1])->paginate(8);
         return view('provider.list',compact('listProvider'));
     }
 
@@ -47,9 +47,6 @@ class ProviderController extends Controller
     } 
     public function upDate($id){
         $proVider= Provider::findOrFail($id);
-        if(empty($proVider)){
-            return redirect()->route('provider.list');
-        }
         return view('provider.update', compact('proVider'));
     }
     public function hdUpdate(Request $request, $id){
@@ -67,4 +64,10 @@ class ProviderController extends Controller
             return back()->with("error: ".$e);
         }
     } 
+    public function delete($id){
+        $proVider= Provider::findOrFail($id);
+        $proVider->status = 2;
+        $proVider->save();
+        return view('provider.list', compact('proVider'));
+    }
 }

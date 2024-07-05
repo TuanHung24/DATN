@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Imports\WareHouseImport;
 use App\Models\Capacity;
 use App\Models\Color;
@@ -104,7 +103,7 @@ class WarehouseController extends Controller
         
         Excel::import(new WarehouseImport(), $request->file('file'));
 
-        // Lấy danh sách lỗi từ WarehouseImport
+       
         $import = new WarehouseImport();
         $errors = $import->getErrors();
 
@@ -114,7 +113,7 @@ class WarehouseController extends Controller
             return back()->with('Success', 'Import file thành công!');
         }
         } catch (\Exception $e) {
-            return back()->with('error', 'Import failed: ' . $e->getMessage());
+            return back()->with('Error', 'Import lỗi: ' . $e->getMessage());
         }
     }
     public function getProductDetailsBySeries($id)

@@ -20,11 +20,14 @@ class LoginController extends Controller
     public function hdLogin(Request $rq)
     {
         try {
-            $credentials = $rq->only('email', 'password',);
-
+            
+            $credentials = $rq->only('username', 'password');
+        
             $remember = $rq->has('remember');
-
-            if (Auth::guard('web')->attempt($credentials, $remember)) {
+        
+           
+            if (Admin::attemptLogin($credentials['username'], $credentials['password'], $remember)) {
+              
                 if (Auth::user()->roles === 1) {
                     return redirect()->route('statistical');
                 } else if (Auth::user()->roles === 3) {
@@ -33,11 +36,13 @@ class LoginController extends Controller
                     return redirect()->route('invoice.list');
                 }
             } else {
-                return back()->withInput()->with(['Error' => 'Email hoặc mật khẩu không đúng.']);
+                return back()->withInput()->with(['Error' => 'Tên tài khoản hoặc mật khẩu không đúng!']);
             }
         } catch (Exception $e) {
+            
             return back()->withInput()->with(['Error' => 'Đăng nhập không thành công!']);
         }
+        
     }
     public function passWordReset()
     {

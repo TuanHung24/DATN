@@ -40,12 +40,12 @@
                         <td>{{ $News->admin->name }}</td>
                         <td>{{ $News->title }}</td>
                         <td>
-                            <a href="{{ route('news.update', ['id' => $News->id]) }}" class="btn btn-outline-primary"><i
+                            <a href="{{ route('news.update', ['id' => $News->id]) }}" title="Cập nhật" class="btn btn-outline-primary"><i
                                     class="fas fa-edit"></i></a> |
-                            <a href="{{ route('news.delete', ['id' => $News->id]) }}" class="btn btn-outline-danger"><i
+                            <a href="{{ route('news.delete', ['id' => $News->id]) }}" title="Xóa" class="btn btn-outline-danger"><i
                                     class="fas fa-trash"></i></a>
                         </td>
-                    </tr> <!-- Đã thêm thẻ đóng </tr> -->
+                    </tr> 
                 @endforeach
             </tbody>
         </table>

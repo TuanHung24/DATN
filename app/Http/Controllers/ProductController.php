@@ -57,8 +57,6 @@ class ProductController extends Controller
     {
         try {
 
-
-
             $proDuct = new Product();
 
             $proDuct->name = $request->product_name;
@@ -170,9 +168,6 @@ class ProductController extends Controller
     public function delete($id)
     {
         $proDuct = Product::findOrFail($id);
-        if (empty($proDuct)) {
-            return "Sản phẩm không tồn tại";
-        }
         $proDuct->delete();
         return redirect()->route('product.list')->with(['Success' => "Xóa sản phẩm {$proDuct->name} thành công!"]);
     }
@@ -184,12 +179,6 @@ class ProductController extends Controller
         return redirect()->route('product.list')->with(['Success' => "Phục hồi sản phẩm {$proDuct->name} thành công "]);
     }
 
-    public function deleted($id)
-    {
-        $proDuct = Product::withTrashed()->findOrFail($id);
-        $proDuct->forceDelete();
-        return redirect()->route('product.list')->with(['Success' => "Xóa vĩnh viễn sản phẩm {$proDuct->name} thành công "]);
-    }
     public function updateImg($id)
     {
         $listProductDetail = ProductDetail::where('product_id', $id)->get();
@@ -243,8 +232,6 @@ class ProductController extends Controller
     public function deleteImage($id)
     {
         $image = ImgProduct::findOrFail($id);
-        // Xóa tệp hình ảnh khỏi hệ thống tệp nếu cần thiết
-        Storage::delete($image->img_url);
         $image->delete();
         return redirect()->back()->with('success', 'Xóa hình ảnh thành công!');
     }
@@ -256,8 +243,9 @@ class ProductController extends Controller
             $file = $request->file('img');
 
             if ($file) {
-
-                Storage::delete($image->img_url);
+                if($image->img_url){
+                    Storage::delete($image->img_url);
+                }
 
                 $path = $file->store('img-product');
                 $image->img_url = $path;
@@ -283,7 +271,7 @@ class ProductController extends Controller
             ->first();
 
         if (!$productDetail) {
-            return response()->json(['Error' => 'Product detail not found or invalid quantity'], 404);
+            return response()->json(['Error' => 'Chi tiết sản phẩm không tồn tại!'], 404);
         }
 
 
@@ -324,10 +312,6 @@ class ProductController extends Controller
         $colors = $request->input('colors');
         $capacities = $request->input('capacities');
 
-
-
-
-        // Kiểm tra xem chi tiết sản phẩm đã tồn tại chưa
         $exists = ProductDetail::where('product_id', $productId)
             ->where('color_id', $colors)
             ->where('capacity_id', $capacities)
@@ -337,13 +321,13 @@ class ProductController extends Controller
             return response()->json(['Success' => false, 'Message' => 'Màu sắc và dung lượng này đã tồn tại.']);
         }
 
-        // Thêm chi tiết sản phẩm mới
+        
         $productDetail = new ProductDetail();
         $productDetail->product_id = $productId;
         $productDetail->color_id = $colors;
         $productDetail->capacity_id = $capacities;
-        $productDetail->quantity = 0; // or any default value
-        $productDetail->price = 0; // or any default value
+        $productDetail->quantity = 0; 
+        $productDetail->price = 0; 
         $productDetail->save();
 
 

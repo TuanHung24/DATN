@@ -36,14 +36,14 @@
                 </td>
                 <td class="comment-container">
                     <div class="comment-section">
-                        <strong class="comment-author">{{ $Comment->customer->name }}</strong>
-                        <span class="comment-date">Ngày bình luận: {{ \Carbon\Carbon::parse($Comment->date)->format('d/m/Y H:i') }}</span>
+                        <strong class="comment-author">{{ $Comment->customer->name }}<span class="comment-date">{{ \Carbon\Carbon::parse($Comment->date)->format('d/m/Y H:i') }}</span></strong>
+                        
                         <div class="comment-content">{{ $Comment->content }}</div>
                     </div>
                     @foreach($Comment->comment_detail as $detail)
                     <div class="comment-detail-section">
-                        <strong class="comment-author">{{ $detail->admin->name }}</strong>
-                        <span class="comment-date">Ngày phản hồi: {{ \Carbon\Carbon::parse($detail->date)->format('d/m/Y H:i') }}</span>
+                        <strong class="comment-author">{{ $detail->admin->name }} <span class="comment-date">{{ \Carbon\Carbon::parse($detail->date)->format('d/m/Y H:i') }}</span></strong>
+                        
                         <div class="comment-detail-content">{{ $detail->content }}</div>
                     </div>
                     @endforeach
@@ -54,7 +54,7 @@
                     @if(isset($Comment->comment_detail) && $Comment->comment_detail->count() > 0)
                     <button class="btn btn-success"><i class="fa-solid fa-reply"></i>Đã trả lời</button>
                     @else
-                    <button class="btn btn-success showModalButton" data-id="{{ $Comment->id }}"><i class="fa-solid fa-reply"></i> Trả lời</button>
+                    <button class="btn btn-primary showModalButton" data-id="{{ $Comment->id }}"><i class="fa-solid fa-reply"></i> Trả lời</button>
                     @endif
                 </td>
             </tr>
@@ -70,8 +70,8 @@
                     <h5 class="md-title" id="examplemdLabel">Trả lời bình luận</h5>
                 </div>
                 <div class="md-body">
-                    <div class="comment-label">Khách hàng:</div>
-                    <strong class="comment-author" id="md-customer-name"></strong>
+                    <div class="comment-label">Khách hàng:
+                    <strong class="comment-author" id="md-customer-name"></strong></div>
                     <div class="comment-label">Nội dung:</div>
                     <div class="comment-content" id="md-comment-content"></div>
                     <form method="POST" action="{{ route('comment.hd-rep') }}" id="replyForm">

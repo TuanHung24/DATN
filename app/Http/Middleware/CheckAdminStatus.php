@@ -17,15 +17,13 @@ class CheckAdminStatus
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            // Lấy thông tin người dùng hiện tại
+            
             $user = Auth::user();
 
-            // Kiểm tra trạng thái của người dùng
-            if ($user->status === 0) {
-                // Nếu trạng thái là 0, đăng xuất người dùng
+            
+            if ($user->status !== 1) {
+                
                 Auth::logout();
-
-                // Điều hướng về trang đăng nhập và hiển thị thông báo lỗi
                 return redirect()->route('login')->with('account_locked', true);
             }
         }

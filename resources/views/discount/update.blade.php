@@ -25,8 +25,8 @@
 </div>
 
 <div class="row">
-    <div class="col-md-2">
-        <label>Tìm kiếm</label>
+    <div class="col-md-3">
+        <label>Chọn sản phẩm</label>
         <select name="product" class="form-select" id="product">
             <option selected disabled>Chọn sản phẩm</option>
             @foreach($listProduct as $proDuct)
@@ -42,7 +42,7 @@
     <button type="button" id="btn-them" class="btn btn-success"><span data-feather="plus"></span>Thêm</button>
 </div>
 <br/>
-<label class="form-label">Các sản phẩm đã áp dụng khuyến mãi:</label>
+<label class="form-label">Các sản phẩm áp dụng khuyến mãi:</label>
 <form method="POST" action="{{route('discount.hd-update',['id'=>$disCount->id])}}">
     @csrf
     <div class="table-responsive">

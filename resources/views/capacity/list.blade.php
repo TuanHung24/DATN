@@ -3,7 +3,7 @@
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH DUNG LƯỢNG</h3>
-    <button type="button" class="btn btn-success" id="showModalButton">Thêm mới</button>
+    <button type="button" class="btn btn-success" id="showModalButton"><i class="fas fa-plus"></i>Thêm mới</button>
 </div>
 <x-notification />
 <div class="md fade" id="exampleModal" tabindex="-1" aria-labelledby="examplemdLabel" aria-hidden="true">
@@ -57,7 +57,7 @@
                         <td>{{ $capaCity->id }}</td>
                         <td>{{ $capaCity->name }}</td>
                         <td>
-                        <td><a href="{{ route('capacity.delete', ['id' => $capaCity->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a></td>
+                        <td><a href="{{ route('capacity.delete', ['id' => $capaCity->id]) }}" class="btn btn-outline-danger" title="Xóa"><i class="fas fa-trash"></i></a></td>
                         </td>
                     </tr>
                     @endforeach

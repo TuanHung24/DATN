@@ -16,73 +16,54 @@ class StatisticalController extends Controller
 {
     public function getListMonth()
     {
-        $inVoice = Invoice::whereBetween('status', [1, 5])->count();
-        $backInvoice = Invoice::where('status', 5)->count();
-
-        $toTal = Invoice::where('status', 4)->sum('total');
-        $totalInvoice = number_format($toTal, 0, ',', '.');
-
-        $cusTomer = Customer::count();
-        $quantityProduct = ProductDetail::sum('quantity');
-
-        $priceWarehouse = Warehouse::sum('total');
-        $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
-
-        $sellProduct = InvoiceDetail::select('product_id')
-            ->selectRaw('SUM(quantity) as totalpd')
-            ->groupBy('product_id')
-            ->orderByDesc('totalpd')
-            ->take(3)
-            ->get();
-
-        return view('statistical-month', compact('inVoice', 'backInvoice', 'totalInvoice', 'sellProduct', 'cusTomer', 'quantityProduct', 'totalWarehouse'));
+        return view('statistical-month');
     }
 
 
     public function getListYear()
     {
-        $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', now()->year)->count();
-        $backInvoice = Invoice::where('status', 5)->count();
+        // $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', now()->year)->count();
+        // $backInvoice = Invoice::where('status', 5)->count();
 
-        $toTal = Invoice::where('status', 4)->whereYear('date', now()->year)->sum('total');
-        $totalInvoice = number_format($toTal, 0, ',', '.');
+        // $toTal = Invoice::where('status', 4)->whereYear('date', now()->year)->sum('total');
+        // $totalInvoice = number_format($toTal, 0, ',', '.');
 
-        $cusTomer = Customer::whereYear('created_at', now()->year)->count();
-        $quantityProduct = ProductDetail::whereYear('created_at', now()->year)->sum('quantity');
+        // $cusTomer = Customer::whereYear('created_at', now()->year)->count();
+        // $quantityProduct = ProductDetail::whereYear('created_at', now()->year)->sum('quantity');
 
-        $priceWarehouse = Warehouse::whereYear('date', now()->year)->sum('total');
-        $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
+        // $priceWarehouse = Warehouse::whereYear('date', now()->year)->sum('total');
+        // $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
 
-        $sellProduct = InvoiceDetail::select('product_id')
-            ->selectRaw('SUM(quantity) as totalpd')
-            ->groupBy('product_id')
-            ->orderByDesc('totalpd')
-            ->whereYear('created_at', now()->year)
-            ->take(3)
-            ->get();
+        // $sellProduct = InvoiceDetail::select('product_id')
+        //     ->selectRaw('SUM(quantity) as totalpd')
+        //     ->groupBy('product_id')
+        //     ->orderByDesc('totalpd')
+        //     ->whereYear('created_at', now()->year)
+        //     ->take(3)
+        //     ->get();
 
-        $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
-            $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
-        }])->whereYear('date', now()->year)->get();
+        // $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
+        //     $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
+        // }])->whereYear('date', now()->year)->get();
 
-        $interestRate = 0;
+        // $interestRate = 0;
 
-        foreach ($Invoice1 as $invoice) {
-            foreach ($invoice->invoice_detail as $detail) {
-                $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
-                    ->where('color_id', $detail->color_id)
-                    ->where('capacity_id', $detail->capacity_id)
-                    ->select('in_price')
-                    ->orderByDesc('created_at')
-                    ->first();
+        // foreach ($Invoice1 as $invoice) {
+        //     foreach ($invoice->invoice_detail as $detail) {
+        //         $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
+        //             ->where('color_id', $detail->color_id)
+        //             ->where('capacity_id', $detail->capacity_id)
+        //             ->select('in_price')
+        //             ->orderByDesc('created_at')
+        //             ->first();
 
-                if ($wareHouseDetail) {
-                    $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
-                }
-            }
-        }
+        //         if ($wareHouseDetail) {
+        //             $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
+        //         }
+        //     }
+        // }
 
-        return view('statistical', compact('inVoice', 'backInvoice', 'totalInvoice', 'sellProduct', 'cusTomer', 'quantityProduct', 'totalWarehouse', 'interestRate'));
+        return view('statistical');
     }
 
 
@@ -93,6 +74,13 @@ class StatisticalController extends Controller
             $Year = $request->year;
 
             if ($Month && $Year) {
+
+
+                $revenue = Invoice::whereYear('date', $Year)
+                ->whereMonth('date', $Month)
+                ->where('status', 4)
+                ->sum('total');
+
                 $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
                     ->whereYear('invoice.date', $Year)
                     ->whereMonth('invoice.date', $Month)
@@ -100,7 +88,6 @@ class StatisticalController extends Controller
                     ->select(
                         DB::raw('DATE(invoice.date) as date'),
                         DB::raw('COUNT(DISTINCT invoice.id) as count'),
-                        DB::raw('SUM(invoice_detail.into_money) as tongtien'),
                         DB::raw('SUM(invoice_detail.quantity) as soluong')
                     )
                     ->groupBy(DB::raw('DATE(invoice.date)'))
@@ -130,21 +117,68 @@ class StatisticalController extends Controller
                 }
             }
 
-            return response()->json(['data'=>$data,'interestRate'=>$interestRate]);
+            return response()->json(['data'=>$data,'interestRate'=>$interestRate,'revenue'=>$revenue]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
             return response()->json(['error' => 'Lỗi máy chủ'], 500);
         }
     }
 
+    public function hdstatisticalMonth(Request $request)
+    {
+        $month = $request->month;
+        $year = $request->year;
 
+        $sellProduct = InvoiceDetail::select('products.name as product_name', 'colors.name as color_name', 'capacity.name as capacity_name')
+            ->selectRaw('SUM(quantity) as totalpd')
+            ->join('products', 'invoice_detail.product_id', '=', 'products.id')
+            ->join('colors', 'invoice_detail.color_id', '=', 'colors.id')
+            ->join('capacity', 'invoice_detail.capacity_id', '=', 'capacity.id')
+            ->whereHas('invoice', function ($query) use ($month, $year) {
+                $query->whereBetween('status', [1,4]);
+                if ($month) {
+                    $query->whereMonth('date', $month);
+                }
+                if ($year) {
+                    $query->whereYear('date', $year);
+                }
+            })
+            ->groupBy('products.name', 'colors.name', 'capacity.name')
+            ->orderByDesc('totalpd')
+            ->take(3)
+            ->get();
+
+
+        function applyMonthFilters($query, $month, $year)
+        {
+            if ($month) {
+                $query->whereMonth('date', $month);
+            }
+            if ($year) {
+                $query->whereYear('date', $year);
+            }
+            return $query;
+        }
+
+        $statuses = [
+            'cho_xu_ly' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_CHO_XU_LY), $month, $year)->count(),
+            'da_duyet' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_DUYET), $month, $year)->count(),
+            'dang_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DANG_GIAO), $month, $year)->count(),
+            'da_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $month, $year)->count(),
+            'da_huy' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $month, $year)->count(),
+        ];
+
+        $data = [
+            'sellProduct' => $sellProduct,
+            'statuses' => $statuses,
+        ];
+
+        return response()->json($data);
+    }
     public function statisticalYear1(Request $request)
     {
-        // try {
+        try { 
         $Year = $request->year;
-
-
-
 
         $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', $Year)->count();
         $backInvoice = Invoice::where('status', 5)->whereYear('date', $Year)->count();
@@ -164,7 +198,7 @@ class StatisticalController extends Controller
             ->join('colors', 'invoice_detail.color_id', '=', 'colors.id')
             ->join('capacity', 'invoice_detail.capacity_id', '=', 'capacity.id')
             ->whereHas('invoice', function ($query) use ($Year) {
-                $query->where('status', 4); // Điều kiện trạng thái hóa đơn là 4
+                $query->whereBetween('status', [1,4]); 
                 if ($Year) {
                     $query->whereYear('date', $Year);
                 }
@@ -222,33 +256,16 @@ class StatisticalController extends Controller
             'quantityProduct'=>$quantityProduct
         ];
         return response()->json($data);
-        // } catch (\Exception $e) {
-        //     Log::error($e->getMessage());
-        //     return response()->json(['error' => 'Lỗi máy chủ'], 500);
-        // }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Lỗi máy chủ'], 500);
+        }
     }
 
 
     public function hdstatisticalYear(Request $request)
     {
+
         $year = $request->year;
-
-        $sellProduct = InvoiceDetail::select('products.name as product_name', 'colors.name as color_name', 'capacity.name as capacity_name')
-            ->selectRaw('SUM(quantity) as totalpd')
-            ->join('products', 'invoice_detail.product_id', '=', 'products.id')
-            ->join('colors', 'invoice_detail.color_id', '=', 'colors.id')
-            ->join('capacity', 'invoice_detail.capacity_id', '=', 'capacity.id')
-            ->whereHas('invoice', function ($query) use ($year) {
-                $query->where('status', 4); // Điều kiện trạng thái hóa đơn là 4
-                if ($year) {
-                    $query->whereYear('date', $year);
-                }
-            })
-            ->groupBy('products.name', 'colors.name', 'capacity.name')
-            ->orderByDesc('totalpd')
-            ->take(3)
-            ->get();
-
         function applyYearFilters($query, $year)
         {
             if ($year) {
@@ -266,7 +283,6 @@ class StatisticalController extends Controller
         ];
 
         $data = [
-            'sellProduct' => $sellProduct,
             'statuses' => $statuses,
         ];
 
@@ -275,9 +291,6 @@ class StatisticalController extends Controller
 
     public function statisticalDay()
     {
-
-
-
         return view('statistical-day');
     }
 
@@ -301,7 +314,7 @@ class StatisticalController extends Controller
             ->join('colors', 'invoice_detail.color_id', '=', 'colors.id')
             ->join('capacity', 'invoice_detail.capacity_id', '=', 'capacity.id')
             ->whereHas('invoice', function ($query) use ($day, $month, $year) {
-                $query->where('status', 4);
+                $query->whereBetween('status', [1,4]);
                 if ($day) {
                     $query->whereDay('date', $day);
                 }
@@ -373,84 +386,6 @@ class StatisticalController extends Controller
     }
 
 
-    public function hdstatisticalMonth(Request $request)
-    {
-        $month = $request->month;
-        $year = $request->year;
-
-        $sellProduct = InvoiceDetail::select('products.name as product_name', 'colors.name as color_name', 'capacity.name as capacity_name')
-            ->selectRaw('SUM(quantity) as totalpd')
-            ->join('products', 'invoice_detail.product_id', '=', 'products.id')
-            ->join('colors', 'invoice_detail.color_id', '=', 'colors.id')
-            ->join('capacity', 'invoice_detail.capacity_id', '=', 'capacity.id')
-            ->whereHas('invoice', function ($query) use ($month, $year) {
-                $query->where('status', 4); // Điều kiện trạng thái hóa đơn là 4
-                if ($month) {
-                    $query->whereMonth('date', $month);
-                }
-                if ($year) {
-                    $query->whereYear('date', $year);
-                }
-            })
-            ->groupBy('products.name', 'colors.name', 'capacity.name')
-            ->orderByDesc('totalpd')
-            ->take(3)
-            ->get();
-
-
-        function applyMonthFilters($query, $month, $year)
-        {
-            if ($month) {
-                $query->whereMonth('date', $month);
-            }
-            if ($year) {
-                $query->whereYear('date', $year);
-            }
-            return $query;
-        }
-
-        $statuses = [
-            'cho_xu_ly' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_CHO_XU_LY), $month, $year)->count(),
-            'da_duyet' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_DUYET), $month, $year)->count(),
-            'dang_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DANG_GIAO), $month, $year)->count(),
-            'da_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $month, $year)->count(),
-            'da_huy' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $month, $year)->count(),
-        ];
-
-        $data = [
-            'sellProduct' => $sellProduct,
-            'statuses' => $statuses,
-        ];
-
-        return response()->json($data);
-    }
-    // public function statisticalYear(Request $request)
-    // {
-    //     try {
-
-    //         $Year = $request->year;
-
-    //         if ($Year) {
-    //             $data = Invoice::join('invoice_detail', 'invoice.id', '=', 'invoice_detail.invoice_id')
-    //                 ->whereYear('invoice.date', $Year)
-
-    //                 ->whereBetween('invoice.status', [1, 4])
-    //                 ->select(
-    //                     DB::raw('DATE(invoice.date) as date'),
-    //                     DB::raw('COUNT(DISTINCT invoice.id) as count'),
-    //                     DB::raw('SUM(invoice_detail.into_money) as tongtien'),
-    //                     DB::raw('SUM(invoice_detail.quantity) as soluong')
-    //                 )
-    //                 ->groupBy(DB::raw('DATE(invoice.date)'))
-    //                 ->get();
-    //         } else {
-    //             $data = [];
-    //         }
-
-    //         return response()->json($data);
-    //     } catch (\Exception $e) {
-    //         Log::error($e->getMessage());
-    //         return response()->json(['error' => 'Lỗi máy chủ'], 500);
-    //     }
-    // }
+    
+    
 }

@@ -58,7 +58,7 @@
 
 <canvas id="orderChart"></canvas>
 
-@endsection
+@endsection 
 
 @section('page-js')
 <script type="text/javascript">
@@ -67,14 +67,10 @@
         var currentYear = new Date().getFullYear();
         $('#yearSelect').val(currentYear);
 
-
         var orderChart;
-
-
 
         thongKe();
 
-        // Thiết lập sự kiện click cho nút Thống kê
         $('#thong-ke').click(function() {
             thongKe();
             StatisTr();
@@ -90,7 +86,7 @@
                     'year': selectedYear,
                 },
                 success: function(response) {
-                    // Xử lý dữ liệu và cập nhật các phần tử HTML
+                    
                     let tongTienHoaDon = 0;
                     let tongSoLuong = 0;
                     let tongHoaDon = 0;
@@ -103,7 +99,7 @@
 
 
                     for (var i in response.invoice) {
-                        var month = response.invoice[i].month - 1; // JavaScript month is 0-indexed
+                        var month = response.invoice[i].month - 1; 
                         var count = response.invoice[i].count;
                         monthsData.push({
                             month: month,
@@ -129,7 +125,7 @@
                     $('#totalInvoice').text(response.totalInvoice + ' VND')
                     $('#interestRate').text(response.interestRate + ' VND')
                     $('#quantityProduct').text(response.quantityProduct)
-                    // Cập nhật biểu đồ cột
+                   
                     
                     updateColumnChart(monthsData);
                 },
@@ -143,24 +139,28 @@
             var labels = [];
             var data = [];
 
-            // Initialize data array with 0 for all 12 months
+            
             for (var i = 1; i <= 12; i++) {
                 labels.push('Tháng ' + i);
                 data.push(0);
             }
 
-            // Fill the data array with actual data from the backend
+            
             monthsData.forEach(function(item) {
-                var month = item.month; // Month is already zero-indexed
-                data[month] = item.count; // Assign count to corresponding month
+                var month = item.month; 
+                data[month] = item.count; 
             });
 
-            // Destroy the old chart before creating a new one
+           
             if (typeof orderChart !== 'undefined') {
                 orderChart.destroy();
             }
 
             var ctx = document.getElementById('orderChart').getContext('2d');
+
+            var maxDataValue = Math.max(...data);
+
+           
             orderChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -186,7 +186,7 @@
                             stepSize: 10,
                             autoSkip: false,
                             min: 0,
-                            max: 100
+                            max: maxDataValue+10
                         },
                         x: {
                             title: {

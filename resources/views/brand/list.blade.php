@@ -16,7 +16,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>DANH SÁCH HÃNG SẢN PHẨM</h3>
     <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
-        aria-controls="offcanvasRight"><i class="fa fa-trash"></i>Thương hiệu đã xóa</button>
+        aria-controls="offcanvasRight"><i class="fa fa-trash"></i>Hãng đã xóa</button>
 </div>
 <div class="custom-search-container">
     <form action="{{ route('brand.search') }}" method="GET">
@@ -41,9 +41,9 @@
                     <td>{{ $Brand->name }}</td>
                     <td><img src="{{asset($Brand->img_url)}}" class="img" alt="avatar" /></td>
                     <td>
-                        <a href="{{ route('brand.update', ['id' => $Brand->id]) }}" class="btn btn-outline-primary"><i
+                        <a href="{{ route('brand.update', ['id' => $Brand->id]) }}" title="Cập nhật" class="btn btn-outline-primary"><i
                                 class="fas fa-edit"></i></a> |
-                        <a href="{{ route('brand.delete', ['id' => $Brand->id]) }}" class="btn btn-outline-danger"><i
+                        <a href="{{ route('brand.delete', ['id' => $Brand->id]) }}" title="Xóa" class="btn btn-outline-danger"><i
                                 class="fas fa-trash"></i></a>
                     </td>
                 <tr>
@@ -57,7 +57,7 @@
 
 <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
     <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasRightLabel">Danh sách sản phẩm</h5>
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Danh sách hãng sản phẩm</h5>
         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -66,7 +66,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Sản phẩm</th>
+                            <th>Tên hãng</th>
                             <th>Thao tác</th>
                         </tr>
                     </thead>
@@ -74,9 +74,9 @@
                         @foreach($listBrandDelete as $brandDelete)
                             <tr>
                                 <td>{{$brandDelete->name}}</td>
-                                <td><a href="{{ route('brand.restore', ['id' => $brandDelete->id])}}"><i
-                                            class="fas fa-undo"></i>Khôi phục</a> | <a href="#"><i
-                                            class="fas fa-info-circle"></i>Chi tiết</a></td>
+                                <td><a href="{{ route('brand.restore', ['id' => $brandDelete->id])}}" title="Khôi phục">
+                                    <i class="fas fa-undo"></i></a> | 
+                                    <a href="#"><i class="fas fa-info-circle" title="Chi tiết"></i></a></td>
                             </tr>
                         @endforeach
                     </tbody>

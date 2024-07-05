@@ -34,7 +34,7 @@
         </thead>
         @foreach($listInvoiceDetail as $invoiceDetail)
         <tr>
-            <td>{{ $invoiceDetail->invoice_id }}</td>
+            <td>HD{{ $invoiceDetail->invoice_id }}</td>
             <td>{{ $invoiceDetail->product->name }} - {{ $invoiceDetail->color->name }} - {{ $invoiceDetail->capacity->name }}</td>
            
             <td>{{ $invoiceDetail->quantity }}</td>

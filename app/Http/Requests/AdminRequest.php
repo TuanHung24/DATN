@@ -27,14 +27,14 @@ class AdminRequest extends FormRequest
             'phone' =>'required|regex:/^0\d{9}$/',
             'email' => [
                 'required',
-                'min:15',
+                'min:10',
                 'max:50',
                 'regex:/^[a-zA-Z0-9._-]+@gmail\.com$/',
                 'unique:admin,email,' . $id,
             ],           
             'address' => 'required|min:10|max:128|regex:/^[^!@#$%^&*()_+{}\[\]:;<>?~\\/-]+$/u',
             'username' => 'required|min:6|max:20|regex:/^[a-zA-Z][a-zA-Z0-9]*$/u|not_regex:/[\p{P}\p{M}\p{S}\p{C}\p{Z}]/u|not_regex:/[^\p{L}\p{N}]/u|unique:admin,username,' . $id,
-            'password' => $this->isMethod('post') ? 'required|min:6|max:128|unique:admin,password,'.$id : 'nullable|min:6|max:128|unique:admin,password,'.$id,
+            // 'password' => $this->isMethod('post') ? 'required|min:6|max:128|unique:admin,password,'.$id : 'nullable|min:6|max:128|unique:admin,password,'.$id,
             'roles' => 'required|in:1,2,3',
             'gender' => 'required|in:0,1',
             'avatar'=> 'image|mimes:jpg,png,jpeg|max:6048'
@@ -74,9 +74,9 @@ class AdminRequest extends FormRequest
             'username.regex'=>"Tên tài khoản không được bắt đầu bằng số, không chứa khoản trắng, không được có dấu và chứa ký tự đặc biệt! ",
             'username.unique' => "Tên tài khoản đã tồn tại!",
 
-            'password.required' => "Mật khẩu không được bỏ trống!",
-            'password.min' => "Mật khẩu phải lớn hơn :min ký tự!",
-            'password.max' => "Mật khẩu phải nhỏ hơn :max ký tự!",
+            // 'password.required' => "Mật khẩu không được bỏ trống!",
+            // 'password.min' => "Mật khẩu phải lớn hơn :min ký tự!",
+            // 'password.max' => "Mật khẩu phải nhỏ hơn :max ký tự!",
 
             'avatar.image' => 'File hình ảnh không hợp lệ!',
             'avatar.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg!',

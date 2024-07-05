@@ -41,15 +41,6 @@
         @enderror
     </div>
     <div class="row">
-        <div class="col-md-4">
-            <label for="password" class="form-label">Mật khẩu</label>
-            <input type="password" class="form-control" name="password" value="{{old('password')}}">
-        </div>
-        @error('password')
-        <span class="error-message"> {{ $message }} </span>
-        @enderror
-    </div>
-    <div class="row">
         <div class="col-md-2">
             <label for="phone" class="form-label">Điện thoại</label>
             <input type="text" class="form-control" name="phone" value="{{old('phone')}}">

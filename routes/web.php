@@ -6,8 +6,6 @@ use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\InvoiceController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SanPhamController;
-use App\Http\Controllers\LoaiSanPhamController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\NewsController;
@@ -122,7 +120,6 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('update/{id}', [BrandController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [BrandController::class, 'hdUpdate'])->name('hd-update');
             Route::get('restore/{id}', [BrandController::class, 'restore'])->name('restore');
-            Route::get('deleted/{id}', [BrandController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [BrandController::class, 'delete'])->name('delete');
         });
     });
@@ -153,7 +150,6 @@ Route::middleware(['auth', 'check.status'])->group(function(){
             Route::get('update/{id}', [ProductController::class, 'upDate'])->name('update');
             Route::post('update/{id}', [ProductController::class, 'hdUpdate'])->name('hd-update');
             Route::get('restore/{id}', [ProductController::class, 'restore'])->name('restore');
-            Route::get('deleted/{id}', [ProductController::class, 'deleted'])->name('deleted');
             Route::get('delete/{id}', [ProductController::class, 'delete'])->name('delete');
             Route::get('update-images/{id}',[ProductController::class, 'updateImg'])->name('update-images');
             Route::post('update-images/{id}',[ProductController::class, 'hdUpdateImg'])->name('hd-update-images');

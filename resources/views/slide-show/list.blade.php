@@ -44,7 +44,7 @@
                 
                 <td> <img type="img_url" class="slide" name="img_url" src="{{asset($loGo->img_url)}}"> </td>
                 <td>
-                <a id="showModalButton" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a>
+                <a id="showModalButton" class="btn btn-outline-primary" title="Cập nhật"><i class="fas fa-edit"></i></a>
                 
                 </td>
             </tr>
@@ -75,8 +75,8 @@
                 <td>{{ $slide->product->name ?? '' }}</td>
                 <td> <img type="img_url" class="slide" name="img_url" src="{{asset($slide->img_url)}}"> </td>
                 <td>
-                <a href="{{ route('slide-show.update', ['id' => $slide->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
-                <a href="{{ route('slide-show.delete', ['id' => $slide->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                <a href="{{ route('slide-show.update', ['id' => $slide->id]) }}" title="Cập nhật" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> | 
+                <a href="{{ route('slide-show.delete', ['id' => $slide->id]) }}" title="Xóa" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
                 </td>
             </tr>
             @endforeach

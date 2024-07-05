@@ -57,7 +57,7 @@
             <td>{{ $Warehouse->total_formatted }}</td>
             <td>{{ \Carbon\Carbon::parse($Warehouse->date)->format('d/m/Y H:i') }}</td>
             <td class="chuc-nang">
-                <a href="{{ route('warehouse.detail', ['id' => $Warehouse->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i>Chi tiết</a>
+                <a href="{{ route('warehouse.detail', ['id' => $Warehouse->id]) }}" class="btn btn-outline-info" title="Chi tiết"><i class="fas fa-info-circle"></i></a>
             </td>
         <tr>
             @endforeach

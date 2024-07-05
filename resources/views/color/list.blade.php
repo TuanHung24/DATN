@@ -49,7 +49,7 @@
                     <tr>
                         <td>{{ $coLor->id }}</td>
                         <td>{{ $coLor->name }}</td>
-                        <td><a href="{{ route('color.delete', ['id' => $coLor->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a></td>
+                        <td><a href="{{ route('color.delete', ['id' => $coLor->id]) }}" class="btn btn-outline-danger" title="Xóa"><i class="fas fa-trash"></i></a></td>
                     </tr>
                     @endforeach
                 </tbody>

@@ -108,12 +108,12 @@
                         var date = new Date(response.data[i].date);
                         var day = date.getDate();
                         counts[day - 1] = response.data[i].count;
-                        tongTienHoaDon += parseFloat(response.data[i].tongtien);
+                        
                         tongSoLuong += parseInt(response.data[i].soluong);
                         tongHoaDon += parseInt(response.data[i].count);
                     }
-
-                    let formattedTongTienHoaDon = formatNumber(tongTienHoaDon);
+                   
+                    let formattedTongTienHoaDon = formatNumber(response.revenue);
                     let formattedInterestRate = formatNumber(response.interestRate);
                     $('#doanh-thu').text(formattedTongTienHoaDon+' VND');
                     $('#so-luong').text(tongSoLuong);
@@ -130,17 +130,18 @@
                             data: counts
                         }]
                     };
-
+                    var maxDataValue = Math.max(...chartData.datasets[0].data);
+                    
                     var barGraph = new Chart(ctx, {
                         type: 'bar',
                         data: chartData,
                         options: {
                             scales: {
                                 y: {
-                                    stepSize: 10,
+                                    stepSize: 3,
                                     autoSkip: false,
                                     min: 0,
-                                    max: 300
+                                    max: maxDataValue+3
                                 },
                                 x: {
                                     type: 'category',

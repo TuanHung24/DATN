@@ -9,9 +9,9 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-
-use function Laravel\Prompts\error;
+use Illuminate\Support\Str;
 
 class AdminController extends Controller
 {
@@ -19,22 +19,27 @@ class AdminController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-
-       
         $listAdmin = Admin::where('name', 'like', '%' . $query . '%')
-                          ->orWhere('email', 'like', '%' . $query . '%')
-                          ->orWhere('username', 'like', '%' . $query . '%')
-                          ->orWhere('phone', 'like', '%' . $query . '%')
-                          ->orWhere('address', 'like', '%' . $query . '%')
-                          ->paginate(5); 
+            ->orWhere('email', 'like', '%' . $query . '%')
+            ->orWhere('username', 'like', '%' . $query . '%')
+            ->orWhere('phone', 'like', '%' . $query . '%')
+            ->orWhere('address', 'like', '%' . $query . '%')
+            ->paginate(5);
 
-        
+        if ($request->ajax()) {
+            $view = view('admin.table', compact('listAdmin'))->render();
+            return response()->json(['html' => $view]);
+        }
+
         return view('admin.list', compact('listAdmin', 'query'));
     }
 
+
+
+
     public function getList()
     {
-        $listAdmin = Admin::paginate(5);
+        $listAdmin = Admin::whereBetween('status', [0, 1])->paginate(5);
         return view('admin.list', compact('listAdmin'));
     }
 
@@ -46,35 +51,39 @@ class AdminController extends Controller
     {
 
         try {
-           
-
             $file = $request->file('avatar');
             $newAdmin = new Admin();
 
             if (isset($file)) {
                 $path = $file->store('avt');
-
                 $newAdmin->avatar_url = $path;
             }
+
             $newAdmin->name = $request->name;
             $newAdmin->email = $request->email;
             $newAdmin->username = $request->username;
-            $newAdmin->password = Hash::make($request->password);
             $newAdmin->phone = $request->phone;
             $newAdmin->address = $request->address;
+
+            $newPassword = str_pad(random_int(100000, 999999), 6, '0', STR_PAD_LEFT);
+            $newAdmin->password = Hash::make($newPassword);
+
 
             if ($request->roles == 1 && $this->countAdmin($newAdmin->id) == 2) {
                 return back()->withInput()->with(['Error' => "Không thể thêm quá 2 quản lý!"]);
             }
             $newAdmin->roles = $request->roles;
-
             $newAdmin->gender = $request->gender;
             $newAdmin->save();
-            
 
-            return redirect()->route('admin.list')->with(['Success' => "Thêm mới tài khoản {$newAdmin->username} thành công !"]);
+            Mail::send('email', ['admin' => $newAdmin, 'newPassword' => $newPassword], function ($email) use ($newAdmin) {
+                $email->subject('HK PHONE - Mật khẩu đăng ký tài khoản!');
+                $email->to($newAdmin->email, $newAdmin->name);
+            });
+
+            return redirect()->route('admin.list')->with(['Success' => "Thêm mới tài khoản {$newAdmin->username} thành công, vui lòng check email để lấy mật khẩu!"]);
         } catch (Exception $e) {
-            return back()->withInput()->with(['error:' => "Error:" . $e]);
+            return back()->withInput()->with(['Error' => "Error: " . $e->getMessage()]);
         }
     }
 
@@ -101,10 +110,11 @@ class AdminController extends Controller
             $aDmin = Admin::findOrFail($id);
 
             if (isset($file)) {
-                Storage::delete($aDmin->avatar_url);
 
+                if ($aDmin->avatar_url) {
+                    Storage::delete($aDmin->avatar_url);
+                }
                 $path = $file->store('avt');
-
                 $aDmin->avatar_url = $path;
             }
             $aDmin->name = $request->name;
@@ -117,7 +127,6 @@ class AdminController extends Controller
             }
             $aDmin->roles = $request->roles;
             $aDmin->gender = $request->gender;
-            $aDmin->status = isset($request->status) ? 1 : 0;
             $aDmin->save();
 
 
@@ -130,7 +139,7 @@ class AdminController extends Controller
     {
         try {
             $aDmin = Admin::findOrFail($id);
-            
+
             if ($aDmin->roles == 1) {
                 return redirect()->route('admin.list')->with(['Error' => "Không thể khóa tài khoản này!"]);
             }
@@ -138,8 +147,9 @@ class AdminController extends Controller
                 return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
             }
 
-            $aDmin->delete();
-            return redirect()->route('admin.list')->with(['Success' => "Khóa tài khoản {$aDmin->username} thành công!"]);
+            $aDmin->status = 2;
+            $aDmin->save();
+            return redirect()->route('admin.list')->with(['Success' => "Xóa tài khoản {$aDmin->username} thành công!"]);
         } catch (Exception $e) {
             return back()->with(['Error' => 'Lỗi ngoại lệ']);
         }
@@ -166,7 +176,7 @@ class AdminController extends Controller
     {
         try {
             $aDmin = Admin::findOrFail($id);
-            
+
             if (empty($aDmin)) {
                 return redirect()->route('admin.list')->with(['Error' => "$id không tồn tại!"]);
             }

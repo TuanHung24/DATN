@@ -38,38 +38,29 @@
             <td>{{ \Carbon\Carbon::parse($inVoice->date)->format('d/m/Y H:i') }}</td>
             <td class="status">
             @if ($inVoice->status == 1)
-            
                 <button type="button" class="btn btn-danger cancel-btn" data-id="{{ $inVoice->id }}">Hủy</button>
                 &nbsp;
                 <a href="{{route('invoice.update-status-approved', ['id' => $inVoice->id])}}">
                     <button type="submit" class="btn btn-success">Duyệt</button>
                 </a>
-            
             @elseif ($inVoice->status == 2)
-           
                 <a href="{{route('invoice.update-status-delivering',['id'=> $inVoice->id])}}">
                     <button type="submit" class="btn btn-warning">Đang vận chuyển</button>
                 </a>
-            
             @elseif ($inVoice->status == 3)
-            
                 <a href="{{route('invoice.update-status-complete',['id'=> $inVoice->id])}}">
                     <button type="submit" class="btn btn-secondary">Đã giao</button>
                 </a>
-           
             @elseif ($inVoice->status == 4)
-            
                 <button class="btn btn-light">Hoàn thành</button>
-            
             @elseif ($inVoice->status == 5)
-            
                 <button type="submit" class="btn btn-light">Đã hủy</button>
             
             @endif
             </td>
-            <td class="chuc-nang">
-                <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i>Chi tiết</a>
-                <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-success"><i class="fas fa-file-export"></i>PDF</a>
+            <td class="chuc-nang-invoice">
+                <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info" title="Chi tiết"><i class="fas fa-info-circle"></i></a>
+                <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-success" title="Xuất PDF"><i class="fas fa-file-export"></i>PDF</a>
             </td>
         <tr>
             @endforeach

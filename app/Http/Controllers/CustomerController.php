@@ -10,27 +10,32 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-use function PHPUnit\Framework\isEmpty;
+
 
 class CustomerController extends Controller
 {
     public function search(Request $request)
     {
-        try{
-        $query = $request->input('query');
-        $listCusTomer = Customer::where('name', 'like', '%' . $query . '%')
-                          ->orWhere('email', 'like', '%' . $query . '%')
-                          ->orWhere('phone', 'like', '%' . $query . '%')
-                          ->orWhere('address', 'like', '%' . $query . '%')
-                          ->paginate(6); 
-        return view('customer.list', compact('listCusTomer', 'query'));
-        }catch(Exception $e){
-            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        try {
+            $query = $request->input('query');
+            $listCusTomer = Customer::where('name', 'like', '%' . $query . '%')
+                ->orWhere('email', 'like', '%' . $query . '%')
+                ->orWhere('phone', 'like', '%' . $query . '%')
+                ->orWhere('address', 'like', '%' . $query . '%')
+                ->paginate(6);
+
+            if ($request->ajax()) {
+                $view = view('customer.table', compact('listCusTomer'))->render();
+                return response()->json(['html' => $view]);
+            }
+            return view('customer.list', compact('listCusTomer', 'query'));
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không tìm thấy khách hàng']);
         }
     }
     public function getList()
     {
-        $listCusTomer = Customer::paginate(6);
+        $listCusTomer = Customer::whereBetween('status', [0, 1])->paginate(6);
         return view('customer.list', compact('listCusTomer'));
     }
 
@@ -42,16 +47,6 @@ class CustomerController extends Controller
     {
 
         try {
-
-            // $request->validate([
-            //     'name' => 'required|string|max:255',
-            //     'email' => 'required|string|email|max:255|unique:cusTomer',
-            //     'password' => 'required|string|min:6',
-            //     'phone' => 'required|string|max:11',
-            //     'address' => 'required|string|max:255',
-            // ]);
-
-
             $newcusTomer = new CusTomer();
             $newcusTomer->name = $request->name;
             $newcusTomer->email = $request->email;
@@ -94,7 +89,7 @@ class CustomerController extends Controller
             $cusTomer->save();
 
 
-            return redirect()->route('customer.list')->with(['Success'=>'Cập nhật khách hàng thành công!']);
+            return redirect()->route('customer.list')->with(['Success' => 'Cập nhật khách hàng thành công!']);
         } catch (Exception $e) {
             return back()->withInput()->with(['error:' => "Error:" . $e->getMessage()]);
         }
@@ -103,8 +98,9 @@ class CustomerController extends Controller
     {
         try {
             $cusTomer = CusTomer::findOrFail($id);
-            $cusTomer->delete();
-            return redirect()->route('cusTomer.list')->with(['Success'=>"Xóa tài khoản {$cusTomer->name} thành công!"]);
+            $cusTomer->status = 2;
+            $cusTomer->save();
+            return redirect()->route('cusTomer.list')->with(['Success' => "Xóa tài khoản {$cusTomer->name} thành công!"]);
         } catch (Exception $e) {
             return back()->with(['error:' => "Error:" . $e]);
         }
@@ -142,7 +138,7 @@ class CustomerController extends Controller
         return view('customer.invoice', compact('listInvoice'));
     }
 
-    public function getInvoiceDetail($customer_id, $id )
+    public function getInvoiceDetail($customer_id, $id)
     {
         $invoice = Invoice::where('customer_id', $customer_id)
             ->first();
@@ -153,6 +149,6 @@ class CustomerController extends Controller
             return back()->with('Error', 'Hóa đơn không tồn tại');
         }
 
-        return view('customer.invoice_detail', compact('invoice','invoiceDetails'));
+        return view('customer.invoice_detail', compact('invoice', 'invoiceDetails'));
     }
 }

@@ -64,11 +64,11 @@
             </td>
 
                 <td class="chuc-nang">
-                <a href="{{ route('customer.get-invoice-detail', ['customer_id' => $listInvoice->first()->customer->id, 'id' => $inVoice->id]) }}" class="btn btn-outline-info">
-                <i class="fas fa-shopping-cart"></i>
+                <a href="{{ route('customer.get-invoice-detail', ['customer_id' => $listInvoice->first()->customer->id, 'id' => $inVoice->id]) }}" title="Chi tiết hóa đơn" class="btn btn-outline-info">
+                <i class="fas fa-info-circle"></i>
                 </a>
                     
-                    <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-success"><i class="fas fa-file-export"></i>PDF</a>
+                    <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" title="Xuất hóa đơn" class="btn btn-outline-success"><i class="fas fa-file-export"></i>PDF</a>
                 </td>
             <tr>
                 @endforeach

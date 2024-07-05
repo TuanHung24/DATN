@@ -6,6 +6,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Traits\HasRoles;
 
 class Admin extends Authenticate
@@ -31,5 +33,16 @@ class Admin extends Authenticate
     public function isAdmin()
     {
         return $this->roles === 3;
+    }
+
+    public static function attemptLogin($username, $password, $remember)
+    {
+        $user = static::whereRaw('BINARY `username` = ?', [$username])->first();
+        if ($user && Hash::check($password, $user->password)) {
+            Auth::login($user, $remember);
+            return true;
+        }
+
+        return false;
     }
 }

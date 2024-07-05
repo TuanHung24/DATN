@@ -36,8 +36,8 @@
                 @endif
             </td>
             <td>
-                <a href="{{ route('provider.update', ['id' => $Provider->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
-                 <a href="{{ route('provider.delete', ['id' => $Provider->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
+                <a href="{{ route('provider.update', ['id' => $Provider->id]) }}" title="Cập nhật" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
+                 <a href="{{ route('provider.delete', ['id' => $Provider->id]) }}" title="Xóa" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a>
             </td>
         <tr>
         @endforeach

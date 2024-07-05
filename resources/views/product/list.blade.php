@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h3>DANH SÁCH DÒNG SẢN PHẨM</h3>
+    <h3>DANH SÁCH SẢN PHẨM</h3>
     <button class="btn btn-danger" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight"><i class="fa fa-trash"></i>Sản phẩm đã xóa</button>
 </div>
 <div class="custom-search-container">
@@ -19,7 +19,6 @@
         <thead>
     <tr class="title_sp">
         <th>Tên sản phẩm</th>
-        
         <th>Mô tả</th>  
         <th>Hãng sản phẩm</th>
         <th>Dòng sản phẩm</th>
@@ -34,11 +33,11 @@
         <td>{{ $Product->brand->name }}</td>
         <td>{{ $Product->product_series->name }}</td>
         <td class="chuc-nang-product">
-            <a href="{{ route('product.update-images', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-camera"></i></a> |
+            <a href="{{ route('product.update-images', ['id' => $Product->id]) }}" class="btn btn-outline-info" title="Cập nhật hình ảnh"><i class="fas fa-camera"></i></a> |
             
-            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary"><i class="fas fa-edit"></i></a> |
-            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info"><i class="fas fa-info-circle"></i></a> |
-            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger"><i class="fas fa-trash"></i></a> 
+            <a href="{{ route('product.update', ['id' => $Product->id]) }}" class="btn btn-outline-primary" title="Cập nhật"><i class="fas fa-edit"></i></a> |
+            <a href="{{ route('product.detail', ['id' => $Product->id]) }}" class="btn btn-outline-info" title="Chi tiết"><i class="fas fa-info-circle"></i></a> |
+            <a href="{{ route('product.delete', ['id' => $Product->id]) }}" class="btn btn-outline-danger" title="Xóa"><i class="fas fa-trash"></i></a> 
         </td>
     <tr>
     @endforeach

@@ -4,17 +4,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>CẬP NHẬT NHÂN VIÊN</h3>
 </div>
-@if(session('Error'))
-<div class="alert alert-danger d-flex align-items-center" role="alert">
-    <div>
-        {{session('Error')}}
-    </div>
-</div>
-@endif
-
-
-
-
+<x-notification />
 <form method="POST" action="{{ route('admin.hd-update', ['id'=> $aDmin->id]) }}" enctype="multipart/form-data">
     @csrf
     @method('PUT') 
@@ -86,15 +76,9 @@
             </select>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <label for="status" class="form-label">Trạng thái</label>
-            <input type="checkbox" name="status" {{ old('status', $aDmin->status) ? 'checked' : '' }} />
-        </div>
-    </div>
     <div class=row>
         <div class="col-md-6">
-            <label for="avatar" class="form-label">Chọn ảnh: </label>
+            <label for="avatar" class="form-label">Chọn ảnh đại diện: </label>
             <input type="file" name="avatar" accept="image/*"/><br />
         </div>
         @error('avatar')

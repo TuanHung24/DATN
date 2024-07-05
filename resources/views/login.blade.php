@@ -24,8 +24,8 @@
                 <form method="POST" action="{{route('hd-login')}}">
                     @csrf
                     <div class="form-group">
-                        <label for="email">E-Mail Address</label>
-                        <input id="email" type="email" class="form-control" name="email" value="{{old('email')}}" >
+                        <label for="username">Username:</label>
+                        <input id="username" type="username" class="form-control" name="username" value="{{old('username')}}" >
                         @if(session('Error'))
                         <span class="error-message">
                             {{ session('Error') }}
@@ -34,7 +34,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">Password
+                        <label for="password">Password:
                         </label>
                         <input id="password" type="password" class="form-control" name="password">
                         <div class="text-right">
