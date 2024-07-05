@@ -8,7 +8,7 @@ use App\Models\InvoiceDetail;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Rate;
-use Carbon\Carbon; 
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -18,17 +18,30 @@ class InvoiceController extends Controller
 {
     public function search(Request $request)
     {
-        try{
+        try {
             $query = $request->input('query');
-            $listInvoice = Invoice::where('customer.name', 'like', '%' . $query . '%')
-                            ->orWhere('phone', 'like', '%' . $query . '%')
-                            ->orWhere('address', 'like', '%' . $query . '%')
-                            ->paginate(10); 
+
+            $listInvoice = Invoice::where('id', $query)->orWhere('phone', 'like', '%' . $query . '%')
+                ->orWhere(function ($queryBuilder) use ($query) {
+                    $queryBuilder->whereHas('customer', function ($queryCustomer) use ($query) {
+                        $queryCustomer->where('name', 'like', '%' . $query . '%');
+                    });
+                })
+                ->orderBy('status','asc')
+                ->orderBy('date','desc')
+                ->paginate(10);
+
+            if ($request->ajax()) {
+                $view = view('invoice.table', compact('listInvoice'))->render();
+                return response()->json(['html' => $view]);
+            }
+
             return view('invoice.list', compact('listInvoice', 'query'));
-        }catch(Exception $e){
-            return back()->with(['Error'=>'Không tìm thấy khách hàng']);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không tìm thấy khách hàng']);
         }
     }
+
     public function addNew()
     {
         $listProduct = Product::whereHas('product_detail', function ($query) {
@@ -105,17 +118,17 @@ class InvoiceController extends Controller
             // })
             ->get();
 
-            // $productsWithoutDiscountOrExpired = ProductDetail::with(['color', 'capacity'])
-            // ->where('product_id', $request->product_id)
-            // ->where('quantity', '>', 0)
-            // ->whereDoesntHave('discount_detail')
-            // ->orWhereHas('discount_detail.discount', function($query) {
-            //     $now = Carbon::now('Asia/Ho_Chi_Minh');
-            //     $query->where('date_end', '<', $now); // Chiết khấu đã hết hạn
-            // })
-            // ->get();
-            
-            // $productDetail = $productsWithValidDiscount->merge($productsWithoutDiscountOrExpired);
+        // $productsWithoutDiscountOrExpired = ProductDetail::with(['color', 'capacity'])
+        // ->where('product_id', $request->product_id)
+        // ->where('quantity', '>', 0)
+        // ->whereDoesntHave('discount_detail')
+        // ->orWhereHas('discount_detail.discount', function($query) {
+        //     $now = Carbon::now('Asia/Ho_Chi_Minh');
+        //     $query->where('date_end', '<', $now); // Chiết khấu đã hết hạn
+        // })
+        // ->get();
+
+        // $productDetail = $productsWithValidDiscount->merge($productsWithoutDiscountOrExpired);
 
         return view('invoice.get-product-ajax', compact('productDetail'));
     }
@@ -153,23 +166,23 @@ class InvoiceController extends Controller
             return redirect()->route('invoice.list');
         }
 
-        $invoiceDetail=InvoiceDetail::where('invoice_id',$id)->get();
+        $invoiceDetail = InvoiceDetail::where('invoice_id', $id)->get();
 
         if (!$invoiceDetail) {
             return redirect()->route('hoa-don.danh-sach')->with('error', "Chi tiết hóa đơn không tồn tại.");
         }
 
-        
-            foreach ($invoiceDetail as $item) {
-                $productDetail = ProductDetail::where('product_id', $item->product_id)
-                                    ->where('color_id', $item->color_id)
-                                    ->where('capacity_id', $item->capacity_id)
-                                    ->first();
-                if (!$productDetail) {  
-                    return redirect()->route('hoa-don.danh-sach')->with('error', "Chi tiết hóa đơn không tồn tại.");
-                }
-                $productDetail->quantity -= $item->quantity;
-                $productDetail->save();
+
+        foreach ($invoiceDetail as $item) {
+            $productDetail = ProductDetail::where('product_id', $item->product_id)
+                ->where('color_id', $item->color_id)
+                ->where('capacity_id', $item->capacity_id)
+                ->first();
+            if (!$productDetail) {
+                return redirect()->route('hoa-don.danh-sach')->with('error', "Chi tiết hóa đơn không tồn tại.");
+            }
+            $productDetail->quantity -= $item->quantity;
+            $productDetail->save();
         }
 
         $inVoice->status = Invoice::TRANG_THAI_DA_DUYET;
@@ -195,6 +208,4 @@ class InvoiceController extends Controller
         $listInvoiceDetail = InvoiceDetail::where('invoice_id', $id)->get();
         return view('invoice.detail', compact('listInvoiceDetail'));
     }
-
-   
 }

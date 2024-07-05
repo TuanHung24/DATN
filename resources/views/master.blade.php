@@ -9,7 +9,6 @@
     <meta name="generator" content="Hugo 0.104.2">
     <title>Trang chủ</title>
     <link href="{{ asset('bootstrap-5.2.3/css/bootstrap.min.css')}}" rel="stylesheet">
-    <!-- Custom styles for this template -->
     <link href="{{ asset('custom.css') }}" rel="stylesheet">
     <link href="{{ asset('style.css') }}" rel="stylesheet">
     <link href="{{asset('bootstrap-5.2.3/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -113,7 +112,7 @@
                                     <span class="unfold-item-icon mr-3">
                                         <i class="fas fa-power-off"></i>
                                     </span>
-                                    Sign Out
+                                    Đăng xuất
                                 </a>
                             </li>
                         </ul>

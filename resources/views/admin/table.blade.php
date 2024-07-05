@@ -1,7 +1,7 @@
 @if(isset($listAdmin) && $listAdmin->isNotEmpty())
 <table class="table">
     <thead>
-        <tr>
+        <tr> 
             <th>Ảnh đại diện</th>
             <th>Họ tên</th>
             <th>Email</th>
@@ -17,7 +17,7 @@
     <tbody>
         @foreach($listAdmin as $Admin)
         <tr>
-            <td><img src="{{ asset($Admin->avatar_url) }}" class="avatar1" alt="avatar" /></td>
+            <td><img src="{{ $Admin->avatar_url ? asset($Admin->avatar_url) : asset('avt/avatar-rong.jpg') }}" class="avatar1" alt="avatar" /></td>
             <td>{{ $Admin->name }}</td>
             <td>{{ $Admin->email }}</td>
             <td>{{ $Admin->username }}</td>

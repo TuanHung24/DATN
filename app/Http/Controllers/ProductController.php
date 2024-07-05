@@ -26,19 +26,23 @@ class ProductController extends Controller
 
     public function search(Request $request)
     {
-        try{
+        try {
             $query = $request->input('query');
 
             $listProduct = Product::where('name', 'like', '%' . $query . '%')
-                            ->paginate(8);  
+                ->paginate(9);
+            if ($request->ajax()) {
+                $view = view('product.table', compact('listProduct'))->render();
+                return response()->json(['html' => $view]);
+            }
             return view('product.list', compact('listProduct', 'query'));
-        }catch(Exception $e){
-            return back()->with(['Error'=>'Không tìm thấy sản phẩm']);
+        } catch (Exception $e) {
+            return back()->with(['Error' => 'Không tìm thấy sản phẩm']);
         }
     }
     public function getList()
     {
-        $listProduct = Product::paginate(8);
+        $listProduct = Product::paginate(9);
         $listProductDelete = Product::onlyTrashed()->get();
         return view('product.list', compact('listProduct', 'listProductDelete'));
     }
@@ -130,7 +134,7 @@ class ProductController extends Controller
             $proDuct->product_series_id = $request->product_series_id;
             $proDuct->save();
 
-            $productDes = ProductDescription::where('product_id',$proDuct->id)->first();
+            $productDes = ProductDescription::where('product_id', $proDuct->id)->first();
             $productDes->product_id = $proDuct->id;
             $productDes->front_camera_id = $request->front_camera;
             $productDes->rear_camera_id = $request->rear_camera;
@@ -142,7 +146,7 @@ class ProductController extends Controller
             $productDes->chip = $request->chip;
             $productDes->sims = $request->sims;
             $productDes->save();
-            
+
 
 
             return redirect()->route('product.list')->with(['Success' => "Cập nhật sản phẩm {$proDuct->name} thành công!"]);
@@ -243,7 +247,7 @@ class ProductController extends Controller
             $file = $request->file('img');
 
             if ($file) {
-                if($image->img_url){
+                if ($image->img_url) {
                     Storage::delete($image->img_url);
                 }
 
@@ -321,13 +325,13 @@ class ProductController extends Controller
             return response()->json(['Success' => false, 'Message' => 'Màu sắc và dung lượng này đã tồn tại.']);
         }
 
-        
+
         $productDetail = new ProductDetail();
         $productDetail->product_id = $productId;
         $productDetail->color_id = $colors;
         $productDetail->capacity_id = $capacities;
-        $productDetail->quantity = 0; 
-        $productDetail->price = 0; 
+        $productDetail->quantity = 0;
+        $productDetail->price = 0;
         $productDetail->save();
 
 
