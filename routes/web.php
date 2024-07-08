@@ -211,7 +211,8 @@ Route::middleware(['auth', 'check.status'])->group(function(){
     Route::get('statistical',[StatisticalController::class, 'getListYear'])->name('statistical')->middleware('role:1');
     Route::get('statistical-day',[StatisticalController::class, 'statisticalDay'])->name('statistical-day')->middleware('role:1');
     Route::get('statistical-month',[StatisticalController::class, 'getListMonth'])->name('statistical-month')->middleware('role:1');
-
+    Route::get('export-year', [StatisticalController::class, 'exportYear'])->name('export-year')->middleware('role:1');
+    Route::get('export-month', [StatisticalController::class, 'exportMonth'])->name('export-month')->middleware('role:1');
     Route::get('statistical-month-1',[StatisticalController::class, 'statisticalMonth'])->name('statistical-month-1')->middleware('role:1');
     Route::post('statistical-month-tr',[StatisticalController::class, 'hdstatisticalMonth'])->name('statistical-month-tr')->middleware('role:1');
 

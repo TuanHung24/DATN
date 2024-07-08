@@ -5,8 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\ProductDetail;
 use App\Models\Rate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use PgSql\Lob;
@@ -23,16 +26,28 @@ class APIInvoiceController extends Controller
                 'message' => "Thanh toán không thành công!"
             ]);
         }
-        $inVoice = new Invoice();
-        $inVoice->customer_id = $request->hd[0]['customer_id'];
-        $inVoice->total = $request->hd[0]['total'];
-        $inVoice->address = $request->hd[0]['address'];
-        $inVoice->phone = $request->hd[0]['phone'];
-        $inVoice->payment_method = $request->hd[0]['payment_method'];
-        $inVoice->note = $request->hd[0]['note'];
-        $inVoice->ship = $request->hd[0]['ship'];
-        $inVoice->save();
+
         for ($i = 0; $i < count($request->cthd); $i++) {
+            $productDetail = ProductDetail::where('product_id', $request->cthd[$i]['product_id'])
+                ->where('color_id', $request->cthd[$i]['color_id'])
+                ->where('capacity_id', $request->cthd[$i]['capacity_id'])->first();
+
+            if (!$productDetail || $request->cthd[$i]['quantity'] > $productDetail->quantity) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Sản phẩm không đủ số lượng để đặt hàng!"
+                ],422);
+            }
+
+            $inVoice = new Invoice();
+            $inVoice->customer_id = $request->hd[0]['customer_id'];
+            $inVoice->total = $request->hd[0]['total'];
+            $inVoice->address = $request->hd[0]['address'];
+            $inVoice->phone = $request->hd[0]['phone'];
+            $inVoice->payment_method = $request->hd[0]['payment_method'];
+            $inVoice->note = $request->hd[0]['note'];
+            $inVoice->ship = $request->hd[0]['ship'];
+            $inVoice->save();
             $invoiceDetail = new InvoiceDetail();
             $invoiceDetail->invoice_id = $inVoice->id;
             $invoiceDetail->product_id = $request->cthd[$i]['product_id'];
@@ -55,9 +70,11 @@ class APIInvoiceController extends Controller
     {
         try {
 
-
-            // Lấy danh sách hóa đơn dựa trên user ID
-            $inVoice = Invoice::where("customer_id", $userId)->get();
+            $inVoice = Invoice::with(['invoice_detail.product.img_product', 'invoice_detail.color:id,name', 'invoice_detail.capacity:id,name'])
+                ->where('customer_id', $userId)
+                ->orderBy('status', 'asc')
+                ->orderBy('date', 'desc')
+                ->get();
 
             if ($inVoice->isEmpty()) {
                 return response()->json([
@@ -66,20 +83,11 @@ class APIInvoiceController extends Controller
                 ]);
             }
 
-            $statusInvoice = [];
 
-            // Lặp qua danh sách hóa đơn và lấy trạng thái tương ứng
-            foreach ($inVoice as $order) {
-                $statusInvoice[] = [
-                    'orderId' => $order->id, // Đặt lại tên cột tương ứng trong CSDL
-                    'status' => $order->status, // Đặt lại tên cột tương ứng trong CSDL
-                ];
-            }
 
             return response()->json([
                 "success" => true,
-                "message" => "Lấy trạng thái thành công!",
-                "data" => $statusInvoice,
+                "data" => $inVoice,
             ]);
         } catch (\Exception $e) {
             return response()->json([
@@ -90,7 +98,16 @@ class APIInvoiceController extends Controller
     }
     public function statusCancel(Request $request)
     {
-        $inVoice = Invoice::findOrFail($request->orderId);
+
+        $user = Auth::guard('api')->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Người dùng chưa được xác thực.'], 401);
+        }
+
+        $inVoice = Invoice::where('customer_id', $user->id)
+            ->where('id', $request->orderId)
+            ->first();
 
         if (empty($inVoice)) {
             return response()->json([
@@ -114,6 +131,54 @@ class APIInvoiceController extends Controller
             "data" => $inVoice
         ]);
     }
+
+    public function refundOrder(Request $request)
+    {
+
+        $user = Auth::guard('api')->user();
+
+        if (!$user) {
+            return response()->json(['message' => 'Người dùng chưa được xác thực.'], 401);
+        }
+
+        $inVoice = Invoice::where('customer_id', $user->id)
+            ->where('id', $request->orderId)
+            ->first();
+
+        if (empty($inVoice)) {
+            return response()->json([
+                "success" => false,
+                "message" => "Hóa đơn không tồn tại!"
+            ]);
+        }
+
+        $invoiceDate = Carbon::parse($inVoice->date);
+        $currentDate = Carbon::now(new \DateTimeZone('Asia/Ho_Chi_Minh'));
+        $difference = $currentDate->diffInDays($invoiceDate);
+
+        if ($difference > 2) {
+            return response()->json([
+                "success" => false,
+                "message" => "Hóa đơn đã quá 2 ngày, không thể hoàn trả!"
+            ]);
+        }
+
+        if ($inVoice->status != Invoice::TRANG_THAI_HOAN_THANH) {
+            return response()->json([
+                "success" => false,
+                "message" => "Hóa đơn hoàn trả không thành công!"
+            ]);
+        }
+        $inVoice->status = Invoice::TRANG_THAI_HOAN_TRA;
+        $inVoice->save();
+
+        return response()->json([
+            "success" => true,
+            "message" => "Hoàn trả hóa đơn thành công!",
+            "data" => $inVoice
+        ]);
+    }
+
     public function evaLuate(Request $request)
     {
         $request->validate([
@@ -174,5 +239,4 @@ class APIInvoiceController extends Controller
             'message' => "Bình luận thành công!"
         ]);
     }
-    
 }

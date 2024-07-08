@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\APIAuthController;
 use App\Http\Controllers\APIBrandController;
+use App\Http\Controllers\APICartController;
 use App\Http\Controllers\APIInvoiceController;
 use App\Http\Controllers\APINewsController;
 use App\Http\Controllers\APIProductController;
@@ -44,7 +45,12 @@ Route::get('/get-news/{title}',[APINewsController::class, "listNewDetail"]);
 Route::post('/new-invoice', [APIInvoiceController::class, 'newInvoice']);
 Route::post('/status-invoice/{userId}', [APIInvoiceController::class, 'statusInvoice']);
 Route::post('/status-cancel',[APIInvoiceController::class, "statusCancel"]);
+Route::post('/refund-order',[APIInvoiceController::class, "refundOrder"]);
 
+Route::post('/add-cart',[APICartController::class, "addCart"]);
+Route::post('/update-cart',[APICartController::class, "updateCart"]);
+Route::get('/get-cart/{id}',[APICartController::class, "getCart"]);
+Route::middleware('auth:api')->delete('/delete-cart/{id}', [APICartController::class, 'deleteCart']);
 Route::post('/evaluate',[APIInvoiceController::class, "evaLuate"]);
 Route::post('/comment',[APIInvoiceController::class, "comMent"]);
 Route::post('/register',[APIAuthController::class, "reGister"]);

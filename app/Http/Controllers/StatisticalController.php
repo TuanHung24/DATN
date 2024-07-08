@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\MonthExport;
+use App\Exports\YearExport;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
@@ -11,6 +13,7 @@ use App\Models\WarehouseDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StatisticalController extends Controller
 {
@@ -22,50 +25,20 @@ class StatisticalController extends Controller
 
     public function getListYear()
     {
-        // $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', now()->year)->count();
-        // $backInvoice = Invoice::where('status', 5)->count();
-
-        // $toTal = Invoice::where('status', 4)->whereYear('date', now()->year)->sum('total');
-        // $totalInvoice = number_format($toTal, 0, ',', '.');
-
-        // $cusTomer = Customer::whereYear('created_at', now()->year)->count();
-        // $quantityProduct = ProductDetail::whereYear('created_at', now()->year)->sum('quantity');
-
-        // $priceWarehouse = Warehouse::whereYear('date', now()->year)->sum('total');
-        // $totalWarehouse = number_format($priceWarehouse, 0, ',', '.');
-
-        // $sellProduct = InvoiceDetail::select('product_id')
-        //     ->selectRaw('SUM(quantity) as totalpd')
-        //     ->groupBy('product_id')
-        //     ->orderByDesc('totalpd')
-        //     ->whereYear('created_at', now()->year)
-        //     ->take(3)
-        //     ->get();
-
-        // $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
-        //     $query->select('invoice_id', 'product_id', 'color_id', 'capacity_id', 'quantity', 'price');
-        // }])->whereYear('date', now()->year)->get();
-
-        // $interestRate = 0;
-
-        // foreach ($Invoice1 as $invoice) {
-        //     foreach ($invoice->invoice_detail as $detail) {
-        //         $wareHouseDetail = WarehouseDetail::where('product_id', $detail->product_id)
-        //             ->where('color_id', $detail->color_id)
-        //             ->where('capacity_id', $detail->capacity_id)
-        //             ->select('in_price')
-        //             ->orderByDesc('created_at')
-        //             ->first();
-
-        //         if ($wareHouseDetail) {
-        //             $interestRate += $detail->price * $detail->quantity - $wareHouseDetail->in_price * $detail->quantity;
-        //         }
-        //     }
-        // }
-
         return view('statistical');
     }
 
+    public function exportYear(Request $request)
+    {
+        $year = $request->input('year');
+        return Excel::download(new YearExport($year), 'doanh_thu_' . $year . '.xlsx');
+    }
+    public function exportMonth(Request $request)
+    {
+        $month = $request->input('month');
+        $year = $request->input('year');
+        return Excel::download(new MonthExport($year,$month), 'doanh_thu_' . $month . '_' .  $year. '.xlsx');
+    }
 
     public function statisticalMonth(Request $request)
     {

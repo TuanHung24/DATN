@@ -34,7 +34,7 @@
                         <td>{{ $detail->product->name }} - {{ $detail->color->name }} - {{ $detail->capacity->name }}</td>
                         <td>{{ $detail->quantity }}</td>
                         <td>{{ number_format($detail->price, 0, ',', '.') }} đ</td>
-                        <td>{{ number_format($detail->into_money, 0, ',', '.') }} đ</td>
+                        <td>{{ number_format($detail->into_money, 0, ',', '.') }} đ  {{$invoice->status }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -47,10 +47,11 @@
         <div class="status-bar-container mb-3">
             <div class="status-bar">
                 <div class="status-step @if($invoice->status == 5) active @endif">Hủy</div>
-                <div class="status-step @if($invoice->status == 1) active @endif">Duyệt</div>
-                <div class="status-step @if($invoice->status == 2) active @endif">Đang vận chuyển</div>
-                <div class="status-step @if($invoice->status == 3) active @endif">Đã giao</div>
-                <div class="status-step @if($invoice->status == 4) active @endif">Hoàn thành</div>
+                <div class="status-step @if($invoice->status == 1) active @endif">Chờ duyệt</div>
+                <div class="status-step @if($invoice->status == 2) active @endif">Đã duyệt</div>
+                <div class="status-step @if($invoice->status == 3) active @endif">Đang giao</div>
+                <div class="status-step @if($invoice->status == 4) active @endif">Đã giao</div>
+                <div class="status-step @if($invoice->status == 6) active @endif">Hoàn trả</div>
             </div>
         </div>
         

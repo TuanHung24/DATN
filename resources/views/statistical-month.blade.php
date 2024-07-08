@@ -2,6 +2,18 @@
 @section('content')
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h3>Thống kê theo tháng</h3>
+    <div>
+        <select id="monthSelect">
+            <option value="0" disabled selected>Chọn tháng</option>
+        </select>
+
+        <select id="yearSelect">
+            <option value="0" disabled selected>Chọn năm</option>
+            <!-- Thêm các tùy chọn năm, ví dụ: từ 2020 đến 2030 -->
+        </select>
+        <button class="btn btn-info" id="thong-ke">Thống kê</button>
+        <button class="btn btn-success" title="Export doanh thu" id="Export">Export</button>
+    </div>
 </div>
 
 <div class="option-m-y">
@@ -18,7 +30,7 @@
         <label for="so-luong">Số lượng sản phẩm:</label>
         <span id="so-luong"></span>
     </div>
-   
+
     <div class="hd-da-ban">
         <label for="so-luong-hoa-don">Số lượng đơn hàng:</label>
         <span id="so-luong-hoa-don"></span>
@@ -27,20 +39,10 @@
         <label for="top-product">Top sản phẩm bán chạy:</label>
         <span id="top-product"></span>
     </div>
-    
+
 </div>
 <br>
-<div class="form-group" id="month-year-statis">
-        <select id="monthSelect">
-            <option value="0" disabled selected>Chọn tháng</option>
-        </select>
 
-        <select id="yearSelect">
-            <option value="0" disabled selected>Chọn năm</option>
-            <!-- Thêm các tùy chọn năm, ví dụ: từ 2020 đến 2030 -->
-        </select>
-        <button class="btn btn-info" id="thong-ke">Thống kê</button>
-</div>
 
 <div class="chart-container">
     <canvas id="pieChart" width="300" height="400"></canvas>
@@ -67,7 +69,7 @@
             $('#monthSelect').append('<option value="' + month + '">Tháng ' + month + '</option>');
         }
 
-        
+
         for (var year = 2023; year <= currentYear; year++) {
             $('#yearSelect').append('<option value="' + year + '">' + year + '</option>');
         }
@@ -92,13 +94,13 @@
                     'year': selectedYear
                 },
                 success: function(response) {
-                    
+
                     var daysInMonth = new Date(selectedYear, selectedMonth, 0).getDate();
                     var counts = Array(daysInMonth).fill(0);
 
                     let tongTienHoaDon = 0;
                     let tongSoLuong = 0;
-                    let tongHoaDon = 0; 
+                    let tongHoaDon = 0;
                     var canvasContainer = $("#orderChart").parent();
                     $("#orderChart").remove();
                     canvasContainer.append('<canvas id="orderChart"></canvas>');
@@ -108,17 +110,17 @@
                         var date = new Date(response.data[i].date);
                         var day = date.getDate();
                         counts[day - 1] = response.data[i].count;
-                        
+
                         tongSoLuong += parseInt(response.data[i].soluong);
                         tongHoaDon += parseInt(response.data[i].count);
                     }
-                   
+
                     let formattedTongTienHoaDon = formatNumber(response.revenue);
                     let formattedInterestRate = formatNumber(response.interestRate);
-                    $('#doanh-thu').text(formattedTongTienHoaDon+' VND');
+                    $('#doanh-thu').text(formattedTongTienHoaDon + ' VND');
                     $('#so-luong').text(tongSoLuong);
                     $('#so-luong-hoa-don').text(tongHoaDon);
-                    $('#interestRate').text(formattedInterestRate+ ' VND');
+                    $('#interestRate').text(formattedInterestRate + ' VND');
                     var chartData = {
                         labels: Array.from({
                             length: daysInMonth
@@ -131,7 +133,7 @@
                         }]
                     };
                     var maxDataValue = Math.max(...chartData.datasets[0].data);
-                    
+
                     var barGraph = new Chart(ctx, {
                         type: 'bar',
                         data: chartData,
@@ -141,7 +143,7 @@
                                     stepSize: 3,
                                     autoSkip: false,
                                     min: 0,
-                                    max: maxDataValue+3
+                                    max: maxDataValue + 3
                                 },
                                 x: {
                                     type: 'category',
@@ -298,7 +300,7 @@
                 success: function(data) {
                     var topProductsHtml = '';
                     data.sellProduct.forEach(function(product) {
-                        topProductsHtml += '<li>Tên sản phẩm: ' + product.product_name + ' - ' + product.color_name + ' - '+ product.capacity_name +', Số lượng bán: ' + product.totalpd + '</li>';
+                        topProductsHtml += '<li>Tên sản phẩm: ' + product.product_name + ' - ' + product.color_name + ' - ' + product.capacity_name + ', Số lượng bán: ' + product.totalpd + '</li>';
                     });
                     $('#top-product').html('<ul>' + topProductsHtml + '</ul>');
                     drawPieChart(data.statuses);
@@ -310,6 +312,15 @@
 
         }
 
+        $('#Export').click(function() {
+            var selectedYear = $('#yearSelect').val();
+            var selectedMonth = $('#monthSelect').val();
+            if (selectedYear && selectedMonth) {
+                window.location.href = "{{ route('export-month') }}" + "?year=" + selectedYear + "&month=" + selectedMonth;
+            } else {
+                alert("Vui lòng chọn tháng và năm.");
+            }
+        });
     });
 </script>
 @endsection

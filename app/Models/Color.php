@@ -12,4 +12,8 @@ class Color extends Model
     public function img_product(){
         return $this->hasMany(ImgProduct::class,'color_id');
     }
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

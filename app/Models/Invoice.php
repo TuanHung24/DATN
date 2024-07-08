@@ -14,6 +14,7 @@ class Invoice extends Model
     const TRANG_THAI_DANG_GIAO = 3;
     const TRANG_THAI_HOAN_THANH = 4;
     const TRANG_THAI_DA_HUY = 5;
+    const TRANG_THAI_HOAN_TRA = 6;
     public function invoice_detail(){
         return $this->hasMany(InvoiceDetail::class);
     }

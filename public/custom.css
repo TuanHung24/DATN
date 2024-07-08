@@ -1052,7 +1052,7 @@ button#checkDate:hover {
 	display: ruby;
 	float: right;
 }
-#thong-ke{
+#thong-ke, #Export{
 	margin-top: -2px;
 	padding: 4px 10px;
 }
@@ -1143,10 +1143,10 @@ button#checkDate:hover {
     
 }
 
-/* Định dạng cho select và button */
+
 #monthSelect, #yearSelect, #thong-ke {
     margin: 0 10px;
-}
+} 
 
 /* Responsive cho màn hình nhỏ */
 @media (max-width: 768px) {
@@ -1164,12 +1164,18 @@ button#checkDate:hover {
     }
 }
 #day-month-year-statis-day{
-	display: contents;
+	float: right;
 }
 #statistics-day{
 	display: block;
 }
 #yearSelect{
+	padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#monthSelect{
 	padding: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;

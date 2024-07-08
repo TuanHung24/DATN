@@ -9,4 +9,8 @@ class Capacity extends Model
 {
     use HasFactory;
     protected $table='capacity';
+    public function cart()
+    {
+        return $this->hasMany(Cart::class);
+    }
 }

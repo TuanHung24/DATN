@@ -31,17 +31,18 @@
             </a>
             @elseif ($inVoice->status == 2)
             <a href="{{route('invoice.update-status-delivering',['id'=> $inVoice->id])}}">
-                <button type="submit" class="btn btn-warning">Đang vận chuyển</button>
+                <button type="submit" class="btn btn-warning">Đang giao</button>
             </a>
             @elseif ($inVoice->status == 3)
             <a href="{{route('invoice.update-status-complete',['id'=> $inVoice->id])}}">
                 <button type="submit" class="btn btn-secondary">Đã giao</button>
             </a>
             @elseif ($inVoice->status == 4)
-            <button class="btn btn-light">Hoàn thành</button>
+            <button class="btn btn-light">Đã giao</button>
             @elseif ($inVoice->status == 5)
             <button type="submit" class="btn btn-light">Đã hủy</button>
-
+            @elseif ($inVoice->status == 6)
+            <button type="submit" class="btn btn-info">Hoàn trả</button>
             @endif
         </td>
         <td class="chuc-nang-invoice">

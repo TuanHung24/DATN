@@ -11,7 +11,10 @@
             for ($year = 2023; $year <= $currentYear; $year++) { echo "<option value='{$year}'" . ($year==$currentYear ? ' selected' : '' ) . ">{$year}</option>" ; } @endphp </select>
 
                 <button class="btn btn-info" id="thong-ke">Thống kê</button>
+
+                <button class="btn btn-success" title="Export doanh thu" id="Export">Export Excel</button>
     </div>
+
 </div>
 
 <span class="thong_ke">
@@ -58,7 +61,7 @@
 
 <canvas id="orderChart"></canvas>
 
-@endsection 
+@endsection
 
 @section('page-js')
 <script type="text/javascript">
@@ -86,7 +89,7 @@
                     'year': selectedYear,
                 },
                 success: function(response) {
-                    
+
                     let tongTienHoaDon = 0;
                     let tongSoLuong = 0;
                     let tongHoaDon = 0;
@@ -99,7 +102,7 @@
 
 
                     for (var i in response.invoice) {
-                        var month = response.invoice[i].month - 1; 
+                        var month = response.invoice[i].month - 1;
                         var count = response.invoice[i].count;
                         monthsData.push({
                             month: month,
@@ -115,7 +118,7 @@
                         topProductsHtml += '<li>Top ' + (index + 1) + ': ' + product.product_name + ' - ' + product.color_name + ' - ' + product.capacity_name + ', Số lượng bán: ' + product.totalpd + '</li>';
                     });
                     $('#top-product').html('<ul>' + topProductsHtml + '</ul>');
-                    
+
                     $('#doanh-thu').text(response.totalInvoice);
                     $('#cusTomer').text(response.cusTomer);
                     $('#so-luong-hoa-don').text(tongHoaDon);
@@ -125,8 +128,8 @@
                     $('#totalInvoice').text(response.totalInvoice + ' VND')
                     $('#interestRate').text(response.interestRate + ' VND')
                     $('#quantityProduct').text(response.quantityProduct)
-                   
-                    
+
+
                     updateColumnChart(monthsData);
                 },
                 error: function(data) {
@@ -139,19 +142,19 @@
             var labels = [];
             var data = [];
 
-            
+
             for (var i = 1; i <= 12; i++) {
                 labels.push('Tháng ' + i);
                 data.push(0);
             }
 
-            
+
             monthsData.forEach(function(item) {
-                var month = item.month; 
-                data[month] = item.count; 
+                var month = item.month;
+                data[month] = item.count;
             });
 
-           
+
             if (typeof orderChart !== 'undefined') {
                 orderChart.destroy();
             }
@@ -160,7 +163,7 @@
 
             var maxDataValue = Math.max(...data);
 
-           
+
             orderChart = new Chart(ctx, {
                 type: 'bar',
                 data: {
@@ -186,7 +189,7 @@
                             stepSize: 10,
                             autoSkip: false,
                             min: 0,
-                            max: maxDataValue+10
+                            max: maxDataValue + 10
                         },
                         x: {
                             title: {
@@ -337,7 +340,10 @@
 
 
         }
-
+        $('#Export').click(function() {
+            var selectedYear = $('#yearSelect').val();
+            window.location.href = "{{ route('export-year') }}" + "?year=" + selectedYear;
+        });
 
     });
 </script>

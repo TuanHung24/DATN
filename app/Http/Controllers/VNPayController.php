@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\ProductDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -100,6 +101,20 @@ class VNPayController extends Controller
                 'message' => "Thanh toán không thành công!"
             ]);
         }
+        for ($i = 0; $i < count($request->cthd); $i++) {
+            $productDetail = ProductDetail::where('product_id', $request->cthd[$i]['product_id'])
+                ->where('color_id', $request->cthd[$i]['color_id'])
+                ->where('capacity_id', $request->cthd[$i]['capacity_id'])->first();
+
+            if (!$productDetail || $request->cthd[$i]['quantity'] > $productDetail->quantity) {
+                return response()->json([
+                    'success' => false,
+                    'message' => "Sản phẩm không đủ số lượng để đặt hàng!"
+                ],422);
+            }
+        }
+
+
         $inVoice = new Invoice();
         $inVoice->customer_id = $request->hd[0]['customer_id'];
         $inVoice->total = $request->hd[0]['total'];

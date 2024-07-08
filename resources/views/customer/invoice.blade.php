@@ -54,17 +54,22 @@
                 
                 @elseif ($inVoice->status == 4)
                 
-                    <button class="btn btn-light">Hoàn thành</button>
+                    <button class="btn btn-light">Đã giao</button>
                 
                 @elseif ($inVoice->status == 5)
                 
                     <button type="submit" class="btn btn-light">Đã hủy</button>
+
+                @elseif ($inVoice->status == 6)
+                
+                <button type="submit" class="btn btn-light">Hoàn trả</button>
                 
                 @endif
             </td>
 
                 <td class="chuc-nang">
-                <a href="{{ route('customer.get-invoice-detail', ['customer_id' => $listInvoice->first()->customer->id, 'id' => $inVoice->id]) }}" title="Chi tiết hóa đơn" class="btn btn-outline-info">
+                <a href="{{ route('customer.get-invoice-detail', ['customer_id' => $inVoice->customer->id, 'id' => $inVoice->id]) }}" title="Chi tiết hóa đơn" class="btn btn-outline-info">
+
                 <i class="fas fa-info-circle"></i>
                 </a>
                     

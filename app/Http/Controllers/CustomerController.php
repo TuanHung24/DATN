@@ -140,15 +140,21 @@ class CustomerController extends Controller
 
     public function getInvoiceDetail($customer_id, $id)
     {
-        $invoice = Invoice::where('customer_id', $customer_id)
-            ->first();
+        try {
 
-        $invoiceDetails = InvoiceDetail::where('invoice_id', $id)->get();
 
-        if (!$invoiceDetails) {
+            $invoice = Invoice::where('customer_id', $customer_id)->where('id', $id)
+                ->first();
+
+            $invoiceDetails = InvoiceDetail::where('invoice_id', $id)->get();
+
+            if (!$invoiceDetails) {
+                return back()->with('Error', 'Hóa đơn không tồn tại');
+            }
+
+            return view('customer.invoice_detail', compact('invoice', 'invoiceDetails'));
+        } catch (Exception $e) {
             return back()->with('Error', 'Hóa đơn không tồn tại');
         }
-
-        return view('customer.invoice_detail', compact('invoice', 'invoiceDetails'));
     }
 }

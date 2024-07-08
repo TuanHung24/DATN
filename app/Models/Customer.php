@@ -22,4 +22,7 @@ class Customer extends Authenticatable implements JWTSubject
     {
         return [];
     }
+    public function cart(){
+        return $this->hasMany(Cart::class);
+    }
 }
