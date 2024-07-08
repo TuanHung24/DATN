@@ -1164,6 +1164,7 @@ button#checkDate:hover {
     }
 }
 #day-month-year-statis-day{
+	display: contents;
 	float: right;
 }
 #statistics-day{

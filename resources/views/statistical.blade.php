@@ -224,7 +224,7 @@
             pieChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
-                    labels: ['Chờ xử lý', 'Đã duyệt', 'Đang giao', 'Đã giao', 'Đã hủy'],
+                    labels: ['Chờ duyệt', 'Đã duyệt', 'Đang giao', 'Đã giao', 'Đã hủy','Hoàn đơn'],
                     datasets: [{
                         label: 'Trạng thái đơn hàng',
                         data: [
@@ -232,21 +232,24 @@
                             data.da_duyet,
                             data.dang_giao,
                             data.da_giao,
-                            data.da_huy
+                            data.da_huy,
+                            data.hoan_don
                         ],
                         backgroundColor: [
                             'rgba(54, 162, 235, 0.8)',
                             'rgba(255, 206, 86, 0.8)',
                             'rgba(75, 192, 192, 0.8)',
                             'rgba(153, 102, 255, 0.8)',
-                            'rgba(255, 99, 132, 0.8)'
+                            'rgba(255, 99, 132, 0.8)',
+                            'rgba(255, 159, 64, 0.8)'
                         ],
                         borderColor: [
                             'rgba(54, 162, 235, 1)',
                             'rgba(255, 206, 86, 1)',
                             'rgba(75, 192, 192, 1)',
                             'rgba(153, 102, 255, 1)',
-                            'rgba(255, 99, 132, 1)'
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(255, 159, 64, 1)'
                         ],
                         borderWidth: 1
                     }]
@@ -268,13 +271,14 @@
             const invoiceList = $('#invoiceList');
             invoiceList.empty();
 
-            const statusLabels = ['Chờ xử lý', 'Đã duyệt', 'Đang giao', 'Đã giao', 'Đã hủy'];
+            const statusLabels = ['Chờ duyệt', 'Đã duyệt', 'Đang giao', 'Đã giao', 'Đã hủy','Hoàn đơn'];
             const backgroundColors = [
                 'rgba(54, 162, 235, 0.8)',
                 'rgba(255, 206, 86, 0.8)',
                 'rgba(75, 192, 192, 0.8)',
                 'rgba(153, 102, 255, 0.8)',
-                'rgba(255, 99, 132, 0.8)'
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(255, 159, 64, 0.8)'
             ];
 
             let hasInvoices = false;
@@ -310,7 +314,8 @@
             da_duyet: 10,
             dang_giao: 10,
             da_giao: 10,
-            da_huy: 10
+            da_huy: 10,
+            hoan_don:10
         });
         StatisTr()
 

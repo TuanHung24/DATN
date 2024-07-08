@@ -139,6 +139,7 @@ class StatisticalController extends Controller
             'dang_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DANG_GIAO), $month, $year)->count(),
             'da_giao' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $month, $year)->count(),
             'da_huy' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $month, $year)->count(),
+            'hoan_don' => applyMonthFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_TRA), $month, $year)->count(),
         ];
 
         $data = [
@@ -253,6 +254,7 @@ class StatisticalController extends Controller
             'dang_giao' => applyYearFilters(Invoice::where('status', Invoice::TRANG_THAI_DANG_GIAO), $year)->count(),
             'da_giao' => applyYearFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $year)->count(),
             'da_huy' => applyYearFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $year)->count(),
+            'hoan_don'=> applyYearFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_TRA), $year)->count(),
         ];
 
         $data = [
@@ -325,6 +327,7 @@ class StatisticalController extends Controller
             'dang_giao' => applyDayFilters(Invoice::where('status', Invoice::TRANG_THAI_DANG_GIAO), $day, $month, $year)->count(),
             'da_giao' => applyDayFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_THANH), $day, $month, $year)->count(),
             'da_huy' => applyDayFilters(Invoice::where('status', Invoice::TRANG_THAI_DA_HUY), $day, $month, $year)->count(),
+            'hoan_don'=> applyDayFilters(Invoice::where('status', Invoice::TRANG_THAI_HOAN_TRA), $day, $month, $year)->count(),
         ];
 
         $Invoice1 = Invoice::with(['invoice_detail' => function ($query) {
