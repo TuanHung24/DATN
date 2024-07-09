@@ -39,29 +39,6 @@ class CustomerController extends Controller
         return view('customer.list', compact('listCusTomer'));
     }
 
-    public function AddNew()
-    {
-        return view('customer.add-new');
-    }
-    public function hdAddNew(CustomerRequest $request)
-    {
-
-        try {
-            $newcusTomer = new CusTomer();
-            $newcusTomer->name = $request->name;
-            $newcusTomer->email = $request->email;
-            $newcusTomer->password = Hash::make($request->password);
-            $newcusTomer->phone = $request->phone;
-            $newcusTomer->address = $request->address;
-            $newcusTomer->save();
-
-
-            return redirect()->route('customer.list');
-        } catch (Exception $e) {
-            return back()->withInput()->with(['error:' => "Error:" . $e->getMessage()]);
-        }
-    }
-
     public function upDate($id)
     {
         $cusTomer = CusTomer::findOrFail($id);
@@ -129,10 +106,10 @@ class CustomerController extends Controller
     }
     public function getInvoice($id)
     {
-        $listInvoice = Invoice::where('customer_id', $id)->paginate(5);
+        $listInvoice = Invoice::where('customer_id', $id)->orderBy('status','asc')->orderBy('date','desc')->paginate(7);
 
         if ($listInvoice->isEmpty()) {
-            return redirect()->route('invoice.list')->with('error', 'Hóa đơn không tồn tại');
+            return redirect()->route('customer.list')->with('Error', 'Hóa đơn không tồn tại');
         }
 
         return view('customer.invoice', compact('listInvoice'));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\CustomerRequest;
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Tymon\JWTAuth\Claims\Custom;
@@ -17,16 +18,21 @@ class APIAuthController extends Controller
     {
         $credentials = $request->only(['email', 'password']);
 
-        $cusTomer = Customer::where('email', $credentials['email'])->where('status', 1)->first();
+        $customer = Customer::where('email', $credentials['email'])->first();
 
-        if (!$cusTomer || !Hash::check($credentials['password'], $cusTomer->password)) {
-            return response()->json(['error' => 'Email mật khẩu không chính xác!'], 401);
+        if (!$customer || !Hash::check($credentials['password'], $customer->password)) {
+            return response()->json(['error' => 'Email hoặc mật khẩu không chính xác!'], 401);
         }
 
-        $token = auth('api')->login($cusTomer);
+        if ($customer->status === 0) {
+            return response()->json(['error' => 'Tài khoản của bạn đã bị khoá! Vui lòng liên hệ hỗ trợ.'], 401);
+        }
+
+        $token = auth('api')->login($customer);
 
         return $this->respondWithToken($token);
     }
+
 
     public function logout()
     {
@@ -49,6 +55,32 @@ class APIAuthController extends Controller
             'expires_in' => JWTAuth::factory()->getTTL() * 60,
         ]);
     }
+
+    public function refreshToken(Request $request)
+    {
+        try {
+            $user = $request->user();
+
+            if (!$user) {
+                return response()->json(['message' => 'Unauthorized'], 401);
+            }
+
+
+            $user->tokens()->delete();
+
+
+            $token = $user->createToken('AccessToken')->plainTextToken;
+
+            return response()->json([
+                'access_token' => $token,
+                'message' => 'Token refreshed successfully.'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error refreshing token'], 500);
+        }
+    }
+
+
     public function sendEmail(Request $request)
     {
 

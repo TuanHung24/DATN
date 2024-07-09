@@ -54,8 +54,6 @@ Route::middleware(['auth', 'check.status'])->group(function(){
     Route::prefix('customer')->middleware('role:1,2')->group(function(){
         Route::name('customer.')->group(function(){
             Route::get('search', [CustomerController::class, 'search'])->name('search');
-            Route::get('add-new', [CustomerController::class, 'addNew'])->name('add-new');
-            Route::post('add-new', [CustomerController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('list', [CustomerController::class, 'getList'])->name('list');
             Route::get('update/{id}', [CustomerController::class, 'upDate'])->name('update');
             Route::put('update/{id}', [CustomerController::class, 'hdUpdate'])->name('hd-update');
@@ -179,10 +177,10 @@ Route::middleware(['auth', 'check.status'])->group(function(){
         Route::name('invoice.')->group(function(){
             Route::get('search', [InvoiceController::class, 'search'])->name('search');
             Route::get('list', [InvoiceController::class, 'getList'])->name('list');
-            Route::get('add-new',[InvoiceController::class, 'addNew'])->name('add-new');
+            // Route::get('add-new',[InvoiceController::class, 'addNew'])->name('add-new');
             Route::get('detail/{id}', [InvoiceController::class, 'invoiceDetail'])->name('detail');
             Route::get('get-product',[InvoiceController::class, 'getProduct'])->name('get-product-ajax');
-            Route::post('add-new',[InvoiceController::class, 'hdAddNew'])->name('hd-add-new');
+            // Route::post('add-new',[InvoiceController::class, 'hdAddNew'])->name('hd-add-new');
             Route::get('update-status-cancel/{id}', [InvoiceController::class, 'updateStatusCancel'])->name('update-status-cancel');
             Route::get('update-status-approved/{id}', [InvoiceController::class, 'updateStatusApproved'])->name('update-status-approved');
             Route::get('update-status-delivering/{id}', [InvoiceController::class, 'updateStatusDelivering'])->name('update-status-delivering');

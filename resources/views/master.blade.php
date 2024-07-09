@@ -199,9 +199,7 @@
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{ route('customer.list')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
                                 </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{ route('customer.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
-                                </li>
+                                
                             </ul>
                         </li>
 
@@ -309,9 +307,6 @@
                                 <li class="side-nav-menu-item">
                                     <a class="side-nav-menu-link" href="{{route('invoice.list')}}">
                                         <span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-list"></i></span>Danh sách</a>
-                                </li>
-                                <li class="side-nav-menu-item">
-                                    <a class="side-nav-menu-link" href="{{ route('invoice.add-new')}}"><span class="side-nav-menu-icon d-flex mr-2 mt-1"><i class="fas fa-plus"></i></span>Thêm mới</a>
                                 </li>
                             </ul>
                         </li>

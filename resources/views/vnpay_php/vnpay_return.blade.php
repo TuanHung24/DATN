@@ -28,22 +28,20 @@
         <div class="table-responsive">
             <div class="form-group">
                 <label>Mã đơn hàng:</label>
-
                 <label><?php echo $_GET['vnp_TxnRef'] ?></label>
             </div>
             <div class="form-group">
-
                 <label>Số tiền:</label>
-                <label><?php echo $_GET['vnp_Amount']/100 ?></label>
+                <label><?php echo number_format($_GET['vnp_Amount'] / 100, 0, ',', '.') ?></label>
             </div>
             <div class="form-group">
                 <label>Nội dung thanh toán:</label>
                 <label><?php echo $_GET['vnp_OrderInfo'] ?></label>
             </div>
-            <div class="form-group">
+            <!-- <div class="form-group">
                 <label>Mã phản hồi (vnp_ResponseCode):</label>
                 <label><?php echo $_GET['vnp_ResponseCode'] ?></label>
-            </div>
+            </div> -->
             <div class="form-group">
                 <label>Mã GD Tại VNPAY:</label>
                 <label><?php echo $_GET['vnp_TransactionNo'] ?></label>
@@ -54,7 +52,12 @@
             </div>
             <div class="form-group">
                 <label>Thời gian thanh toán:</label>
-                <label><?php echo $_GET['vnp_PayDate'] ?></label>
+                <label> <?php
+                    $vnp_PayDate = $_GET['vnp_PayDate'];
+                    $dateTime = DateTime::createFromFormat('YmdHis', $vnp_PayDate);
+                    $formattedDate = $dateTime->format('d-m-Y H:i:s');
+                    echo $formattedDate;
+                    ?></label>
             </div>
             <div class="form-group">
                 <label>Trạng thái giao dịch: </label>

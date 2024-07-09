@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
     Route::post('login', 'APIAuthController@login');
     Route::post('logout',[APIAuthController::class, 'logout']);
-    Route::post('refresh', 'APIAuthController@refresh');
+    Route::post('/refresh', [APIAuthController::class],'refreshToken');
     Route::get('me', [APIAuthController::class,'me']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
