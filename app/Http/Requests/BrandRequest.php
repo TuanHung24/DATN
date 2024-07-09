@@ -23,7 +23,7 @@ class BrandRequest extends FormRequest
     {
         $id = $this->route('id');
         return [
-            'name'=>'required|min:5|max:50|regex:/^[^\d\W_][^\W_]*$/u|unique:brand,name,'. $id,
+            'name'=>'required|min:4|max:50|regex:/^[^\d\W_][^\W_]*$/u|unique:brand,name,'. $id,
         ];
     }
     public function messages(){

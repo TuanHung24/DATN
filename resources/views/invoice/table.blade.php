@@ -9,6 +9,7 @@
             <th>Tổng tiền</th>
             <th>PT thanh toán</th>
             <th>Ngày tạo</th>
+            <th>TT hiện tại</th>
             <th>Trạng thái</th>
             <th>Tác vụ</th>
         </tr>
@@ -22,6 +23,21 @@
         <td>{{ $inVoice->total_formatted }}</td>
         <td>{{ $inVoice->payment_method }}</td>
         <td>{{ \Carbon\Carbon::parse($inVoice->date)->format('d/m/Y H:i') }}</td>
+        <td class="status-now">
+            @if ($inVoice->status == 1)
+                <button type="submit" class="btn btn-primary">Chờ duyệt</button>
+            @elseif($inVoice->status == 2)
+                <button type="submit" class="btn btn-primary">Đã duyệt</button>
+            @elseif($inVoice->status == 3)
+                <button type="submit" class="btn btn-primary">Đang giao</button>
+            @elseif($inVoice->status == 4)
+            <button type="submit" class="btn btn-primary">Đã giao</button>
+            @elseif($inVoice->status == 5)
+            <button type="submit" class="btn btn-primary">Đã hủy</button>
+            @else
+            <button type="submit" class="btn btn-primary">Hoàn trả</button>
+            @endif
+        </td>
         <td class="status">
             @if ($inVoice->status == 1)
             <button type="button" class="btn btn-danger cancel-btn" data-id="{{ $inVoice->id }}">Hủy</button>

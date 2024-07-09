@@ -1324,3 +1324,7 @@ button#checkDate:hover {
 #md-customer-name{
 	margin-bottom: 30px;
 }
+
+.status-now{
+	width: 120px;
+}
