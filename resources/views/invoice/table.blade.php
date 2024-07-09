@@ -64,6 +64,7 @@
         <td class="chuc-nang-invoice">
             <a href="{{ route('invoice.detail', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-info" title="Chi tiết"><i class="fas fa-info-circle"></i></a>
             <a href="{{ route('invoice.export', ['id'=> $inVoice->id ]) }}" class="btn btn-outline-success" title="Xuất PDF"><i class="fas fa-file-export"></i>PDF</a>
+            
         </td>
     <tr>
         @endforeach

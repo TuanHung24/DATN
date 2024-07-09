@@ -38,10 +38,7 @@
                 <label>Nội dung thanh toán:</label>
                 <label><?php echo $_GET['vnp_OrderInfo'] ?></label>
             </div>
-            <!-- <div class="form-group">
-                <label>Mã phản hồi (vnp_ResponseCode):</label>
-                <label><?php echo $_GET['vnp_ResponseCode'] ?></label>
-            </div> -->
+           
             <div class="form-group">
                 <label>Mã GD Tại VNPAY:</label>
                 <label><?php echo $_GET['vnp_TransactionNo'] ?></label>

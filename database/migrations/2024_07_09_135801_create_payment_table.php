@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('payment', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('vnp_TxnRef');
+            $table->foreignId('vnp_TxnRef')->constrained('invoice');
             $table->decimal('vnp_Amount',12,0);
             $table->string('vnp_BankCode');
             $table->string('vnp_BankTranNo');
