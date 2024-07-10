@@ -143,7 +143,7 @@
                                     stepSize: 3,
                                     autoSkip: false,
                                     min: 0,
-                                    max: maxDataValue + 3
+                                    max: maxDataValue + 1
                                 },
                                 x: {
                                     type: 'category',

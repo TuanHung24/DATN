@@ -478,6 +478,9 @@ button.ui-button::-moz-focus-inner {
 .error {
 	color: red;
 }
+.success{
+	color: green;
+}
 
 .form-label {
 	color: black;
@@ -1251,6 +1254,15 @@ button#checkDate:hover {
 	max-height: 200px;
 	border-radius: 20px;
 	margin-bottom: -40px;
+}
+.title-login{
+	margin-left: 35%;
+	font-weight: bolder;
+	color: #007bff;
+}
+#logo-password-reset{
+	width: 530px;
+	height: 200px;
 }
 .search-button {
     background-color: #007bff;

@@ -20,11 +20,11 @@
         <div class="card">
             
             <div class="card-body">
-            <h4>Login</h4>
+            <h4 class="title-login">ĐĂNG NHẬP</h4>
                 <form method="POST" action="{{route('hd-login')}}">
                     @csrf
                     <div class="form-group">
-                        <label for="username">Username:</label>
+                        <label for="username">Tên tài khoản:</label>
                         <input id="username" type="username" class="form-control" name="username" value="{{old('username')}}" >
                         @if(session('Error'))
                         <span class="error-message">
@@ -34,7 +34,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">Password:
+                        <label for="password">Mật khẩu:
                         </label>
                         <input id="password" type="password" class="form-control" name="password">
                         <div class="text-right">

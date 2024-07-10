@@ -19,7 +19,7 @@
                   
         <div class="container">
         <h3>Tạo mới đơn hàng</h3>
-            <div class="table-responsive">
+            <div class="table-responsive"> 
                 <form action="/vnpay_php/vnpay_create_payment.php" id="frmCreateOrder" method="post">        
                     <div class="form-group">
                         <label for="amount">Số tiền</label>

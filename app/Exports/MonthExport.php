@@ -8,6 +8,7 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithColumnFormatting;
+
 class MonthExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
     protected $year;
@@ -39,15 +40,18 @@ class MonthExport implements FromCollection, WithHeadings, WithMapping, WithColu
 
     public function map($invoice): array
     {
+
+
         return [
-            \Carbon\Carbon::parse($invoice->day)->format('d/m/Y')
+            \Carbon\Carbon::parse($invoice->day)->format('d/m/Y'),
+            $invoice->total,
         ];
     }
 
     public function columnFormats(): array
     {
         return [
-            'B' => NumberFormat::FORMAT_NUMBER_COMMA_SEPARATED1,
+            'B' => '#,##0',
         ];
     }
 }

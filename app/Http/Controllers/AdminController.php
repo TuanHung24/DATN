@@ -101,6 +101,7 @@ class AdminController extends Controller
         $countAdmin = Admin::where('roles', 1)->where('id', '<>', $id)->count();
         return $countAdmin;
     }
+    
     public function hdUpdate(AdminRequest $request, $id)
     {
 
@@ -124,6 +125,9 @@ class AdminController extends Controller
             $aDmin->address = $request->address;
             if ($request->roles == 1 && $this->countAdmin($aDmin->id) == 2) {
                 return back()->withInput()->with(['Error' => "Không thể thêm quá 2 quản lý!"]);
+            } 
+            if($this->countAdmin($aDmin->id) == 0 && $request->roles != 1){
+                return back()->withInput()->with(['Error' => "Tối thiểu phải có 1 quản lý!"]);
             }
             $aDmin->roles = $request->roles;
             $aDmin->gender = $request->gender;

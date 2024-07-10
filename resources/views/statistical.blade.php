@@ -28,7 +28,6 @@
         <span data-feather="shopping-bag" class="align-text-bottom" id="icon-tk"></span>
         <h5>Số lượng hóa đơn</h5>
         <span>Hóa đơn: <strong id="inVoice"></strong></span><br />
-        <span>Đã hủy: <strong id="backInvoice"></strong></span><br />
         <span>Doanh thu: <strong id="totalInvoice"></strong></span><br />
         <span>Lãi: <strong id="interestRate"></strong></span>
     </div>
@@ -124,7 +123,6 @@
                     $('#so-luong-hoa-don').text(tongHoaDon);
                     $('#totalWarehouse').text(response.totalWarehouse + ' VND')
                     $('#inVoice').text(response.inVoice);
-                    $('#backInvoice').text(response.backInvoice);
                     $('#totalInvoice').text(response.totalInvoice + ' VND')
                     $('#interestRate').text(response.interestRate + ' VND')
                     $('#quantityProduct').text(response.quantityProduct)
@@ -189,7 +187,7 @@
                             stepSize: 10,
                             autoSkip: false,
                             min: 0,
-                            max: maxDataValue + 10
+                            max: maxDataValue + 2
                         },
                         x: {
                             title: {

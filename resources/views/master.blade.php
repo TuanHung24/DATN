@@ -57,18 +57,17 @@
                                
                                 <div class="card-header d-flex align-items-center border-bottom py-3">
                                     <h5 class="mb-0">Duyệt đơn hàng</h5>
-                                    <!-- <a class="link small ml-auto" href="#">Clear All</a> -->
+                                   
                                 </div>
                                 @if($quantityInvoice)
                                 <div class="card-body p-0">
                                     <div class="list-group list-group-flush">
                                         @foreach($customerInvoice as $invoice)
-                                        @if($invoice->customer) <!-- Kiểm tra xem có khách hàng không -->
+                                        @if($invoice->customer) 
                                         <a href="{{route('invoice.list')}}" class="list-group-item list-group-item-action">
                                             <div class="d-flex align-items-center text-nowrap mb-2">
                                                 <i class="fas fa-info-circle icon-text text-primary mr-2"></i>
-                                                <h6 class="font-weight-semi-bold mb-0">Đơn hàng</h6>
-                                                <!-- <span class="list-group-item-date text-muted ml-auto">Duyệt</span> -->
+                                                <h6 class="font-weight-semi-bold mb-0">Đơn hàng: {{$invoice->id}}</h6>
                                             </div>
                                             <p class="mb-0">
                                                 Khách hàng: <strong>{{ $invoice->customer->name }} </strong> đang chờ duyệt

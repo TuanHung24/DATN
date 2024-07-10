@@ -155,7 +155,7 @@ class StatisticalController extends Controller
         $Year = $request->year;
 
         $inVoice = Invoice::whereBetween('status', [1, 5])->whereYear('date', $Year)->count();
-        $backInvoice = Invoice::where('status', 5)->whereYear('date', $Year)->count();
+        
 
         $toTal = Invoice::whereYear('date', $Year)->where('status', 4)->sum('total');
         $totalInvoice = number_format($toTal, 0, ',', '.');
@@ -220,7 +220,6 @@ class StatisticalController extends Controller
         $interestRate = number_format($interestRate, 0, ',', '.');
         $data = [
             'inVoice' => $inVoice,
-            'backInvoice' => $backInvoice,
             'totalInvoice' => $totalInvoice,
             'cusTomer' => $cusTomer,
             'totalWarehouse' => $totalWarehouse,

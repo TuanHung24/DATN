@@ -6,10 +6,10 @@ use App\Models\Invoice;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
-
+use Maatwebsite\Excel\Concerns\WithColumnFormatting;
 use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 
-class YearExport implements FromCollection, WithHeadings, WithMapping
+class YearExport implements FromCollection, WithHeadings, WithMapping, WithColumnFormatting
 {
     protected $year;
 
@@ -44,7 +44,7 @@ class YearExport implements FromCollection, WithHeadings, WithMapping
     public function columnFormats(): array
     {
         return [
-            'B' => NumberFormat::FORMAT_NUMBER,
+            'B' => '#,##0',
         ];
     }
 }

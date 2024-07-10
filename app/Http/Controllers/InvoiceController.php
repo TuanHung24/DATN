@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\Invoice;
 use App\Models\InvoiceDetail;
+use App\Models\PayMent;
 use App\Models\Product;
 use App\Models\ProductDetail;
 use App\Models\Rate;
@@ -205,7 +206,8 @@ class InvoiceController extends Controller
 
     public function invoiceDetail($id)
     {
+        $payMent = PayMent::where('vnp_TxnRef',$id)->first();
         $listInvoiceDetail = InvoiceDetail::where('invoice_id', $id)->get();
-        return view('invoice.detail', compact('listInvoiceDetail'));
+        return view('invoice.detail', compact('listInvoiceDetail','payMent'));
     }
 }

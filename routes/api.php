@@ -61,6 +61,6 @@ Route::post('/vnpay-payment',[VNPayController::class, "createPayment"]);
 
 Route::post('/vnpay/index', [VNPayController::class, 'index']);
 Route::post('/vnpay/ipn', [VNPayController::class, 'ipn']);
-Route::get('/vnpay/pay',[VNPayController::class, 'pay']);
+Route::post('/vnpay/pay',[VNPayController::class, 'pay']);
 Route::post('/vnpay/refund', [VNPayController::class, 'refund']);
 Route::get('/vnpay/return', [VnPayController::class, 'return'])->name('vnpay.return');

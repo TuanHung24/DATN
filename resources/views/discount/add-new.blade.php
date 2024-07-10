@@ -63,9 +63,9 @@
             </tbody>
         </table>
     </div>
-    <input type="" id="hd-name" name="discount_name" />
-    <input type="datetime-local" id="hd-date-start" name="date_start" />
-    <input type="datetime-local" id='hd-date-end' name="date_end" />
+    <input type="" id="hd-name" name="discount_name" hidden/>
+    <input type="datetime-local" id="hd-date-start" name="date_start" hidden/>
+    <input type="datetime-local" id='hd-date-end' name="date_end" hidden/>
 
     <input type="hidden" id='hd-percent' name="percent_all" />
     <div class="col-md-2">

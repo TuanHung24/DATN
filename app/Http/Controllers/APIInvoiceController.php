@@ -216,7 +216,7 @@ class APIInvoiceController extends Controller
         $request->validate([
             'customer_id' => 'required|numeric',
             'product_id' => 'required|numeric',
-            'content' => 'required|string|',
+            'content' => 'required|string|min:5|max:100',
             'color_id' => 'required|numeric',
             'capacity_id' => 'required|numeric',
         ], [
@@ -227,6 +227,15 @@ class APIInvoiceController extends Controller
             'content.required' => 'Nội dung bình luận là bắt buộc.',
             'content.string' => 'Nội dung bình luận phải là một chuỗi ký tự.',
         ]);
+        $inVoice = Invoice::where('id',$request->invoice_id)->where('customer_id',$request->customer_id)
+        ->where('status',4)->first();
+        if($inVoice){
+            return response()->json([
+                'success' => false,
+                'message' => "Đơn hàng không tồn tại!"
+            ]);
+        }
+        
         $comMent = new Comment();
         $comMent->customer_id = $request->customer_id;
         $comMent->product_id = $request->product_id;
